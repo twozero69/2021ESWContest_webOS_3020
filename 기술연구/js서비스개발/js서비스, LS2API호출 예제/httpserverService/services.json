@@ -1,0 +1,9 @@
+{
+  "id": "com.app.webserver.service",
+  "description": "service",
+  "services": [
+    {
+      "name": "com.app.webserver.service"
+    }
+  ]
+}
