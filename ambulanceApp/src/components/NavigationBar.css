@@ -1,0 +1,57 @@
+.navigation-bar{
+    height: 100%;
+    width: 600px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 15px 25px;
+    /*
+        background-color : 배경색상을 지정
+        background : background-color + background-image + background-repeat + background-attachment + background-position
+        (한번에 설정가능)
+    */
+    background-color: #333D51;
+    color: white;
+}
+
+.navigation-bar .navigation-head .logo{
+    display: flex;
+    min-height: 50px;
+    width: 100%;
+    align-items: center;
+}
+
+.navigation-bar .navigation-head .logo svg{
+    font-size: 100px;
+    color: #A50034;
+    margin-right: 10px;
+}
+
+.navigation-bar .navigation-head .logo .logo-name{
+    font-size: 80px;
+    font-weight: 400;
+    color: #D3AC2B;
+}
+
+.navigation-bar .navigation-head .btn{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 110px;
+}
+
+.navigation-bar ul{
+    list-style: none;
+    margin-top: 100px;
+}
+
+.navigation-bar ul li{
+    position: relative;
+    height: 150px;
+    width: 100%;
+    margin: 0 20px;
+}
+
+/* .navigation-bar ul li svg{
+    display
+} */

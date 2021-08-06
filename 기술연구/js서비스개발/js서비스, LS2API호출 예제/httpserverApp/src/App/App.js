@@ -75,8 +75,8 @@ const App = () => {
 
 	return(
 		<div>
-			<h1>{text}</h1>
-			<h1>server msg : {serverMsg}</h1>
+			<h1 style={{color: "white"}}>{text}</h1>
+			<h1 style={{color: "white"}}>server msg : {serverMsg}</h1>
 			<button onClick={onClickStart}>start server</button>
 			<button onClick={onClickStop}>stop server</button>
 			<button onClick={onClickToast}>create toast</button>

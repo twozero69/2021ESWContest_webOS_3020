@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+/* 
+    css 상속에 관련된 정보
+
+    background-color
+    margin
+    padding
+    position 
+    height
+    width 등의 일부 속성들은
+    자식요소에게 상속되지 않음.
+
+    font-family는 상속이 되는 속성임.
+*/
+
+*{
+    /*
+        padding과 margin의 값 지정
+
+        네 면 모두 적용 
+        padding: 1em;
+
+        세로방향 | 가로방향
+        padding: 5% 10%;
+
+        위 | 가로방향 | 아래
+        padding: 1em 2em 2em;
+
+        위 | 오른쪽 | 아래 | 왼쪽
+        padding: 5px 1em 0 2em;
+    */
+    margin: 0;      
+    padding: 0;
+    /*
+        box-sizing : 요소의 크기(width, height)를 계산하는 방법을 지정
+        - content-box : width와 height가 margin, border, padding을 전부 포함하지 않고 content만을 지정.
+        - border-box : width와 height가 margin을 포함하지 않고 border, padding, content를 포함.
+    */
+    box-sizing: border-box;
+}
+
+/*
+    body와 #root
+
+    일반 웹페이지였으면 아래의 css 선택자로 body가 들어가겠지만
+    react에서 <div id="root"></div>가 한번 감싸므로 #root를 선택자로 사용함.
+*/
+#root{
+    background-color: #CBD0D8;
+    font-family: 'Noto Sans KR', sans-serif;
+    /*
+        position : 요소를 어떻게 배치할지 결정하는 속성. static을 제외하고는 top, left, bottom, right 속성을 사용해서 요소의 위치를 지정할 수 있다.
+        -static(default) : 좌->우, 상->하 방향으로 차례대로 쌓는다.
+        -relative : static에서 top, left, bottom, right속성을 사용한 위치조정이 가능. 부모요소의 내부에서 상대적인 위치를 조정함.
+        -absolute : relative와 동일하나 static속성이외에 다른 속성을 가진 부모를 기준으로 조정함.(아무것도 없다면 body기준)
+        -fixed : 지정한 위치에 고정
+        -sticky : (조금 복잡) 일정범위까지는 relative로 동작하다가 top, left, bottom, right 속성으로 지정한 범위부터 fixed로 동작.
+        (ex 스크롤을 내리다면 내려가다가 아래에서 고정되는 요소)
+    */
+    position: relative;
+    /*
+        height : 내부의 content가 height를 넘기더라도 height로 고정함.
+        min-height : 지정된 크기를 유지하다가 content가 지정된 크기를 넘어가면 같이 커짐.
+    */
+    /*
+        100% : 부모요소의 100%를 사용하겠다는 것, body의 부모인 html의 100%를 사용한다는 것.
+        100vh : viewport height의 약자, viewport는 현재 실행중인 브라우저의 크기를 의미
+
+        만약에 어떤 컴포넌트의 높이를 브라우저의 세로길이만큼 전부 쓰려고 할 때, 100%를 사용하면 문제가 발생.
+        component의 min-height를 100%로 쓰면 상위 컴포넌트인 body의 100%인데
+        body의 크기는 body의 상위 컴포넌트인 html의 100%이고
+        html은 내부 content를 담을 만큼만 height를 설정하므로 의도한대로 component의 세로길이가 설정되지 않는다.
+    
+        100%를 사용하여 의도한대로 설정하려면 html, body, component의 height를 모두 100%로 설정하여야 브라우저의 세로길이를 모두 사용한다.
+        하지만 vh를 사용하면 component의 height만 조정해서 브라우저의 세로길이를 모두 사용할 수 있다.
+    */
+    height: 100vh;
+    width: 100%;
+    /*
+        overflow : 요소의 content가 요소의 height 또는 width를 넘길 때 어떻게 반응할 것인지 결정.
+        -visible(default) : 요소의 밖으로 나가는 content를 넘친채로 표시함.
+        -hidden : 요소밖에 나가는 content는 잘라버림.
+        =scroll : 요소에 스크롤바가 추가되어 스크롤해서 볼 수 있음.
+        -auto : content양에 따라 scroll로 설정할지 자동으로 결정.
+        
+        요소의 높이가 min-height로 설정된다면 content가 범위를 넘기면 content에 맞추어 값이 변하므로 무의미한 속성.
+    */
+    overflow: hidden;
+}
