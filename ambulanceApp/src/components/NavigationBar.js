@@ -6,10 +6,8 @@ const NavigationBar = ({user}) => {
     return(
         <div className="navigation-bar">
             <div className="navigation-head">
-                <div className="logo">
-                    <BiPlusMedical/>
-                    <div className="logo-name">A2H</div>
-                </div>
+                <BiPlusMedical className="logo-img"/>
+                <div className="logo-name">A2H</div>
                 <BiMenu className="btn"/>
             </div> 
 
@@ -38,7 +36,9 @@ const NavigationBar = ({user}) => {
                     <div className="name">{user.name}</div>
                     <div className="job">{user.job}</div>
                 </div>
-                <BiLogOut/>
+                <div className="logout">
+                    <BiLogOut/>
+                </div>
             </div>
         </div>
     );

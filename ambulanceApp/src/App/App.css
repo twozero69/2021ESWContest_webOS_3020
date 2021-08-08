@@ -76,7 +76,7 @@
         하지만 vh를 사용하면 component의 height만 조정해서 브라우저의 세로길이를 모두 사용할 수 있다.
     */
     height: 100vh;
-    width: 100%;
+    width: 100vw;
     /*
         overflow : 요소의 content가 요소의 height 또는 width를 넘길 때 어떻게 반응할 것인지 결정.
         -visible(default) : 요소의 밖으로 나가는 content를 넘친채로 표시함.
