@@ -88,3 +88,19 @@
     */
     overflow: hidden;
 }
+
+.navigation-bar{
+    height: 100%;
+    width: 17%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.app-contents{
+    height: 100%;
+    width: 83%;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
