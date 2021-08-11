@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {HashRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 
 import NavigationBar from "../components/NavigationBar";
@@ -22,14 +22,16 @@ const App = () => {
 		name: '홍길동',
 		job: '구급대원',
 	});
+	const navigationBar = useRef();
+	const appContents = useRef();
 
 	return(
 		<Router>
 			{loginFlag ? (<>
-				<div className="navigation-bar">
-					<NavigationBar user={user} setUser={setUser} setLoginFlag={setLoginFlag}/>
+				<div ref={navigationBar} className="navigation-bar">
+					<NavigationBar user={user} setUser={setUser} setLoginFlag={setLoginFlag} navigationBar={navigationBar} appContents={appContents} />
 				</div>
-				<div className="app-contents">
+				<div ref={appContents} className="app-contents">
 					<Switch>
 						{/* <Route path="/add-patient"> */}
 						<Route exact path="/">

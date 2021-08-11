@@ -91,16 +91,26 @@
 
 .navigation-bar{
     height: 100%;
-    width: 17%;
+    width: 4%;
     position: fixed;
     top: 0;
     left: 0;
+    transition: all 0.5s;
+}
+
+.navigation-bar.active{
+    width: 17%
 }
 
 .app-contents{
     height: 100%;
-    width: 83%;
+    width: 96%;
     position: fixed;
     top: 0;
     right: 0;
+    transition: all 0.5s;
+}
+
+.app-contents.active{
+    width: 83%;
 }

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap');
 
 .navigation-bar{
-    padding: 15px 25px;
+    /* padding: 15px 25px; */
     /*
         background-color : 배경색상을 지정
         background : background-color + background-image + background-repeat + background-attachment + background-position
@@ -13,39 +13,95 @@
 
 .navigation-bar .navigation-head{
     display: flex;
-    min-height: 50px;
-    width: 100%;
     align-items: center;
-    margin-top: 10px;
+    height: 100px;
+    margin-top: 20px;
+}
+
+.navigation-bar.active .navigation-head{
+    width: 100%;
 }
 
 .navigation-bar .navigation-head .logo-img{
     font-size: 100px;
     color: #A50034;
+    margin-right: 0;
+    display: none;
+}
+
+.navigation-bar.active .navigation-head .logo-img{
     margin-right: 10px;
+    display: block;
 }
 
 .navigation-bar .navigation-head .logo-name{
     font-family: 'Orbitron', sans-serif;
     font-size: 80px;
     color: #D3AC2B;
+    display: none;
+}
+
+.navigation-bar.active .navigation-head .logo-name{
+    display: block;
 }
 
 .navigation-bar .navigation-head .btn{
     position: absolute;
-    right:5%;
-    font-size: 100px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 30px;
 }
+
+.navigation-bar.active .navigation-head .btn{
+    position: absolute;
+    right: 10px;
+    transform: translate(0%);
+}
+
+.navigation-bar .navigation-head .btn:hover{
+    color: #202633;
+    background-color: #CBD0D8;
+}
+
+.navigation-bar .navigation-head .btn svg{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+
+.navigation-bar .navigation-head .btn .menu-btn{
+    font-size: 80px;
+    display: block;
+}
+
+.navigation-bar.active .navigation-head .btn .menu-btn{
+    display: none;
+}
+
+.navigation-bar .navigation-head .x-btn{
+    font-size: 100px;
+    display: none;
+}
+
+.navigation-bar.active .navigation-head .x-btn{
+    display: block;
+}
+
 
 .navigation-bar ul{
     list-style: none;
-    margin-top: 50px;
+    position: absolute;
+    left:50%;
+    transform: translateX(-50%);
 }
 
 .navigation-bar ul li{
-    position: relative;
+    width: 100px;
     height: 100px;
-    margin: 50px 20px;
+    margin: 50px 0;
     display: flex;
     align-items: center;
     border-radius: 30px;
@@ -63,7 +119,14 @@
             5. ease-in-out : 전환(transition) 효과가 천천히 시작되어, 천천히 끝납니다.
             6. cubic-bezier(n,n,n,n) : 전환(transition) 효과가 사용자가 정의한 cubic-bezier 함수에 따라 진행됩니다.
     */
-    transition: all 0.4s;
+    transition: width 0.4s;
+}
+
+.navigation-bar.active ul li{
+    position: relative;
+    left:50%;
+    transform: translateX(-50%);
+    width: 100%;
 }
 
 /*
@@ -71,13 +134,32 @@
     hover : 마우스 커서가 요소에 올라가 있을 때 동작.
 */
 .navigation-bar ul li:hover{
-    color: #333D51;
-    background-color: #CBD0D8; 
+    color: #202633;
+    background-color: #CBD0D8;
 }
 
 .navigation-bar ul li svg{
-    width: 150px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 70px;
+}
+
+.navigation-bar.active ul li svg{
+    left: 0%;
+    transform: translateX(0%);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.navigation-bar ul li div{
+    display: none;
+}
+
+.navigation-bar.active ul li div{
+    min-width: 200px;
+    max-height: 100px;
+    display: block;
 }
 
 .navigation-bar .profile{
@@ -98,29 +180,47 @@
     object-fit: cover;
     border-radius: 30px;
     margin-left: 20px;
+    display: none;
+}
+
+.navigation-bar.active .profile img{
+    display: block;
 }
 
 .navigation-bar .profile .name-job{
     margin-left: 20px;
+    display: none;
+}
+
+.navigation-bar.active .profile .name-job{
+    display: block;
 }
 
 .navigation-bar .profile .name-job .name{
     font-size: 40px;
     font-weight: 600;
+    max-height: 50px;
 }
 
 .navigation-bar .profile .name-job .job{
     font-size: 30px;
     font-weight: 600;
+    max-height: 50px;
 }
 
 .navigation-bar .profile .logout{
     position: absolute;
-    right: 5%;
+    right: 50%;
+    transform: translateX(50%);
     width: 100px;
     height: 100px;
     border-radius: 30px;
     transition: all 0.4s;
+}
+
+.navigation-bar.active .profile .logout{
+    right: 10px;
+    transform: translateX(0%);
 }
 
 .navigation-bar .profile .logout:hover{

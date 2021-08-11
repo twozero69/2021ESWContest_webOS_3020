@@ -1,9 +1,9 @@
 /* eslint-disable */
-import { BiPlusMedical, BiMenu, BiUserPlus, BiMap, BiWrench, BiVideo, BiLogOut } from "react-icons/bi"
+import { BiPlusMedical, BiMenu, BiUserPlus, BiMap, BiWrench, BiVideo, BiLogOut, BiX } from "react-icons/bi"
 import { useHistory } from "react-router-dom";
 import "./NavigationBar.css"
 
-const NavigationBar = ({user, setUser, setLoginFlag}) => {
+const NavigationBar = ({user, setUser, setLoginFlag, navigationBar, appContents}) => {
     const history = useHistory();
 
     const onClickAddPatient = () => {
@@ -27,45 +27,57 @@ const NavigationBar = ({user, setUser, setLoginFlag}) => {
         setLoginFlag(false);
     };
 
-    return(
-        <>
-            <div className="navigation-head">
-                <BiPlusMedical className="logo-img"/>
-                <div className="logo-name">A2H</div>
-                <BiMenu className="btn"/>
-            </div> 
+    const onClickMenuBtn = () => {
+        navigationBar.current.classList.add("active");
+        appContents.current.classList.add("active");
+    }
 
-            <ul>
-                <li onClick={onClickAddPatient}>
-                    <BiUserPlus/>
-                    <span>환자등록</span>
-                </li>
+    const onClickXBtn = () => {
+        navigationBar.current.classList.remove("active");
+        appContents.current.classList.remove("active");
+    }
 
-                <li onClick={onClickSelectHospital}>
-                    <BiMap/>
-                    <span>병원선정</span>
-                </li>
-                <li onClick={onClickControlHospital}>
-                    <BiWrench/>
-                    <span>병원제어</span>
-                </li>
-                <li onClick={onClickTelemedicine}>
-                    <BiVideo/>
-                    <span>원격진료</span>
-                </li>
-            </ul>
+    return (
+      <>
+        <div className="navigation-head">
+          <BiPlusMedical className="logo-img" />
+          <div className="logo-name">A2H</div>
+          <div className="btn">
+            <BiMenu className="menu-btn" onClick={onClickMenuBtn} />
+            <BiX className="x-btn" onClick={onClickXBtn} />
+          </div>
+        </div>
 
-            <div className="profile">
-                <img src={user.image}/>
-                <div className="name-job">
-                    <div className="name">{user.name}</div>
-                    <div className="job">{user.job}</div>
-                </div>
-                <div className="logout" onClick={onClickLogout}>
-                    <BiLogOut/>
-                </div>
-            </div>
-        </>
+        <ul>
+          <li onClick={onClickAddPatient}>
+            <BiUserPlus />
+            <div>환자등록</div>
+          </li>
+          <li onClick={onClickSelectHospital}>
+            <BiMap />
+            <div>병원선정</div>
+          </li>
+          <li onClick={onClickControlHospital}>
+            <BiWrench />
+            <div>병원제어</div>
+          </li>
+          <li onClick={onClickTelemedicine}>
+            <BiVideo />
+            <div>원격진료</div>
+          </li>
+        </ul>
+
+        <div className="profile">
+          <img src={user.image} />
+          <div className="name-job">
+            <div className="name">{user.name}</div>
+            <div className="job">{user.job}</div>
+          </div>
+          <div className="logout" onClick={onClickLogout}>
+            <BiLogOut />
+          </div>
+        </div>
+      </>
     );
 }
 
