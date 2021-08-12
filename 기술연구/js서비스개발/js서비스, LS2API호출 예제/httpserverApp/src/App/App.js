@@ -52,12 +52,12 @@ const App = () => {
 
 	const onClickToast = (event) => {
 		LS2.send({
-			'service' : 'luna://com.webos.notification',
-			'method' : 'createToast',
-			'parameters' : {
-				'sourceId' : 'com.app.webserver',
-				'message' : 'hihihi',
-				'iconUrl' : icon	//80x80만 가능.
+			service : 'luna://com.webos.notification',
+			method : 'createToast',
+			parameters : {
+				sourceId : 'com.app.webserver',
+				message : 'hihihi',
+				iconUrl : icon	//80x80만 가능.
 			},
 			onComplete : (res) => {
 				setText('create toast')
