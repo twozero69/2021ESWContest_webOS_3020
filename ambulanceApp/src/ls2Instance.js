@@ -50,4 +50,4 @@ const LS2RequestThinqAPI = (file) => {
 }
 
 export default LS2;
-export {LS2SetConfig, LS2RequestThinqAPI};
+export {LS2SetConfig};

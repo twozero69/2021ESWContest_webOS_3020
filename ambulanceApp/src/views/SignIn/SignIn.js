@@ -3,41 +3,44 @@ import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./SignIn.css"
 
-const SignIn = () => {
+const SignIn = ({setLoginFlag, setUser}) => {
     const history = useHistory();
     const webcamVideo = useRef();
+    const intervalID = useRef();
     const [imageCapture, setImageCapture] = useState(null); 
-    const [intervalID, setIntervalID] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     useEffect(() => {
         getVideo();
+
+        return () => {
+            clearInterval(intervalID.current);
+        }
     }, []);
 
     const getVideo = () => {
         window.navigator.mediaDevices.getUserMedia({
             video: true,
             audio: false
-        }, ).then(stream => {
+        }).then(stream => {
             webcamVideo.current.srcObject = stream;
             const track = stream.getVideoTracks()[0];
-            setImageCapture(new imageCapture(track));
+            const newImageCapture = new ImageCapture(track);
+            setImageCapture(newImageCapture);
         }).catch(error => {
             console.log(error);
         })
     }
 
     const getImage = () => {
-        // imageCapture.grabFrame().then(imageBitmap => {
-        //     console.log(imageBitmap);
-        // }).catch(error => {
-        //     console.log(error);
-        // })
+        //takePhoto가 반환하는 값은 Promise
+        return imageCapture.takePhoto();
     }
 
     const onSubmit = (event) => {
         event.preventDefault();
+        setLoginFlag(true);
     };
 
     const onEmailChange = (event) => {
@@ -55,8 +58,10 @@ const SignIn = () => {
     };
 
     const onPlay = () => {
-        const newIntervalID = setInterval(getImage, 1000);
-        setIntervalID(newIntervalID);
+        intervalID.current = setInterval(async () => {
+            const blob = await getImage();
+            console.log(blob);
+        }, 3000);
     }
 
     return(

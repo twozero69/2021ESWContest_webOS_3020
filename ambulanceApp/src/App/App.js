@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {HashRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 
 import NavigationBar from "../components/NavigationBar";
@@ -12,17 +12,34 @@ import SignUp from "../views/SignUp/SignUp";
 
 import "./App.css"
 
+import { thinqGetToken } from "../axiosMethods";
+
 import img from "../../webos-meta/icon.png"
 
 
 const App = () => {
-	const [loginFlag, setLoginFlag] = useState(false);
-	//image: img,
-	//name: '홍길동',
-	//job: '구급대원',
-	const [user, setUser] = useState(null);
 	const navigationBar = useRef();
 	const appContents = useRef();
+	const intervalID = useRef();
+	const [loginFlag, setLoginFlag] = useState(false);
+	const [user, setUser] = useState({
+		image: img,
+		name: '홍길동',
+		job: '구급대원',
+	});
+	
+
+	useEffect(() => {
+		thinqGetToken();
+		//발근된 Token은 60분동안 유효하므로 59분 주기로 재발급받는다.
+		intervalID.current = setInterval(() => {
+			thinqGetToken();
+		}, 1000 * 60 * 59);
+		
+		return () => {
+			clearInterval(intervalID.current);
+		};
+	}, []);
 
 	return(
 		<Router>
@@ -51,7 +68,7 @@ const App = () => {
 			</>) : (<>
 				<Switch>
 					<Route exact path="/">
-						<SignIn />
+						<SignIn setLoginFlag={setLoginFlag} setUser={setUser} />
 					</Route>
 					<Route path="/sign-up">
 						<SignUp />
