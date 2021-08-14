@@ -18,7 +18,7 @@ const thinqGetToken = async () => {
 
 
 const thinqServiceConfig = {
-    baseURL: process.env.REACT_APP_THINQ_SERVICE_URL,
+    // baseURL: process.env.REACT_APP_THINQ_SERVICE_URL,
     headers: {
         "x-api-key" : process.env.REACT_APP_THINQ_API_KEY,
         "Authorization" : null,
@@ -26,5 +26,10 @@ const thinqServiceConfig = {
     }
 };
 
+const thinqRequestVisionLabs = (file) => {
+    console.log(thinqServiceConfig);
+    return axios.post("/vision/face/v1/estimation", file, thinqServiceConfig);
+}
 
-export {thinqGetToken};
+
+export {thinqGetToken, thinqRequestVisionLabs};

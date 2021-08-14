@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { thinqRequestVisionLabs } from "../../axiosMethods";
 import "./SignIn.css"
 
 const SignIn = ({setLoginFlag, setUser}) => {
@@ -30,12 +31,7 @@ const SignIn = ({setLoginFlag, setUser}) => {
             setImageCapture(newImageCapture);
         }).catch(error => {
             console.log(error);
-        })
-    }
-
-    const getImage = () => {
-        //takePhoto가 반환하는 값은 Promise
-        return imageCapture.takePhoto();
+        });
     }
 
     const onSubmit = (event) => {
@@ -59,15 +55,17 @@ const SignIn = ({setLoginFlag, setUser}) => {
 
     const onPlay = () => {
         intervalID.current = setInterval(async () => {
-            const blob = await getImage();
-            console.log(blob);
+            const blob = await imageCapture.takePhoto();
+            const buffer = await blob.arrayBuffer();
+            const byteArray = new Uint8Array(buffer);
+            const result = await thinqRequestVisionLabs(byteArray);
+            console.log(result);
         }, 3000);
     }
 
     return(
         <div className="sign-in">
             <video ref={webcamVideo} playsInline autoPlay onPlay={onPlay} />
-            <canvas />
             <form onSubmit={onSubmit}>
                 <input type="email" value={email} onChange={onEmailChange} required />
                 <input type="password" value={password} onChange={onPasswordChange} required />

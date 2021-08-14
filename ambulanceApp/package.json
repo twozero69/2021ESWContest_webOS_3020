@@ -2,7 +2,7 @@
 	"name": "ambulanceapp",
 	"version": "1.0.0",
 	"description": "A general template for an Enact Sandstone application for webOS TVs",
-	"author": "",
+	"author": "twozero69",
 	"main": "src/index.js",
 	"scripts": {
 		"serve": "enact serve",
@@ -47,5 +47,6 @@
 		"react-dom": "^17.0.1",
 		"react-icons": "^4.2.0",
 		"react-router-dom": "^5.2.0"
-	}
+	},
+	"proxy": "https://korea.api.thinqai.net:443"
 }
