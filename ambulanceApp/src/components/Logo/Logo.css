@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap');
+
+.logo{
+    display: flex;
+    align-items: center;
+}
+
+.logo .logo-img{
+    font-size: 100px;
+    color: #A50034;
+    margin-right: 10px;
+}
+
+.logo .logo-name{
+    font-family: 'Orbitron', sans-serif;
+    font-size: 80px;
+    color: #D3AC2B;
+}

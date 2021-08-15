@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { thinqRequestVisionLabs } from "../../axiosMethods";
 import Button from "../../components/Button/Button";
+import Input from "../../components/Input/Input";
+import Logo from "../../components/Logo/Logo";
 import "./SignIn.css"
 
 
@@ -131,11 +133,11 @@ const SignIn = ({setLoginFlag, setUser}) => {
                 </div>
                 <div className="email-form">
                     <div className="email-contents">
-                        <h3>로그인</h3>
-                        <label>이메일</label>
-                        <input type="email" value={email} onChange={onEmailChange} placeholder="이메일을 입력하세요." required />
-                        <label>비밀번호</label>
-                        <input type="password" value={password} onChange={onPasswordChange} placeholder="비밀번호를 입력하세요." required />
+                        <Logo />
+                        <label>Email</label>
+                        <Input type="email" value={email} onChange={onEmailChange} placeholder="이메일을 입력하세요." />
+                        <label>Password</label>
+                        <Input type="password" value={password} onChange={onPasswordChange} placeholder="비밀번호를 입력하세요." />
                         <Button value="로그인" onClick={onSignIn} />
                         <Button value="회원가입" onClick={onSignUp} />
                     </div>

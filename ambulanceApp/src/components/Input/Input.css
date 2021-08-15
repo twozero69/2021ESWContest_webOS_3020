@@ -1,0 +1,28 @@
+input{
+    height: 100px;
+    border: none;
+
+    /*
+        background-color에 넣을 수 있는 전역 값
+            inherit: 
+            initial:
+            unset:
+
+        background-color에 넣을 수 있는 특별 키워드 값
+            currentcolor:
+            transpacrent:
+    */
+    background-color: inherit;
+    color: #333D51;
+    box-shadow: inset 0px -3px 0px 0px #CBD0D8;
+    transition: box-shadow 0.2s;
+}
+
+input:hover{
+    box-shadow: inset 0px -5px 0px 0px #333D51;
+}
+
+input:focus{
+    outline: none;
+    box-shadow: inset 0px -5px 0px 0px #333D51;
+}

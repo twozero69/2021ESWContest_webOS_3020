@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap');
-
 .navigation-bar{
     /* padding: 15px 25px; */
     /*
@@ -22,27 +20,12 @@
     width: 100%;
 }
 
-.navigation-bar .navigation-head .logo-img{
-    font-size: 100px;
-    color: #A50034;
-    margin-right: 0;
+.navigation-bar .navigation-head .logo{
     display: none;
 }
 
-.navigation-bar.active .navigation-head .logo-img{
-    margin-right: 10px;
-    display: block;
-}
-
-.navigation-bar .navigation-head .logo-name{
-    font-family: 'Orbitron', sans-serif;
-    font-size: 80px;
-    color: #D3AC2B;
-    display: none;
-}
-
-.navigation-bar.active .navigation-head .logo-name{
-    display: block;
+.navigation-bar.active .navigation-head .logo{
+    display: flex;
 }
 
 .navigation-bar .navigation-head .btn{

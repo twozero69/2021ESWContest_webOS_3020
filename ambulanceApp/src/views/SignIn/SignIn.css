@@ -59,9 +59,8 @@
     padding: 30px;
 }
 
-.email-contents h3{
-    color: #D3AC2B;
-    text-align: center;
+.email-contents .logo{
+    margin: 10% 0;
 }
 
 .email-contents label{
