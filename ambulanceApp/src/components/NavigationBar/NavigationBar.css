@@ -152,6 +152,11 @@
     margin-right: 10px;
 }
 
+/* 
+    span은 inline element이므로 공간(width, height)을 가지지 않는다.
+    따라서 span대신에 div를 사용하였다.
+    span을 꼭 사용하고 싶다면 display: inline-block을 통해서 inline element를 block element로 변경할 수 있다.
+*/
 .navigation-bar ul li div{
     display: none;
 }
