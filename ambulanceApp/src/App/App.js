@@ -12,7 +12,7 @@ import SignUp from "../views/SignUp/SignUp";
 
 import "./App.css"
 
-import { thinqGetToken } from "../axiosMethods";
+import { thinqGetToken } from "../functions/axiosMethods";
 
 import img from "../../webos-meta/icon.png"
 

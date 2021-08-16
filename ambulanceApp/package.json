@@ -1,7 +1,7 @@
 {
 	"name": "ambulanceapp",
 	"version": "1.0.0",
-	"description": "A general template for an Enact Sandstone application for webOS TVs",
+	"description": "",
 	"author": "twozero69",
 	"main": "src/index.js",
 	"scripts": {

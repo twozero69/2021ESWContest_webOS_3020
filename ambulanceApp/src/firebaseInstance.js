@@ -13,6 +13,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const firestoreService = firebase.firestore();
+const storageService = firebase.storage();
 
 export default firebase;
-export {firestoreService};
+export {firestoreService, storageService};
