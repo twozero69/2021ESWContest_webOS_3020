@@ -1,13 +1,14 @@
+/* eslint-disable */
 import "./Input.css";
 
-const Input = ({type, value, setValue, placeholder}) => {
+const Input = ({type, id, value, setValue, placeholder}) => {
     const onChange = (event) => {
-        const {target : {value}} = event;
+        const {target: {value}} = event;
         setValue(value);
     }
 
     return(
-        <input type={type} value={value} placeholder={placeholder} onChange={onChange}/>
+        <input type={type} id={id} value={value} placeholder={placeholder} onChange={onChange}/>
     );
 };
 

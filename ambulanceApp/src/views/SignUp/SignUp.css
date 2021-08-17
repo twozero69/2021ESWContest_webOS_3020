@@ -33,6 +33,21 @@
 .video-contents video{
     width: 100%;
     border-radius: 30px;
+    display: block;
+}
+
+.video-contents.take-photo video{
+    display: none;
+}
+
+.video-contents canvas{
+    border-radius: 30px;
+    width: 100%;
+    display: none;
+}
+
+.video-contents.take-photo canvas{
+    display: block;
 }
 
 .video-contents div{
@@ -71,6 +86,10 @@
 }
 
 .email-contents input{
+    width: 90%;
+}
+
+.email-contents select{
     width: 90%;
 }
 

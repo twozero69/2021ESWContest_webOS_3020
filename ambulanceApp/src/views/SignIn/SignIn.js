@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import Logo from "../../components/Logo/Logo";
+import { readUserdataFromEmail } from "../../functions/firebaseMethods";
 import { getVideo, visionSignIn } from "../../functions/visionMethods";
 
 import "./SignIn.css"
@@ -27,8 +28,35 @@ const SignIn = ({setLoginFlag, setUser}) => {
         setvisionMessage("얼굴인식을 통해 로그인하시려면 버튼을 눌러주세요.");
     }
 
-    const onSignIn = () => {
-        //여기서 firebase에서 id password체크
+    const onSignIn = async () => {
+        if(email == ""){
+            alert("이메일을 입력하세요.");
+            return;
+        }
+
+        if(password == ""){
+            alert("비밀번호를 입력하세요.");
+            return;
+        }
+
+        const {docs} = await readUserdataFromEmail(email);
+        if(docs.length != 1){
+            if(docs.length == 0){
+                alert("가입하지 않은 이메일입니다.");
+            }
+            else{
+                alert("치명적오류 : 이메일중복");
+            }
+            return;
+        }
+
+        const userdata = docs[0].data();
+        if(password != userdata.password){
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+        }
+
+        setUser(userdata);
         setLoginFlag(true);
     };
 
@@ -66,10 +94,10 @@ const SignIn = ({setLoginFlag, setUser}) => {
                 <div className="email-form">
                     <div className="email-contents">
                         <Logo />
-                        <label>Email</label>
-                        <Input type="text" value={email} setValue={setEmail} placeholder="이메일을 입력하세요." />
-                        <label>Password</label>
-                        <Input type="password" value={password} setValue={setPassword} placeholder="비밀번호를 입력하세요." />
+                        <label htmlFor="email">Email</label>
+                        <Input type="text" id="email" value={email} setValue={setEmail} placeholder="이메일을 입력하세요." />
+                        <label htmlFor="password">Password</label>
+                        <Input type="password" id="password" value={password} setValue={setPassword} placeholder="비밀번호를 입력하세요." />
                         <Button value="로그인" onClick={onSignIn} />
                         <Button value="회원가입" onClick={goSignUp} />
                     </div>

@@ -30,5 +30,4 @@ const thinqRequestVisionLabs = (file) => {
     return axios.post("/vision/face/v1/estimation", file, thinqServiceConfig);
 }
 
-
 export {thinqGetToken, thinqRequestVisionLabs};

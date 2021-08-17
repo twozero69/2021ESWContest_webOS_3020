@@ -1,0 +1,12 @@
+select{
+    height: 100px;
+    border: none;
+    background-color: transparent;
+    color: #333D51;
+    box-shadow: inset 0px -3px 0px 0px #CBD0D8;
+    outline: none;
+}
+
+select:hover{
+    box-shadow: inset 0px -5px 0px 0px #333D51;
+}

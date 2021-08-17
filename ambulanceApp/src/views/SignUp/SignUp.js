@@ -1,17 +1,25 @@
 /* eslint-disable */
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
+import Select from "../../components/Select/Select";
+import { createUserdataInFirestore } from "../../functions/firebaseMethods";
 import { getVideo, visionSignUp } from "../../functions/visionMethods";
 import "./SignUp.css"
 
 const SignUp = () => {
     const history = useHistory();
+    const videoContents = useRef();
     const webcamVideo = useRef();
     const imageCapture = useRef();
-    const faceImage = useRef(); //useState를 써야할지도?
+    const faceCanvas = useRef();
+    const faceContext = useRef();
     const faceLandmark = useRef();
+    const faceImage = useRef();
+    const [name, setName] = useState("");
+    const [job, setJob] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -19,20 +27,31 @@ const SignUp = () => {
     const [retryFlag, setRetryFlag] = useState(false);
 
     useEffect(() => {
-        console.log(faceImage.current);
         getVideo(webcamVideo, imageCapture);
+        faceContext.current = faceCanvas.current.getContext("2d");
     }, []);
+
+    useEffect(() => {
+        if(faceImage.current){
+            videoContents.current.classList.add("take-photo");
+        }
+        else{
+            videoContents.current.classList.remove("take-photo");
+        }
+    }, [faceImage.current]);
 
     const onPlay = () => {
         setRetryFlag(true)
         setvisionMessage("face ID에 사용할 사진을 촬영하세요.");
+        faceCanvas.current.width = webcamVideo.current.videoWidth;
+        faceCanvas.current.height = webcamVideo.current.videoHeight;
     }
 
     const onCapture = async () => {
         setRetryFlag(false);
         setvisionMessage("사진을 촬영하는 중 입니다.")
 
-        const {result, message} = await visionSignUp(imageCapture, faceImage, faceLandmark);
+        const {result, message} = await visionSignUp(imageCapture, faceContext, faceImage, faceLandmark);
         setvisionMessage(message);
 
         if(result){
@@ -43,6 +62,16 @@ const SignUp = () => {
     }
 
     const onSignUp = () => {
+        if(name.length == 0){
+            alert("이름을 입력하세요.");
+            return;
+        }
+
+        if(job == ""){
+            alert("직업을 선택하세요.");
+            return;
+        }
+
         if(email.length < 5){
             alert("이메일을 5글자 이상 입력하세요.");
             return;
@@ -58,18 +87,31 @@ const SignUp = () => {
             return;
         }
 
-         if(faceImage.current == null){
-             alert("사진을 촬영해주세요.");
-             return;
-         }
+        if(!faceImage.current || !faceLandmark.current){
+            alert("사진을 촬영해주세요.");
+            return;
+        }
 
-         
+        const userdata = {
+            uid: uuidv4(),
+            landmark: faceLandmark.current,
+            name: name,
+            email: email,
+            password: password,
+            job: job,
+            imageURL: "",
+            createdAt: Date.now()
+        };
+
+        createUserdataInFirestore(faceImage, userdata);
+        history.push("/");
     }
 
     const onRetry = () => {
         faceImage.current = null;
         faceLandmark.current = null;
         setRetryFlag(true)
+        setvisionMessage("face ID에 사용할 사진을 촬영하세요.");
     }
 
     const onReturn = () => {
@@ -80,8 +122,9 @@ const SignUp = () => {
         <div className="sign-up">
             <div className="sign-up-form">
                 <div className="video-form">
-                    <div className="video-contents">
+                    <div ref={videoContents} className="video-contents">
                         <video ref={webcamVideo} playsInline autoPlay onPlay={onPlay} />
+                        <canvas ref={faceCanvas} />
                         <div>{visionMessage}</div>
                         {retryFlag && <Button value="사진촬영" onClick={onCapture} />}
                         {faceImage.current && <Button value="재시도" onClick={onRetry} />}
@@ -90,12 +133,16 @@ const SignUp = () => {
                 <div className="email-form">
                     <div className="email-contents">
                         <h3>회원가입</h3>
-                        <label>Email</label>
-                        <Input type="text" value={email} setValue={setEmail} placeholder="이메일을 입력하세요." />
-                        <label>Password</label>
-                        <Input type="password" value={password} setValue={setPassword} placeholder="비밀번호를 입력하세요." />
-                        <label>Confirm Password</label>
-                        <Input type="password" value={confirmPassword} setValue={setConfirmPassword} placeholder="비밀번호를 다시 입력하세요." />
+                        <label htmlFor="name">Name</label>
+                        <Input type="text" id="name" value={name} setValue={setName} placeholder="이름을 입력하세요." />
+                        <label htmlFor="job">Job</label>
+                        <Select id="job" value={job} setValue={setJob} options={["구급대원", "간호사", "의사"]} placeholder="직업을 선택하세요." />
+                        <label htmlFor="email">Email</label>
+                        <Input type="text" id="email" value={email} setValue={setEmail} placeholder="이메일을 입력하세요." />
+                        <label htmlFor="password">Password</label>
+                        <Input type="password" id="password" value={password} setValue={setPassword} placeholder="비밀번호를 입력하세요." />
+                        <label htmlFor="confirm-password">Confirm Password</label>
+                        <Input type="password" id="confirm-password" value={confirmPassword} setValue={setConfirmPassword} placeholder="비밀번호를 다시 입력하세요." />
                         <Button value="회원가입" onClick={onSignUp} />
                         <Button value="뒤로가기" onClick={onReturn} />
                     </div>

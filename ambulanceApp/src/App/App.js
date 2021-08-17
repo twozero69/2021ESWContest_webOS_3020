@@ -22,11 +22,7 @@ const App = () => {
 	const appContents = useRef();
 	const intervalID = useRef();
 	const [loginFlag, setLoginFlag] = useState(false);
-	const [user, setUser] = useState({
-		image: img,
-		name: '홍길동',
-		job: '구급대원',
-	});
+	const [user, setUser] = useState(null);
 	
 
 	useEffect(() => {

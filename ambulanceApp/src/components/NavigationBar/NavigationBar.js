@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { BiMenu, BiUserPlus, BiMap, BiWrench, BiVideo, BiLogOut, BiX } from "react-icons/bi"
 import { useHistory } from "react-router-dom";
+import { BiMenu, BiUserPlus, BiMap, BiWrench, BiVideo, BiLogOut, BiX } from "react-icons/bi"
 import Logo from "../Logo/Logo";
 import "./NavigationBar.css"
 
@@ -68,7 +68,7 @@ const NavigationBar = ({user, setUser, setLoginFlag, navigationBar, appContents}
         </ul>
 
         <div className="profile">
-          <img src={user.image} alt="user img" />
+          <img src={user.imageURL} alt="userimage" />
           <div className="name-job">
             <div className="name">{user.name}</div>
             <div className="job">{user.job}</div>
