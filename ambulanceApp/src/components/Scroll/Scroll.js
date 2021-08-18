@@ -1,8 +1,8 @@
 import "./Scroll.css";
 
-const Scroll = ({children}) => {
+const Scroll = ({className, children}) => {
     return(
-        <div className="scroll">
+        <div className={`scroll ${className}`}>
             {children}
         </div>
     );

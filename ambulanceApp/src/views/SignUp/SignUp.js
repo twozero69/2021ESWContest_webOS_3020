@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
+import Scroll from "../../components/Scroll/Scroll";
 import Select from "../../components/Select/Select";
 import { createUserdataInFirestore } from "../../functions/firebaseMethods";
 import { getVideo, visionSignUp } from "../../functions/visionMethods";
@@ -131,7 +132,7 @@ const SignUp = () => {
                     </div>
                 </div>
                 <div className="email-form">
-                    <div className="email-contents">
+                    <Scroll className="email-contents">
                         <h3>회원가입</h3>
                         <label htmlFor="name">Name</label>
                         <Input type="text" id="name" value={name} setValue={setName} placeholder="이름을 입력하세요." />
@@ -145,7 +146,7 @@ const SignUp = () => {
                         <Input type="password" id="confirm-password" value={confirmPassword} setValue={setConfirmPassword} placeholder="비밀번호를 다시 입력하세요." />
                         <Button onClick={onSignUp}>회원가입</Button>
                         <Button onClick={onReturn}>뒤로가기</Button>
-                    </div>
+                    </Scroll>
                 </div>
             </div>
         </div>
