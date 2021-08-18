@@ -126,8 +126,8 @@ const SignUp = () => {
                         <video ref={webcamVideo} playsInline autoPlay onPlay={onPlay} />
                         <canvas ref={faceCanvas} />
                         <div>{visionMessage}</div>
-                        {retryFlag && <Button value="사진촬영" onClick={onCapture} />}
-                        {faceImage.current && <Button value="재시도" onClick={onRetry} />}
+                        {retryFlag && <Button onClick={onCapture}>사진촬영</Button>}
+                        {faceImage.current && <Button onClick={onRetry}>재시도</Button>}
                     </div>
                 </div>
                 <div className="email-form">
@@ -143,8 +143,8 @@ const SignUp = () => {
                         <Input type="password" id="password" value={password} setValue={setPassword} placeholder="비밀번호를 입력하세요." />
                         <label htmlFor="confirm-password">Confirm Password</label>
                         <Input type="password" id="confirm-password" value={confirmPassword} setValue={setConfirmPassword} placeholder="비밀번호를 다시 입력하세요." />
-                        <Button value="회원가입" onClick={onSignUp} />
-                        <Button value="뒤로가기" onClick={onReturn} />
+                        <Button onClick={onSignUp}>회원가입</Button>
+                        <Button onClick={onReturn}>뒤로가기</Button>
                     </div>
                 </div>
             </div>

@@ -88,7 +88,7 @@ const SignIn = ({setLoginFlag, setUser}) => {
                     <div className="video-contents">
                         <video ref={webcamVideo} playsInline autoPlay onPlay={onPlay} />
                         <div>{visionMessage}</div>
-                        {retryFlag && <Button value="face 로그인" onClick={onVision} />}
+                        {retryFlag && <Button onClick={onVision}>face 로그인</Button>}
                     </div>
                 </div>
                 <div className="email-form">
@@ -98,8 +98,8 @@ const SignIn = ({setLoginFlag, setUser}) => {
                         <Input type="text" id="email" value={email} setValue={setEmail} placeholder="이메일을 입력하세요." />
                         <label htmlFor="password">Password</label>
                         <Input type="password" id="password" value={password} setValue={setPassword} placeholder="비밀번호를 입력하세요." />
-                        <Button value="로그인" onClick={onSignIn} />
-                        <Button value="회원가입" onClick={goSignUp} />
+                        <Button onClick={onSignIn}>로그인</Button>
+                        <Button onClick={goSignUp}>회원가입</Button>
                     </div>
                 </div>
             </div>
