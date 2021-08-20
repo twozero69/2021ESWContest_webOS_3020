@@ -14,11 +14,8 @@ import "./App.css"
 
 import { thinqGetToken } from "../functions/axiosMethods";
 
-import img from "../../webos-meta/icon.png"
-
 
 const App = () => {
-	const navigationBar = useRef();
 	const appContents = useRef();
 	const intervalID = useRef();
 	const [loginFlag, setLoginFlag] = useState(false);
@@ -40,9 +37,7 @@ const App = () => {
 	return(
 		<Router>
 			{loginFlag ? (<>
-				<div ref={navigationBar} className="navigation-bar">
-					<NavigationBar user={user} setUser={setUser} setLoginFlag={setLoginFlag} navigationBar={navigationBar} appContents={appContents} />
-				</div>
+				<NavigationBar user={user} setUser={setUser} setLoginFlag={setLoginFlag} appContents={appContents} />
 				<div ref={appContents} className="app-contents">
 					<Switch>
 						{/* <Route path="/add-patient"> */}

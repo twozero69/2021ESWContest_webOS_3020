@@ -8,6 +8,7 @@ import Scroll from "../../components/Scroll/Scroll";
 import Select from "../../components/Select/Select";
 import { createUserdataInFirestore } from "../../functions/firebaseMethods";
 import { getVideo, visionSignUp } from "../../functions/visionMethods";
+
 import "./SignUp.css"
 
 const SignUp = () => {

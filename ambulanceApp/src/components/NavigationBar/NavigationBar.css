@@ -1,5 +1,4 @@
 .navigation-bar{
-    /* padding: 15px 25px; */
     /*
         background-color : 배경색상을 지정
         background : background-color + background-image + background-repeat + background-attachment + background-position
@@ -7,6 +6,16 @@
     */
     background-color: #333D51;
     color: #CBD0D8;
+    height: 100%;
+    width: 4%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all 0.4s;
+}
+
+.navigation-bar.active{
+    width: 17%
 }
 
 .navigation-bar .navigation-head{

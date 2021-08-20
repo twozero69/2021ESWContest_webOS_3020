@@ -22,6 +22,7 @@
 .video-form .video-contents{
     width: 100%;
     height: 100%;
+    color: #333D51;
     background-color: #333D51;
     border-radius: 50px;
     display: flex;
@@ -64,7 +65,11 @@
 .email-form .email-contents{
     width: 100%;
     height: 100%;
-    color: #333D51;
+    /* 
+        color는 보통 텍스트색상을 지정하기위해서 사용하는 색상이지만
+        이 경우에는 currentColor의 값을 초기화해주기 위해서 사용함.
+    */
+    color: #F4F3EA;
     background-color: #F4F3EA;
     border-radius: 50px;
     display: flex;

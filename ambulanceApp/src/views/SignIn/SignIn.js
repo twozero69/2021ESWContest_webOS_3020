@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import Logo from "../../components/Logo/Logo";
+import Scroll from "../../components/Scroll/Scroll";
 import { readUserdataFromEmail } from "../../functions/firebaseMethods";
 import { getVideo, visionSignIn } from "../../functions/visionMethods";
 
@@ -92,7 +93,7 @@ const SignIn = ({setLoginFlag, setUser}) => {
                     </div>
                 </div>
                 <div className="email-form">
-                    <div className="email-contents">
+                    <Scroll className="email-contents">
                         <Logo />
                         <label htmlFor="email">Email</label>
                         <Input type="text" id="email" value={email} setValue={setEmail} placeholder="이메일을 입력하세요." />
@@ -100,7 +101,7 @@ const SignIn = ({setLoginFlag, setUser}) => {
                         <Input type="password" id="password" value={password} setValue={setPassword} placeholder="비밀번호를 입력하세요." />
                         <Button onClick={onSignIn}>로그인</Button>
                         <Button onClick={goSignUp}>회원가입</Button>
-                    </div>
+                    </Scroll>
                 </div>
             </div>
         </div>

@@ -1,11 +1,13 @@
 /* eslint-disable */
+import { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { BiMenu, BiUserPlus, BiMap, BiWrench, BiVideo, BiLogOut, BiX } from "react-icons/bi"
 import Logo from "../Logo/Logo";
 import "./NavigationBar.css"
 
-const NavigationBar = ({user, setUser, setLoginFlag, navigationBar, appContents}) => {
+const NavigationBar = ({user, setUser, setLoginFlag, appContents}) => {
     const history = useHistory();
+    const navigationBar = useRef();
 
     const onClickAddPatient = () => {
         history.push("/");
@@ -39,7 +41,7 @@ const NavigationBar = ({user, setUser, setLoginFlag, navigationBar, appContents}
     }
 
     return (
-      <>
+      <div ref={navigationBar} className="navigation-bar">
         <div className="navigation-head">
           <Logo />
           <div className="btn">
@@ -77,7 +79,7 @@ const NavigationBar = ({user, setUser, setLoginFlag, navigationBar, appContents}
             <BiLogOut />
           </div>
         </div>
-      </>
+      </div>
     );
 }
 
