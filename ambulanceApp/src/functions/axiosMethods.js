@@ -30,4 +30,12 @@ const thinqRequestVisionLabs = (file) => {
     return axios.post("/vision/face/v1/estimation", file, thinqServiceConfig);
 }
 
-export {thinqGetToken, thinqRequestVisionLabs};
+const visionServerConfig = {
+    baseURL: process.env.REACT_APP_VISION_SERVER_URL
+}
+
+const visionRequestToServer = (landmark) => {
+    return axios.post("/vision/face/v1/recognition", landmark, visionServerConfig);
+}
+
+export {thinqGetToken, thinqRequestVisionLabs, visionRequestToServer};

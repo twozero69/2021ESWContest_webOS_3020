@@ -69,10 +69,11 @@ const SignIn = ({setLoginFlag, setUser}) => {
         setRetryFlag(false);
         setvisionMessage("얼굴인식 중 입니다.")
         
-        const {result, message} = await visionSignIn(imageCapture);
+        const {result, message, userdata} = await visionSignIn(imageCapture);
         setvisionMessage(message);
 
         if(result){
+            setUser(userdata);
             setTimeout(() => {
                 setLoginFlag(true);
             }, 1000);

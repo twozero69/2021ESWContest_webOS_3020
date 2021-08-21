@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { thinqRequestVisionLabs } from "./axiosMethods";
+import { thinqRequestVisionLabs, visionRequestToServer } from "./axiosMethods";
 
 const getVideo = (webcamVideoRef, imageCaptureRef) => {
     window.navigator.mediaDevices.getUserMedia({
@@ -72,16 +72,15 @@ const visionSignIn = async (imageCaptureRef) => {
         }
     }
 
-    //여기 ML서버에 요청
-    console.log(landmark);
-
-    //인증되었다면 다음 진행
-
-    //user정보 읽어오기
+    const {data: {returnValue, userdata}} = await visionRequestToServer(landmark);
+    if(!returnValue){
+        message = "데이터베이스에 해당하는 얼굴이 없습니다.";
+        return {result, message};
+    }
 
     result = true;
     message = "얼굴인식에 성공했습니다.";
-    return {result, message};
+    return {result, message, userdata};
 }
 
 const drawBlobToCanvas = (faceContextRef, blob, faceInfo) => {
