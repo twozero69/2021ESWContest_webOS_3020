@@ -2,17 +2,17 @@
 외부 PC에서 실행되는 얼굴인식용 서버
 ## 패키지설치
 #### `pip install -r requirements.txt`
+## .env 작성
+.env.example파일을 참고하여 .env파일 생성
 ## 실행
 #### `python manage.py runserver` (python3)
 ## API
 ### HTTP:
-#### `'POST' http://<IP>:<PORT>/vision/face/v1/recognition`  
-
+#### `'POST' http://<IP>:<PORT>/vision/face/v1/recognition`
 ### Description:
-firebase firestore에서 얼굴의 주인을 찾아 그 결과를 반환.  
-
+firebase firestore에서 얼굴의 주인을 찾아 그 결과를 반환.
 ### Request:
-``` 
+```
 [
 	//얼굴의 68개 랜드마크
 	{
@@ -22,8 +22,7 @@ firebase firestore에서 얼굴의 주인을 찾아 그 결과를 반환.
 	},
 	...
 ]
-```  
-
+```
 ### Response:
 ```
 {

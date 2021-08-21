@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 
@@ -18,7 +18,7 @@ def face_recognition(request):
 
         
         #결과 반환
-        return HttpResponse({
-            returnValue: False,
-            userdata: None
+        return JsonResponse({
+            "returnValue": False,
+            "userdata": None
         })

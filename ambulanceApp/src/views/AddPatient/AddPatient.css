@@ -1,0 +1,14 @@
+.add-patient{
+    width: 100%;
+    height: 90%;
+    padding: 50px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    grid-gap: 50px;
+}
+
+.add-patient video{
+    width: 100%;
+    border-radius: 30px;
+}

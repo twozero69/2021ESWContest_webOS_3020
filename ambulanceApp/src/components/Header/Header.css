@@ -1,0 +1,14 @@
+.header{
+    width: 100%;
+    height: 10%;
+    padding: 25px 50px;
+}
+
+.header .view-name{
+    color: #333D51;
+}
+
+.header .view-outline{
+    color: #333D51;
+    font-size: 35px;
+}

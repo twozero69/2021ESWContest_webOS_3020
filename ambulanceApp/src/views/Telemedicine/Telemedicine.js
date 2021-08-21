@@ -5,9 +5,9 @@ import Button from "../../components/Button/Button";
 import { getVideoWithAudio } from "../../functions/visionMethods";
 
 import "./Telemedicine.css";
+import Header from "../../components/Header/Header";
 
 const Telemedicine = () => {
-    const telemedicine = useRef();
     const patientVideo = useRef();
     const hospitalVideo = useRef();
     const [greenButtonText, setGreenButtonText] = useState("병원과 연결");
@@ -29,11 +29,8 @@ const Telemedicine = () => {
 
     return(
         <>
-            <div className="header">
-                <h3 className="view-name">원격진료</h3>
-                <div className="view-outline">병원에 영상을 연결하여 의사의 지도를 받습니다.</div>
-            </div>
-            <div ref={telemedicine} className="telemedicine">
+            <Header name="원격진료" outline="병원에 영상을 연결하여 의사의 지도를 받습니다." />
+            <div className="telemedicine">
                 <ContentsBox className="hospital-contents" title="병원영상" >
                     {callFlag && <video ref={hospitalVideo} playsInline autoPlay />}
                 </ContentsBox>

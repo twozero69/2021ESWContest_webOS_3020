@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { useEffect, useRef, useState } from "react";
 import {HashRouter as Router, Redirect, Route, Switch} from "react-router-dom";
-
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import AddPatient from "../views/AddPatient/AddPatient";
 import SelectHospital from "../views/SelectHospital/SelectHospital";
@@ -9,10 +8,9 @@ import ControlHospital from "../views/ControlHospital/ControlHospital"
 import Telemedicine from "../views/Telemedicine/Telemedicine"
 import SignIn from "../views/SignIn/SignIn";
 import SignUp from "../views/SignUp/SignUp";
-
+import { thinqGetToken } from "../functions/axiosMethods";
 import "./App.css"
 
-import { thinqGetToken } from "../functions/axiosMethods";
 
 
 const App = () => {
