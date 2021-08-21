@@ -5,15 +5,13 @@
 ## 실행
 #### `python manage.py runserver` (python3)
 ## API
-#### HTTP:
+### HTTP:
 #### `'POST' http://<IP>:<PORT>/vision/face/v1/recognition`  
 
-#### Description:
-```
-firebase firestore에서 얼굴의 주인을 찾아 그 결과를 반환.
-```  
+### Description:
+firebase firestore에서 얼굴의 주인을 찾아 그 결과를 반환.  
 
-#### Request:
+### Request:
 ``` 
 [
 	//얼굴의 68개 랜드마크
@@ -26,7 +24,7 @@ firebase firestore에서 얼굴의 주인을 찾아 그 결과를 반환.
 ]
 ```  
 
-#### Response:
+### Response:
 ```
 {
 	returnValue: True,	//얼굴인식 결과
