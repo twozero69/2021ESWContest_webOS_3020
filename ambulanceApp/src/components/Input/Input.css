@@ -1,5 +1,5 @@
 input{
-    height: 100px;
+    height: 150px;
     border: none;
 
     /*
@@ -12,9 +12,10 @@ input{
             currentColor: 이 요소에 설정된 color속성의 값.
             transpacrent: 투명, rgba(0,0,0,0)과 같음.
     */
+    font-size: 60px;
     background-color: transparent;
     color: #333D51;
-    box-shadow: inset 0px -3px 0px 0px #CBD0D8;
+    box-shadow: inset 0px -5px 0px 0px #CBD0D8;
     transition: box-shadow 0.2s;
 }
 

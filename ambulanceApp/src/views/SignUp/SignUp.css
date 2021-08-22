@@ -1,9 +1,9 @@
 .sign-up{
     background: linear-gradient(90deg, #D3AC2B 50%,#333D51 50%);
-    box-shadow: 0px 0px 100px rgba(34, 35, 58, 0.2);
+    box-shadow: 0px 0px 150px rgba(34, 35, 58, 0.2);
     margin: 10% 25%;
     height: 60%;
-    border-radius: 50px;
+    border-radius: 75px;
 }
 
 .sign-up-form{
@@ -24,16 +24,16 @@
     height: 100%;
     color: #333D51;
     background-color: #333D51;
-    border-radius: 50px;
+    border-radius: 75px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
+    padding: 45px;
 }
 
 .video-contents video{
     width: 100%;
-    border-radius: 30px;
+    border-radius: 45px;
     display: block;
 }
 
@@ -42,7 +42,7 @@
 }
 
 .video-contents canvas{
-    border-radius: 30px;
+    border-radius: 45px;
     width: 100%;
     display: none;
 }
@@ -54,7 +54,7 @@
 .video-contents div{
     margin-top: 5%;
     color: #F4F3EA;
-    font-size: 40px;
+    font-size: 60px;
     font-weight: 600; 
 }
 
@@ -71,33 +71,35 @@
     */
     color: #F4F3EA;
     background-color: #F4F3EA;
-    border-radius: 50px;
+    border-radius: 75px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
+    padding: 45px;
 }
 
-.email-contents h3{
+.sign-up .email-contents h2{
     color: #CBD0D8;
 }
 
-.email-contents label{
+.sign-up .email-contents label{
     margin-top: 5%;
     align-self: start;
-    padding-left: 30px;
-    font-size: 40px;
+    padding-left: 45px;
+    font-size: 60px;
     color: #CBD0D8;
 }
 
-.email-contents input{
+.sign-up .email-contents input{
     width: 90%;
+    margin-top: 3%;
 }
 
-.email-contents select{
+.sign-up .email-contents select{
     width: 90%;
+    margin-top: 3%;
 }
 
-.email-contents button{
+.sign-up .email-contents button{
     margin-top: 7%;
 }

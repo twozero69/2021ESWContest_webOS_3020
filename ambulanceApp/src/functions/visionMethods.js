@@ -139,4 +139,32 @@ const visionSignUp = async (imageCaptureRef, faceContextRef, faceImageRef, faceL
     return {result, message};
 }
 
-export {getVideo, getVideoWithAudio, getVisionProcessResult, visionSignIn, drawBlobToCanvas, visionSignUp};
+const visionGetAttributes = async (imageCaptureRef, faceContextRef, faceImageRef) => {
+    let result = false;
+    let message = ""; 
+    
+    const blob = await imageCaptureRef.current.takePhoto();
+    const {faceCount, estimationResult} = await getVisionProcessResult(blob);
+  
+    if(faceCount != 1){
+        if(faceCount == 0){
+            message = "얼굴인식에 실패했습니다.";
+        }
+        else{
+            message = "너무 많은 얼굴이 인식되었습니다.";
+        }
+
+        return {result, message};
+    }
+
+    const {attributes, faceInfo} = estimationResult[0];
+
+    drawBlobToCanvas(faceContextRef, blob, faceInfo);
+    faceImageRef.current = blob;
+
+    result = true;
+    message = "다시 촬영하시려면 재시도 버튼을 눌러주세요.";
+    return {result, message, attributes};
+}
+
+export {getVideo, getVideoWithAudio, getVisionProcessResult, visionSignIn, drawBlobToCanvas, visionSignUp, visionGetAttributes};

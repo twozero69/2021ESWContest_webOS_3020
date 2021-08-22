@@ -134,7 +134,7 @@ const SignUp = () => {
                 </div>
                 <div className="email-form">
                     <Scroll className="email-contents">
-                        <h3>회원가입</h3>
+                        <h2>회원가입</h2>
                         <label htmlFor="name">Name</label>
                         <Input type="text" id="name" value={name} setValue={setName} placeholder="이름을 입력하세요." />
                         <label htmlFor="job">Job</label>
