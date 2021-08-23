@@ -21,6 +21,7 @@ from visionApp import views
 
 urlpatterns = [
     path('vision/face/v1/recognition', views.face_recognition),
+    path('vision/face/v1/vector', views.get_vector),
     path('admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls'))
 ]

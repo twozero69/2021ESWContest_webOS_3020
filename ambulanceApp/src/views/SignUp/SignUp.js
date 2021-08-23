@@ -18,8 +18,10 @@ const SignUp = () => {
     const imageCapture = useRef();
     const faceCanvas = useRef();
     const faceContext = useRef();
-    const faceLandmark = useRef();
     const faceImage = useRef();
+    const faceInfo = useRef();
+    const faceLandmark = useRef();
+    const faceVector = useRef();
     const [name, setName] = useState("");
     const [job, setJob] = useState("");
     const [email, setEmail] = useState("");
@@ -53,7 +55,7 @@ const SignUp = () => {
         setRetryFlag(false);
         setvisionMessage("사진을 촬영하는 중 입니다.")
 
-        const {result, message} = await visionSignUp(imageCapture, faceContext, faceImage, faceLandmark);
+        const {result, message} = await visionSignUp(imageCapture, faceContext, faceImage, faceInfo, faceLandmark, faceVector);
         setvisionMessage(message);
 
         if(result){
@@ -89,14 +91,16 @@ const SignUp = () => {
             return;
         }
 
-        if(!faceImage.current || !faceLandmark.current){
+        if(!faceImage.current || !faceInfo.current || !faceLandmark.current || !faceVector.current){
             alert("사진을 촬영해주세요.");
             return;
         }
 
         const userdata = {
             uid: uuidv4(),
+            faceInfo: faceInfo.current,
             landmark: faceLandmark.current,
+            vector: faceVector.current,
             name: name,
             email: email,
             password: password,
@@ -111,7 +115,9 @@ const SignUp = () => {
 
     const onRetry = () => {
         faceImage.current = null;
+        faceInfo.current = null;
         faceLandmark.current = null;
+        faceVector.current = null;
         setRetryFlag(true)
         setvisionMessage("face ID에 사용할 사진을 촬영하세요.");
     }

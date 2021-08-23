@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { thinqRequestVisionLabs, visionRequestToServer } from "./axiosMethods";
+import { thinqRequestVisionLabs, djangoRequestToServer, djangoGetVector } from "./axiosMethods";
 
 const getVideo = (webcamVideoRef, imageCaptureRef) => {
     window.navigator.mediaDevices.getUserMedia({
@@ -72,7 +72,7 @@ const visionSignIn = async (imageCaptureRef) => {
         }
     }
 
-    const {data: {returnValue, userdata}} = await visionRequestToServer(landmark);
+    const {data: {returnValue, userdata}} = await djangoRequestToServer(blob, landmark);
     if(!returnValue){
         message = "데이터베이스에 해당하는 얼굴이 없습니다.";
         return {result, message};
@@ -98,7 +98,7 @@ const drawBlobToCanvas = (faceContextRef, blob, faceInfo) => {
     image.src = URL.createObjectURL(blob);
 }
 
-const visionSignUp = async (imageCaptureRef, faceContextRef, faceImageRef, faceLandmarkRef) => {
+const visionSignUp = async (imageCaptureRef, faceContextRef, faceImageRef, faceInfoRef, faceLandmarkRef, faceVectorRef) => {
     let result = false;
     let message = "";
 
@@ -130,9 +130,22 @@ const visionSignUp = async (imageCaptureRef, faceContextRef, faceImageRef, faceL
         }
     }
 
+    const faceX = faceInfo.x;
+    const faceY = faceInfo.y;
+    const processedLandmark = landmark.map(({id, x, y}) =>{
+        return {
+            id,
+            x: x + faceX,
+            y: y + faceY
+        };
+    });
+
+    visionGetVector(blob, processedLandmark, faceVectorRef);
+    
     drawBlobToCanvas(faceContextRef, blob, faceInfo);
     faceImageRef.current = blob;
-    faceLandmarkRef.current = landmark;
+    faceInfoRef.current = faceInfo;
+    faceLandmarkRef.current = processedLandmark;
 
     result = true;
     message = "다시 촬영하시려면 재시도 버튼을 눌러주세요.";
@@ -167,4 +180,15 @@ const visionGetAttributes = async (imageCaptureRef, faceContextRef, faceImageRef
     return {result, message, attributes};
 }
 
-export {getVideo, getVideoWithAudio, getVisionProcessResult, visionSignIn, drawBlobToCanvas, visionSignUp, visionGetAttributes};
+const visionGetVector = (blob, landmark, faceVectorRef) => {
+    const reader = new FileReader();
+    let base64 = null;
+    reader.onload = async () => {
+        base64 = reader.result;
+        const {data: {vector}} = await djangoGetVector(base64, landmark);
+        faceVectorRef.current = vector;
+    }
+    reader.readAsDataURL(blob);
+}
+
+export {getVideo, getVideoWithAudio, getVisionProcessResult, visionSignIn, drawBlobToCanvas, visionSignUp, visionGetAttributes, visionGetVector};

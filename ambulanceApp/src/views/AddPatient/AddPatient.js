@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import ContentsBox from "../../components/ContentsBox/ContentsBox";
 import Header from "../../components/Header/Header"
@@ -9,6 +10,7 @@ import { getVideo, visionGetAttributes } from "../../functions/visionMethods";
 import "./AddPatient.css";
 
 const AddPatient = () => {
+    const history = useHistory();
     const patientVideo = useRef();
     const imageCapture = useRef();
     const faceCanvas = useRef();
@@ -27,6 +29,17 @@ const AddPatient = () => {
         faceContext.current = faceCanvas.current.getContext("2d");
     }, []);
 
+    useEffect(() => {
+        if(faceImage.current){
+            patientVideo.current.style.display = "none";
+            faceCanvas.current.style.display = "block";
+        }
+        else{
+            patientVideo.current.style.display = "block";
+            faceCanvas.current.style.display = "none";
+        }
+    }, [faceImage.current]);
+
     const onPlay = () => {
         setRetryFlag(true)
         setvisionMessage("버튼을 눌러 사진을 촬영하세요.");
@@ -38,10 +51,11 @@ const AddPatient = () => {
         setRetryFlag(false);
         setvisionMessage("사진을 촬영하는 중 입니다.");
 
-        const {result, message, attributes: {age, gender}} = await visionGetAttributes(imageCapture, faceContext, faceImage);
+        const {result, message, attributes} = await visionGetAttributes(imageCapture, faceContext, faceImage);
         setvisionMessage(message);
 
         if(result){
+            const {age, gender} = attributes;
             setAge(age);
             if(gender == 0)
                 setGender("여자");
@@ -57,6 +71,10 @@ const AddPatient = () => {
         faceImage.current = null;
         setRetryFlag(true);
         setvisionMessage("버튼을 눌러 사진을 촬영하세요.");
+    }
+
+    const onSearch = () => {
+        history.push("select-hospital");
     }
 
     return(
@@ -86,7 +104,7 @@ const AddPatient = () => {
                     <Button>작성완료</Button>
                 </ContentsBox>
                 <ContentsBox className="department-contents" title="추천 진료과">
-                    <Button>병원탐색</Button>
+                    <Button onClick={onSearch}>병원탐색</Button>
                 </ContentsBox>
             </div>
         </>

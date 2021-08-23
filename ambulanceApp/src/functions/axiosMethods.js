@@ -28,14 +28,18 @@ const thinqServiceConfig = {
 
 const thinqRequestVisionLabs = (file) => {
     return axios.post("/vision/face/v1/estimation", file, thinqServiceConfig);
-}
+};
 
-const visionServerConfig = {
+const djangoServerConfig = {
     baseURL: process.env.REACT_APP_VISION_SERVER_URL
-}
+};
 
-const visionRequestToServer = (landmark) => {
-    return axios.post("/vision/face/v1/recognition", landmark, visionServerConfig);
-}
+const djangoRequestToServer = (blob, landmark) => {
+    return axios.post("/vision/face/v1/recognition", {image: blob, landmark}, djangoServerConfig);
+};
 
-export {thinqGetToken, thinqRequestVisionLabs, visionRequestToServer};
+const djangoGetVector = (base64, landmark) => {
+    return axios.post("vision/face/v1/vector", {base64, landmark}, djangoServerConfig);
+};
+
+export {thinqGetToken, thinqRequestVisionLabs, djangoRequestToServer, djangoGetVector};

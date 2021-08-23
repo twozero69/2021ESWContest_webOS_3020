@@ -3,14 +3,9 @@
     height: 90%;
     padding: 75px;
     display: grid;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 2fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 75px;
-}
-
-.add-patient video{
-    width: 100%;
-    border-radius: 45px;
 }
 
 .add-patient label{
@@ -34,14 +29,16 @@
     color: #F4F3EA;
 }
 
+
+.add-patient .image-contents video{
+    width: 100%;
+    border-radius: 45px;
+}
+
 .add-patient .image-contents canvas{
     border-radius: 45px;
     width: 100%;
     display: none;
-}
-
-.add-patient .image-contents.active canvas{
-    display: block;
 }
 
 .add-patient .image-contents .vision-message{
