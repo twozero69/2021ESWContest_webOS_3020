@@ -6,7 +6,7 @@ import ContentsBox from "../../components/ContentsBox/ContentsBox";
 import Header from "../../components/Header/Header"
 import Input from "../../components/Input/Input";
 import Select from "../../components/Select/Select";
-import { getVideo, visionGetAttributes } from "../../functions/visionMethods";
+import { getVideo, getAttributes } from "../../functions/visionMethods";
 import "./AddPatient.css";
 
 const AddPatient = () => {
@@ -51,7 +51,7 @@ const AddPatient = () => {
         setRetryFlag(false);
         setvisionMessage("사진을 촬영하는 중 입니다.");
 
-        const {result, message, attributes} = await visionGetAttributes(imageCapture, faceContext, faceImage);
+        const {result, message, attributes} = await getAttributes(imageCapture, faceContext, faceImage);
         setvisionMessage(message);
 
         if(result){

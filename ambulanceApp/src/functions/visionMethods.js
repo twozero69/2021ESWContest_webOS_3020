@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { thinqRequestVisionLabs, djangoRequestToServer, djangoGetVector } from "./axiosMethods";
+import { thinqRequestVisionLabs, djangoFaceRecognition, djangoGetVector } from "./axiosMethods";
 
 const getVideo = (webcamVideoRef, imageCaptureRef) => {
     window.navigator.mediaDevices.getUserMedia({
@@ -58,7 +58,7 @@ const visionSignIn = async (imageCaptureRef) => {
         return {result, message};
     }
     
-    const {headpose, landmark, quality: {quality}} = estimationResult[0];
+    const {headpose, quality: {quality}, faceInfo} = estimationResult[0];
 
     if(quality < 0.9){
         message = "영상의 화질이 좋지않습니다."
@@ -72,7 +72,7 @@ const visionSignIn = async (imageCaptureRef) => {
         }
     }
 
-    const {data: {returnValue, userdata}} = await djangoRequestToServer(blob, landmark);
+    const {data: {returnValue, userdata}} = await getFaceRecognition(blob, faceInfo);
     if(!returnValue){
         message = "데이터베이스에 해당하는 얼굴이 없습니다.";
         return {result, message};
@@ -130,9 +130,20 @@ const visionSignUp = async (imageCaptureRef, faceContextRef, faceImageRef, faceI
         }
     }
 
+    const {data: {vector}} = await getVector(blob, faceInfo);
+    if(!vector){
+        message = "얼굴인식 서버와의 연결이 원활하지 않습니다.";
+        return {result, message};
+    }
+    
+    drawBlobToCanvas(faceContextRef, blob, faceInfo);
+    faceImageRef.current = blob;
+    faceInfoRef.current = faceInfo;
+    faceVectorRef.current = vector;
+
     const faceX = faceInfo.x;
     const faceY = faceInfo.y;
-    const processedLandmark = landmark.map(({id, x, y}) =>{
+    faceLandmarkRef.current = landmark.map(({id, x, y}) =>{
         return {
             id,
             x: x + faceX,
@@ -140,19 +151,12 @@ const visionSignUp = async (imageCaptureRef, faceContextRef, faceImageRef, faceI
         };
     });
 
-    visionGetVector(blob, processedLandmark, faceVectorRef);
-    
-    drawBlobToCanvas(faceContextRef, blob, faceInfo);
-    faceImageRef.current = blob;
-    faceInfoRef.current = faceInfo;
-    faceLandmarkRef.current = processedLandmark;
-
     result = true;
     message = "다시 촬영하시려면 재시도 버튼을 눌러주세요.";
     return {result, message};
 }
 
-const visionGetAttributes = async (imageCaptureRef, faceContextRef, faceImageRef) => {
+const getAttributes = async (imageCaptureRef, faceContextRef, faceImageRef) => {
     let result = false;
     let message = ""; 
     
@@ -180,15 +184,28 @@ const visionGetAttributes = async (imageCaptureRef, faceContextRef, faceImageRef
     return {result, message, attributes};
 }
 
-const visionGetVector = (blob, landmark, faceVectorRef) => {
-    const reader = new FileReader();
-    let base64 = null;
-    reader.onload = async () => {
-        base64 = reader.result;
-        const {data: {vector}} = await djangoGetVector(base64, landmark);
-        faceVectorRef.current = vector;
-    }
-    reader.readAsDataURL(blob);
+const convertBlobToBase64 = (blob) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        
+        reader.onload = () => {
+            resolve(reader.result);
+        }
+
+        reader.onerror = reject;
+
+        reader.readAsDataURL(blob);
+    });
 }
 
-export {getVideo, getVideoWithAudio, getVisionProcessResult, visionSignIn, drawBlobToCanvas, visionSignUp, visionGetAttributes, visionGetVector};
+const getVector = async (blob, faceInfo) => {
+    const base64 = await convertBlobToBase64(blob);
+    return djangoGetVector(base64, faceInfo);
+}
+
+const getFaceRecognition = async (blob, faceInfo) => {
+    const base64 = await convertBlobToBase64(blob);
+    return djangoFaceRecognition(base64, faceInfo);
+}
+
+export {getVideo, getVideoWithAudio, getVisionProcessResult, visionSignIn, drawBlobToCanvas, visionSignUp, getAttributes, getVector, getFaceRecognition};

@@ -6,7 +6,6 @@ from django.views.decorators.csrf import csrf_exempt
 import base64
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 
@@ -19,13 +18,12 @@ def get_vector(request):
         byteData = base64.b64decode(base64Data)
         arrData = np.frombuffer(byteData, np.uint8)
 
-        #bgr_img, landmark
+        #bgr_img, face_info
         bgr_img = cv2.imdecode(arrData, flags=cv2.IMREAD_COLOR)
-        landmark = data["landmark"]
+        face_info = data["faceInfo"]
+
         ########################################
-        #여기에서 landmark -> vector로 변환
-
-
+        #여기에서 vector계산
         vector = "계산 후 저장"
         ########################################
 
@@ -43,9 +41,9 @@ def face_recognition(request):
         byteData = base64.b64decode(base64Data)
         arrData = np.frombuffer(byteData, np.uint8)
 
-        #bgr_img, landmark
+        #bgr_img, face_info
         bgr_img = cv2.imdecode(arrData, flags=cv2.IMREAD_COLOR)
-        landmark = data["landmark"]
+        face_info = data["faceInfo"]
 
         ########################################
         #여기에 얼굴인식 코딩

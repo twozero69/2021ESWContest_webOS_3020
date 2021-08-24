@@ -34,12 +34,17 @@ const djangoServerConfig = {
     baseURL: process.env.REACT_APP_VISION_SERVER_URL
 };
 
-const djangoRequestToServer = (blob, landmark) => {
-    return axios.post("/vision/face/v1/recognition", {image: blob, landmark}, djangoServerConfig);
+const djangoGetVector = (base64, faceInfo) => {
+    return axios.post("vision/face/v1/vector", {base64, faceInfo}, djangoServerConfig);
 };
 
-const djangoGetVector = (base64, landmark) => {
-    return axios.post("vision/face/v1/vector", {base64, landmark}, djangoServerConfig);
+const djangoFaceRecognition = (base64, faceInfo) => {
+    return axios.post("/vision/face/v1/recognition", {base64, faceInfo}, djangoServerConfig);
 };
 
-export {thinqGetToken, thinqRequestVisionLabs, djangoRequestToServer, djangoGetVector};
+
+const openapi = () => {
+    
+}
+
+export {thinqGetToken, thinqRequestVisionLabs, djangoFaceRecognition, djangoGetVector};
