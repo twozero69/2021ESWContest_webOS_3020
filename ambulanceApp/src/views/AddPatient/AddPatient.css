@@ -3,7 +3,7 @@
     height: 90%;
     padding: 75px;
     display: grid;
-    grid-template-rows: 2fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 75px;
 }
@@ -13,6 +13,7 @@
     padding-left: 45px;
     font-size: 60px;
     color: #CBD0D8;
+    margin-top: 60px;
 }
 
 .add-patient input{
@@ -23,12 +24,18 @@
     width: 90%;
 }
 
+.add-patient .guide{
+    width: 100%;
+    font-size: 60px;
+    font-weight: 600;
+    color: #333D51;
+}
+
 .add-patient .image-contents{
-    grid-row: 1;
+    grid-row: 1 / 3;
     grid-column: 1;
     color: #F4F3EA;
 }
-
 
 .add-patient .image-contents video{
     width: 100%;
@@ -48,28 +55,35 @@
     font-weight: 600; 
 }
 
-.add-patient .image-contents button{
-    margin-top: 30px;
+.add-patient button{
+    margin-top: 60px;
 }
 
 .add-patient .information-contents{
-    grid-row: 2;
+    grid-row: 3;
     grid-column: 1;
     color: #F4F3EA;
 }
 
-.add-patient .information-contents .contents{
-    justify-content: center;
-}
-
-.add-patient .symptom-contents{
-    grid-row: 1 / 3;
+.add-patient .severity-contents{
+    grid-row: 1;
     grid-column: 2;
     color: #F4F3EA;
 }
 
-.add-patient .department-contents{
+.add-patient .diagnosis-contents{
+    grid-row: 2 / 4;
+    grid-column: 2;
+    color: #F4F3EA;
+}
+
+.add-patient .severeDisease-contents{
     grid-row: 1 / 3;
     grid-column: 3;
     color: #F4F3EA;
+}
+
+.add-patient .facility-contents{
+    grid-row: 3;
+    grid-column: 3;
 }

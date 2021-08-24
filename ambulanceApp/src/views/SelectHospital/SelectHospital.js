@@ -1,6 +1,12 @@
+/* eslint-disable */
+import { useEffect } from "react";
 import "./SelectHospital.css"
 
-const SelectHospital = () => {
+const SelectHospital = ({patient}) => {
+    useEffect(() => {
+        console.log(patient);
+    }, [])
+
     return(
         <>
             SelectHospital

@@ -18,7 +18,8 @@ const App = () => {
 	const intervalID = useRef();
 	const [loginFlag, setLoginFlag] = useState(false);
 	const [user, setUser] = useState(null);
-	
+	const [patient, setPatient] = useState(null);
+	const [hospital, setHospital] = useState(null);
 
 	useEffect(() => {
 		thinqGetToken();
@@ -40,10 +41,10 @@ const App = () => {
 					<Switch>
 						{/* <Route path="/add-patient"> */}
 						<Route exact path="/">
-							<AddPatient />
+							<AddPatient setPatient={setPatient} />
 						</Route>
 						<Route path="/select-hospital">
-							<SelectHospital />
+							<SelectHospital patient={patient} />
 						</Route>
 						<Route path="/control-hospital">
 							<ControlHospital />

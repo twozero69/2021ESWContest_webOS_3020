@@ -6,7 +6,7 @@ button{
     border-radius: 45px;
     border-width: 0;
     width: 450px;
-    height: 105px;
+    min-height: 105px;
     transition: filter 0.2s;
 }
 
