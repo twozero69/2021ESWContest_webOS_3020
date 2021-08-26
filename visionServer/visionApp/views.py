@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
@@ -8,13 +7,29 @@ import base64
 import cv2
 import dlib
 import numpy as np
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 
 # ML models
 facerec = dlib.face_recognition_model_v1("models/dlib_face_recognition_resnet_model_v1.dat")
 
 
+#firebase instance
+cred = credentials.Certificate('admin/firebase-adminsdk.json')
+firebase_admin.initialize_app(cred)
+db = firestore.client()
+users_ref = db.collection(u'users')
+
+
 # utility methods
+def base64_to_img(base64Data):
+    byteData = base64.b64decode(base64Data)
+    arrData = np.frombuffer(byteData, np.uint8)
+    return cv2.imdecode(arrData, flags=cv2.IMREAD_COLOR)
+
+
 def points_to_dlib(points):
     dlib_points = dlib.points()
     for point in points:
@@ -26,8 +41,8 @@ def points_to_dlib(points):
 def face_info_to_dlib(face_info):
     left = face_info['x']
     top = face_info['y']
-    right = face_info['x']+face_info['width']
-    bottom = face_info['y']+face_info['height']
+    right = face_info['x'] + face_info['width']
+    bottom = face_info['y'] + face_info['height']
     return dlib.rectangle(left, top, right, bottom)
 
 
@@ -50,11 +65,9 @@ def get_vector(request):
     if request.method == "POST":
         data = JSONParser().parse(request)
         base64Data = data["base64"].split(",")[1]
-        byteData = base64.b64decode(base64Data)
-        arrData = np.frombuffer(byteData, np.uint8)
 
         #bgr_img, face_info, landmark
-        bgr_img = cv2.imdecode(arrData, flags=cv2.IMREAD_COLOR)
+        bgr_img = base64_to_img(base64Data)
         face_info = data["faceInfo"]
         landmark = data["landmark"]
 
@@ -74,11 +87,9 @@ def face_recognition(request):
     if request.method == "POST":
         data = JSONParser().parse(request)
         base64Data = data["base64"].split(",")[1]
-        byteData = base64.b64decode(base64Data)
-        arrData = np.frombuffer(byteData, np.uint8)
         
         #bgr_img, face_info, landmark
-        bgr_img = cv2.imdecode(arrData, flags=cv2.IMREAD_COLOR)
+        bgr_img = bgr_img = base64_to_img(base64Data)
         face_info = data["faceInfo"]
         landmark = data["landmark"]
 
@@ -86,13 +97,25 @@ def face_recognition(request):
         shape = landmark_to_dlib(landmark, face_info)
         dlib_vector = facerec.compute_face_descriptor(bgr_img, shape)
         vector = dlib_vector_to_list(dlib_vector)
-        ########################################
-        #여기에서 vector랑 firebase storage와 비교코딩
 
-        ########################################
+        #firebase firestore의 사용자 얼굴정보와 비교
+        return_value = False
+        userdata = None
+        minDist = 0.3
+
+        docs = users_ref.stream()
+        for doc in docs:
+            data = doc.to_dict()
+            dist = np.linalg.norm(np.array(data['vector'])-np.array(vector), axis=0)
+            if dist < minDist:
+                minDist = dist
+                userdata = data
+                return_value = True
+            
+            print(data['name'], dist)
 
         #인식결과 반환
         return JsonResponse({
-            "returnValue": False,
-            "userdata": None
+            "returnValue": return_value,
+            "userdata": userdata
         })

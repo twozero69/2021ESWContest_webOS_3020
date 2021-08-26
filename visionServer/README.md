@@ -17,6 +17,10 @@
 ### 외부접속 허용:
 #### `python manage.py runserver 0.0.0.0:<PORT>`
 
+# firebase admin SDK 추가
+
+프로젝트 폴더에 admin폴더를 추가하고 admin/<firebase-adminsdk.json> 파일 추가
+
 # API1
 
 ### HTTP:
@@ -37,7 +41,18 @@
         y: 198,
         width: 121,
         height: 215
-    }
+    },
+    landmark: [ //눈코입의 위치를 기록한 68개의 점
+        {
+            x: 129,
+            y: 228
+        },
+        {
+            x: 129,
+            y: 228
+        },
+        ...
+    ]
 }
 ```
 
@@ -69,7 +84,18 @@
         y: 198,
         width: 121,
         height: 215
-    }
+    },
+    landmark: [ //눈코입의 위치를 기록한 68개의 점
+        {
+            x: 129,
+            y: 228
+        },
+        {
+            x: 129,
+            y: 228
+        },
+        ...
+    ]
 }
 ```
 

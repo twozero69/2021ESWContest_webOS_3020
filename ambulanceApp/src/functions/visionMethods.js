@@ -58,7 +58,7 @@ const visionSignIn = async (imageCaptureRef) => {
         return {result, message};
     }
     
-    const {headpose, quality: {quality}, faceInfo} = estimationResult[0];
+    const {headpose, quality: {quality}, faceInfo, landmark} = estimationResult[0];
 
     if(quality < 0.9){
         message = "영상의 화질이 좋지않습니다."
@@ -72,7 +72,7 @@ const visionSignIn = async (imageCaptureRef) => {
         }
     }
 
-    const {data: {returnValue, userdata}} = await getFaceRecognition(blob, faceInfo, landmark);
+    const {data: {returnValue, userdata}} = await getFaceRecognition(blob, faceInfo, getProcessedLandmark(landmark, faceInfo));
     if(!returnValue){
         message = "데이터베이스에 해당하는 얼굴이 없습니다.";
         return {result, message};
@@ -130,7 +130,7 @@ const visionSignUp = async (imageCaptureRef, faceContextRef, faceImageRef, faceI
         }
     }
 
-    const {data: {vector}} = await getVector(blob, faceInfo, landmark);
+    const {data: {vector}} = await getVector(blob, faceInfo, getProcessedLandmark(landmark, faceInfo));
     if(!vector){
         message = "얼굴인식 서버와의 연결이 원활하지 않습니다.";
         return {result, message};
@@ -140,17 +140,7 @@ const visionSignUp = async (imageCaptureRef, faceContextRef, faceImageRef, faceI
     faceImageRef.current = blob;
     faceInfoRef.current = faceInfo;
     faceVectorRef.current = vector;
-
-    const faceX = faceInfo.x;
-    const faceY = faceInfo.y;
-    faceLandmarkRef.current = landmark.map(({id, x, y}) =>{
-        return {
-            id,
-            x: x + faceX,
-            y: y + faceY
-        };
-    });
-
+    faceLandmarkRef.current = landmark;
     result = true;
     message = "다시 촬영하시려면 재시도 버튼을 눌러주세요.";
     return {result, message};
@@ -206,6 +196,13 @@ const getVector = async (blob, faceInfo, landmark) => {
 const getFaceRecognition = async (blob, faceInfo, landmark) => {
     const base64 = await convertBlobToBase64(blob);
     return djangoFaceRecognition(base64, faceInfo, landmark);
+}
+
+const getProcessedLandmark = (landmark, faceInfo) => {
+    const faceX = faceInfo.x;
+    const faceY = faceInfo.y;
+
+    return landmark.map(({x, y}) => ({x: x + faceX, y: y + faceY}));
 }
 
 export {getVideo, getVideoWithAudio, getVisionProcessResult, visionSignIn, drawBlobToCanvas, visionSignUp, getAttributes, getVector, getFaceRecognition};

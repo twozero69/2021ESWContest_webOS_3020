@@ -7,3 +7,4 @@ cmake
 wheel
 dlib
 numpy
+firebase-admin

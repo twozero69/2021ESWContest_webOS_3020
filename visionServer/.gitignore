@@ -13,3 +13,6 @@ media
 
 # Environments
 .env
+
+# firebase certificate
+admin
