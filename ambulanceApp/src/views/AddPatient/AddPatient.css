@@ -78,12 +78,13 @@
 }
 
 .add-patient .severeDisease-contents{
-    grid-row: 1 / 3;
+    grid-row: 1;
     grid-column: 3;
     color: #F4F3EA;
 }
 
 .add-patient .facility-contents{
-    grid-row: 3;
+    grid-row: 2 / 4;
     grid-column: 3;
+    color: #F4F3EA;
 }

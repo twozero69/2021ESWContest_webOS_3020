@@ -100,10 +100,20 @@ const AddPatient = ({setPatient}) => {
     }
 
     const onRegister = async () => {
+        if(severity==""){
+            alert("중증도를 선택해주세요.");
+            return;
+        }
+
+        const {coords: {latitude, longitude}} = await getGeolocation();
+
         const patientData = {
             pid: uuidv4(),
             imageBlob: faceImage.current,
-            location: await getGeolocation(),
+            location: {
+                latitude: latitude,
+                longitude: longitude,
+            },
             attributes:{
                 gender: gender,
                 age: age

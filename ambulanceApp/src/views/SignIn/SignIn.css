@@ -72,6 +72,10 @@
     color: #CBD0D8;
 }
 
+.sign-in .email-contents label:first-of-type{
+    margin-top: 0;
+}
+
 .sign-in .email-contents input{
     width: 90%;
 }

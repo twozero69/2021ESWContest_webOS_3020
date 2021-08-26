@@ -26,25 +26,42 @@ const thinqServiceConfig = {
     }
 };
 
-const thinqRequestVisionLabs = (file) => {
-    return axios.post("/vision/face/v1/estimation", file, thinqServiceConfig);
+const thinqRequestVisionLabs = (byteArray) => {
+    return axios.post("/vision/face/v1/estimation", byteArray, thinqServiceConfig);
 };
 
 const djangoServerConfig = {
     baseURL: process.env.REACT_APP_VISION_SERVER_URL
 };
 
-const djangoGetVector = (base64, faceInfo) => {
-    return axios.post("vision/face/v1/vector", {base64, faceInfo}, djangoServerConfig);
+const djangoGetVector = (base64, faceInfo, landmark) => {
+    return axios.post("vision/face/v1/vector", {base64, faceInfo, landmark}, djangoServerConfig);
 };
 
-const djangoFaceRecognition = (base64, faceInfo) => {
-    return axios.post("/vision/face/v1/recognition", {base64, faceInfo}, djangoServerConfig);
+const djangoFaceRecognition = (base64, faceInfo, landmark) => {
+    return axios.post("/vision/face/v1/recognition", {base64, faceInfo, landmark}, djangoServerConfig);
 };
 
+const openapiGetEmergencyCenter = ({latitude, longitude}) => {
+    return axios.get("/getEgytListInfoInqire", {
+        baseURL: process.env.REACT_APP_OPENAPI_SERVICE_URL,
+        params: {
+            ServiceKey: process.env.REACT_APP_OPENAPI_API_KEY,
+            WGS84_LON: longitude,
+            WGS84_LAT: latitude
+        }
+    });
+};
 
-const openapi = () => {
-    
-}
+const openapiGetTraumaCenter = ({latitude, longitude}) => {
+    return axios.get("/getStrmBassInfoInqire", {
+        baseURL: process.env.REACT_APP_OPENAPI_SERVICE_URL,
+        params: {
+            ServiceKey: process.env.REACT_APP_OPENAPI_API_KEY,
+            WGS84_LON: longitude,
+            WGS84_LAT: latitude
+        }
+    });
+};
 
-export {thinqGetToken, thinqRequestVisionLabs, djangoFaceRecognition, djangoGetVector};
+export {thinqGetToken, thinqRequestVisionLabs, djangoFaceRecognition, djangoGetVector, openapiGetEmergencyCenter};

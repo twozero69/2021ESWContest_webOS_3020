@@ -10,5 +10,13 @@
 	"largeIcon": "icon-large.png",
 	"uiRevision": 2,
 	"allowAudioCapture": true,
-	"allowVideoCapture": true
+	"allowVideoCapture": true,
+	"allowGeolocation": true,
+	"requiredPermissions": [
+		"time.query",
+		"activity.operation",
+		"location.operation"
+	]
 }
+
+

@@ -3,4 +3,7 @@ djangorestframework
 django-cors-headers
 django-environ
 opencv-python
+cmake
+wheel
+dlib
 numpy

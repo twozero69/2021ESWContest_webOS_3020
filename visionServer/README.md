@@ -1,23 +1,23 @@
 
-## visionServer
+# visionServer
 
 외부 PC에서 실행되는 얼굴인식용 서버
 
-## 패키지설치
+# 패키지설치
 
 #### `pip install -r requirements.txt`
 
-## .env 작성
+# .env 작성
 
 .env.example파일을 참고하여 .env파일 생성
 
-## 실행(python3)
+# 실행(python3)
 ### local에서 실행:
 #### `python manage.py runserver` 
 ### 외부접속 허용:
 #### `python manage.py runserver 0.0.0.0:<PORT>`
 
-## API1
+# API1
 
 ### HTTP:
 
@@ -49,7 +49,7 @@
 }
 ```
 
-## API2
+# API2
 
 ### HTTP:
 

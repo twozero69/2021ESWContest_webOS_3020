@@ -4,7 +4,7 @@ import { thinqRequestVisionLabs, djangoFaceRecognition, djangoGetVector } from "
 const getVideo = (webcamVideoRef, imageCaptureRef) => {
     window.navigator.mediaDevices.getUserMedia({
         video: true,
-        audio: false
+        audio: false,
     }).then(stream => {
         webcamVideoRef.current.srcObject = stream;
         const track = stream.getVideoTracks()[0];
@@ -72,7 +72,7 @@ const visionSignIn = async (imageCaptureRef) => {
         }
     }
 
-    const {data: {returnValue, userdata}} = await getFaceRecognition(blob, faceInfo);
+    const {data: {returnValue, userdata}} = await getFaceRecognition(blob, faceInfo, landmark);
     if(!returnValue){
         message = "데이터베이스에 해당하는 얼굴이 없습니다.";
         return {result, message};
@@ -130,7 +130,7 @@ const visionSignUp = async (imageCaptureRef, faceContextRef, faceImageRef, faceI
         }
     }
 
-    const {data: {vector}} = await getVector(blob, faceInfo);
+    const {data: {vector}} = await getVector(blob, faceInfo, landmark);
     if(!vector){
         message = "얼굴인식 서버와의 연결이 원활하지 않습니다.";
         return {result, message};
@@ -198,14 +198,14 @@ const convertBlobToBase64 = (blob) => {
     });
 }
 
-const getVector = async (blob, faceInfo) => {
+const getVector = async (blob, faceInfo, landmark) => {
     const base64 = await convertBlobToBase64(blob);
-    return djangoGetVector(base64, faceInfo);
+    return djangoGetVector(base64, faceInfo, landmark);
 }
 
-const getFaceRecognition = async (blob, faceInfo) => {
+const getFaceRecognition = async (blob, faceInfo, landmark) => {
     const base64 = await convertBlobToBase64(blob);
-    return djangoFaceRecognition(base64, faceInfo);
+    return djangoFaceRecognition(base64, faceInfo, landmark);
 }
 
 export {getVideo, getVideoWithAudio, getVisionProcessResult, visionSignIn, drawBlobToCanvas, visionSignUp, getAttributes, getVector, getFaceRecognition};

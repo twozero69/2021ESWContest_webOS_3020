@@ -45,6 +45,7 @@
     width: 150px;
     height: 150px;
     border-radius: 45px;
+    transition: all 0.4s;
 }
 
 .navigation-bar.active .navigation-head .btn{
@@ -116,7 +117,7 @@
             5. ease-in-out : 전환(transition) 효과가 천천히 시작되어, 천천히 끝납니다.
             6. cubic-bezier(n,n,n,n) : 전환(transition) 효과가 사용자가 정의한 cubic-bezier 함수에 따라 진행됩니다.
     */
-    transition: width 0.4s;
+    transition: all 0.4s;
 }
 
 .navigation-bar.active ul li{
