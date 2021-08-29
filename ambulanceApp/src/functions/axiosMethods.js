@@ -42,26 +42,57 @@ const djangoFaceRecognition = (base64, faceInfo, landmark) => {
     return axios.post("/vision/face/v1/recognition", {base64, faceInfo, landmark}, djangoServerConfig);
 };
 
-const openapiGetEmergencyCenter = ({latitude, longitude}) => {
-    return axios.get("/getEgytListInfoInqire", {
-        baseURL: process.env.REACT_APP_OPENAPI_SERVICE_URL,
-        params: {
-            ServiceKey: process.env.REACT_APP_OPENAPI_API_KEY,
-            WGS84_LON: longitude,
-            WGS84_LAT: latitude
-        }
-    });
+const openapiServiceConfig = {
+    // baseURL: process.env.REACT_APP_OPENAPI_SERVICE_URL
+}
+
+const openapiSearchCenterDivision = async () => {
+    const queryParams = `?ServiceKey=${process.env.REACT_APP_OPENAPI_API_KEY}&STAGE1=${process.env.REACT_APP_OPENAPI_STAGE1}&pageNo=1&numOfRows=1000`;
+    const requestURL = `/getEmrrmRltmUsefulSckbdInfoInqire${queryParams}`;
+    const {data: {response: {body: {totalCount, items: item}}}} = await axios.get(requestURL, openapiServiceConfig);
+    return item;
 };
 
-const openapiGetTraumaCenter = ({latitude, longitude}) => {
-    return axios.get("/getStrmBassInfoInqire", {
-        baseURL: process.env.REACT_APP_OPENAPI_SERVICE_URL,
-        params: {
-            ServiceKey: process.env.REACT_APP_OPENAPI_API_KEY,
-            WGS84_LON: longitude,
-            WGS84_LAT: latitude
+const mkiosktyMap = new Map(
+    [
+        ["뇌출혈", "1"],
+        ["뇌경색", "2"],
+        ["심근경색", "3"],
+        ["복부손상", "4"],
+        ["사지접합", "5"],
+        ["응급내시경", "6"],
+        ["응급투석", "7"],
+        ["조산산모", "8"],
+        ["정신질환", "9"],
+        ["신생아", "10"],
+        ["중증화상", "11"]
+    ]
+);
+
+const openapiSearchCenterDisease = async (mkioskty) => {
+    const smType1 = mkiosktyMap[mkioskty[0]];
+    const queryParams = `?ServiceKey=${process.env.REACT_APP_OPENAPI_API_KEY}&STAGE1=${process.env.REACT_APP_OPENAPI_STAGE1}&SM_TYPE=${smType1}&pageNo=1&numOfRows=1000`;
+    const requestURL = `/getSrsillDissAceptncPosblInfoInqire${queryParams}`;
+    const {data: {response: {body: {totalCount, items: item}}}} = await axios.get(requestURL, openapiServiceConfig);
+
+    if(mkiosktyMap.length == 1){
+        return item;
+    }
+    else{
+        const smType2 = mkiosktyMap[mkioskty[2]];
+        if(smType == "1"){
+            return item.filter(element => {
+                return element.smTypeString == "Y";
+            });
         }
-    });
+    }
 };
 
-export {thinqGetToken, thinqRequestVisionLabs, djangoFaceRecognition, djangoGetVector, openapiGetEmergencyCenter};
+const openapiGetCenterInfo = async (hpid) => {
+    const queryParams = `?ServiceKey=${process.env.REACT_APP_OPENAPI_API_KEY}&HPID=${hpid}&pageNo=1&numOfRows=1000`;
+    const requestURL = `/getEgytBassInfoInqire${queryParams}`;
+    const {data: {response: {body: {totalCount, items: item}}}} = await axios.get(requestURL, openapiServiceConfig);
+    return item;
+};
+
+export {thinqGetToken, thinqRequestVisionLabs, djangoGetVector, djangoFaceRecognition, openapiSearchCenterDivision, openapiSearchCenterDisease, openapiGetCenterInfo};

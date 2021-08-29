@@ -7,7 +7,7 @@ import ContentsBox from "../../components/ContentsBox/ContentsBox";
 import Header from "../../components/Header/Header"
 import Input from "../../components/Input/Input";
 import Select from "../../components/Select/Select";
-import { getGeolocation } from "../../functions/geolocationMethods";
+import { getMockGeolocation } from "../../functions/kakaoMapMethods";
 import { getVideo, getAttributes } from "../../functions/visionMethods";
 import "./AddPatient.css";
 
@@ -105,7 +105,15 @@ const AddPatient = ({setPatient}) => {
             return;
         }
 
-        const {coords: {latitude, longitude}} = await getGeolocation();
+        const {latitude, longitude} = getMockGeolocation();
+
+        const severeDisease = [];
+        if(severeDisease1 != ""){
+            severeDisease.push(severeDisease1);
+        }
+        if(severeDisease2 != ""){
+            severeDisease.push(severeDisease2);
+        }
 
         const patientData = {
             pid: uuidv4(),
@@ -127,7 +135,7 @@ const AddPatient = ({setPatient}) => {
                 headInjury: headInjury,
                 fracture: fracture
             },
-            mkioskty: [severeDisease1, severeDisease2],
+            mkioskty: severeDisease,
             facility:{
                 hospitalization: hospitalization,
                 operation: operation

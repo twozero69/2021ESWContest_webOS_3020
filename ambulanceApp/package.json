@@ -49,5 +49,5 @@
 		"react-router-dom": "^5.2.0",
 		"uuid": "^8.3.2"
 	},
-	"proxy": "https://korea.api.thinqai.net:443"
+	"proxy": "http://apis.data.go.kr/B552657/ErmctInfoInqireService"
 }

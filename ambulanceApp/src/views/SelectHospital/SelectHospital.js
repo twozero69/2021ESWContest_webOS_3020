@@ -2,17 +2,26 @@
 import { useEffect, useState } from "react";
 import ContentsBox from "../../components/ContentsBox/ContentsBox";
 import Header from "../../components/Header/Header";
-import { openapiGetEmergencyCenter } from "../../functions/axiosMethods";
+import { getHospitalList } from "../../functions/kakaoMapMethods";
 import "./SelectHospital.css"
 
 const SelectHospital = ({patient}) => {
+    const [loading, setLoading] = useState(true);
     const [hospitalList, setHospitalList] = useState(null);
 
     useEffect(async () => {
-        const {location} = patient;
-        const {data} = await openapiGetEmergencyCenter(location);
-        console.log(data);
-    }, [])
+        getHospitalList(patient).then(list => {
+            setHospitalList(list);
+        });
+    }, []);
+
+    if(loading){
+        return(
+            <>
+                loading...
+            </>
+        );
+    }
 
     return(
         <>
