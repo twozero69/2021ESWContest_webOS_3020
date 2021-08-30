@@ -1,0 +1,15 @@
+.hospital-information{
+    width: 100%;
+    padding: 30px;
+    color: #F4F3EA;
+    background-color: #333D51;
+    border-radius: 30px;
+}
+
+.hospital-information .hospital-head{
+    color: #D3AC2B;
+}
+
+.hospital-information .hospital-head .hospital-name{
+    font-size: 60px;
+}

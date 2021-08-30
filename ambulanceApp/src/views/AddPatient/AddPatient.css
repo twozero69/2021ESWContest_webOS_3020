@@ -88,3 +88,7 @@
     grid-column: 3;
     color: #F4F3EA;
 }
+
+.add-patient .contents-box .scroll::-webkit-scrollbar-track-piece:start{
+    margin-top: 7px;
+}
