@@ -7,7 +7,7 @@ import ContentsBox from "../../components/ContentsBox/ContentsBox";
 import Header from "../../components/Header/Header"
 import Input from "../../components/Input/Input";
 import Select from "../../components/Select/Select";
-import { getMockGeolocation } from "../../functions/kakaoMapMethods";
+import { getMockGeolocation } from "../../functions/mapMethods";
 import { getVideo, getAttributes } from "../../functions/visionMethods";
 import "./AddPatient.css";
 

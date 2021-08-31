@@ -1,16 +1,17 @@
 /* eslint-disable */
 import { useEffect, useRef, useState } from "react";
+import { RenderAfterNavermapsLoaded } from "react-naver-maps";
 import ContentsBox from "../../components/ContentsBox/ContentsBox";
 import Header from "../../components/Header/Header";
 import HospitalInfo from "../../components/HospitalInfo/HospitalInfo";
-import KakaoMap from "../../components/KakaoMap/KakaoMap";
-import { getHospitalList } from "../../functions/kakaoMapMethods";
+import Map from "../../components/Map/Map";
+import { getHospitalList } from "../../functions/mapMethods";
 import "./SelectHospital.css"
 
 const SelectHospital = ({patient}) => {
-    const map = useRef();
     const [loading, setLoading] = useState(true);
     const [hospitalList, setHospitalList] = useState(null);
+    const [selectedIdx, setSelectedIdx] = useState(-1);
 
     useEffect(async () => {
         const {
@@ -91,12 +92,14 @@ const SelectHospital = ({patient}) => {
         <>
             <Header name="병원선정" outline="환자를 수송할 병원을 선택합니다." />
             <div className="select-hospital">
-                <ContentsBox className="map-contents" title="지도">
-                    <KakaoMap map={map} location={patient.location}/>
-                </ContentsBox>
-                <ContentsBox className="list-contents" title="병원 목록">
-                    {hospitalList.map((hospitalInfo, idx) => <HospitalInfo hospitalInfo={hospitalInfo} key={idx}/>)}
-                </ContentsBox>
+                <RenderAfterNavermapsLoaded ncpClientId={process.env.REACT_APP_NAVER_CLIENT_ID}>
+                    <ContentsBox className="map-contents" title="지도">
+                        <Map hospitalList={hospitalList} location={patient.location} selectedIdx={selectedIdx} setSelectedIdx={setSelectedIdx} />
+                    </ContentsBox>
+                    <ContentsBox className="list-contents" title="병원 목록">
+                        {hospitalList.map((hospitalInfo, idx) => <HospitalInfo key={idx} hospitalInfo={hospitalInfo} idx={idx} selectedIdx={selectedIdx} setSelectedIdx={setSelectedIdx} />)}
+                    </ContentsBox>
+                </RenderAfterNavermapsLoaded>
             </div>
         </>
     );

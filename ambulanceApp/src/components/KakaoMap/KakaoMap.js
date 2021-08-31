@@ -1,6 +1,6 @@
 /* eslint-disable */
 /* global kakao */
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import "./KakaoMap.css"
 
 const KakaoMap = ({map, location: {latitude, longitude}}) => {

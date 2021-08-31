@@ -1,12 +1,27 @@
 /* eslint-disable */
+import { useEffect } from "react";
 import "./HospitalInfo.css";
 
-const HospitalInfo = ({hospitalInfo}) => {
+const HospitalInfo = ({hospitalInfo, idx, selectedIdx, setSelectedIdx}) => {
+    useEffect(() => {
+        if(selectedIdx == -1){
+            return;
+        }
+
+        if(selectedIdx == idx){
+            
+        }
+        else{
+
+        }
+
+    }, [selectedIdx]);
+
     const {dutyName, dutyAddr, distance} = hospitalInfo;
 
     const onClick = () => {
-
-    }
+        setSelectedIdx(idx);
+    };
 
     return(
         <div className="hospital-information" onClick={onClick}>
