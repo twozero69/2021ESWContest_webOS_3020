@@ -9,8 +9,8 @@ import Telemedicine from "../views/Telemedicine/Telemedicine"
 import SignIn from "../views/SignIn/SignIn";
 import SignUp from "../views/SignUp/SignUp";
 import { thinqGetToken } from "../functions/axiosMethods";
+import { importKakaoMapSDK } from "../functions/kakaoMapMethods";
 import "./App.css"
-
 
 
 const App = () => {
@@ -22,6 +22,10 @@ const App = () => {
 	const [hospital, setHospital] = useState(null);
 
 	useEffect(() => {
+		//kakao map api 가져오기
+		importKakaoMapSDK();
+
+		//thinq AI Token 획득
 		thinqGetToken();
 		//발근된 Token은 60분동안 유효하므로 59분 주기로 재발급받는다.
 		intervalID.current = setInterval(() => {
@@ -32,6 +36,7 @@ const App = () => {
 			clearInterval(intervalID.current);
 		};
 	}, []);
+
 
 	return(
 		<Router>
