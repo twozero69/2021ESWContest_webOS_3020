@@ -1,12 +1,20 @@
 /* eslint-disable */
 import axios from "axios";
+import axiosRetry from "axios-retry";
 
-const credentials = window.btoa(`${process.env.REACT_APP_THINQ_CLIENT_ID}:${process.env.REACT_APP_THINQ_CLIENT_PASSWORD}`);
+//axios-retry설정 - 실패시 3번 반복
+axiosRetry(axios, {
+    retries: 3,
+    // retryDelay: axiosRetry.exponentialDelay
+});
+
+//thinq토큰을 얻기 위한 credentials
+const thinqCredentials = window.btoa(`${process.env.REACT_APP_THINQ_CLIENT_ID}:${process.env.REACT_APP_THINQ_CLIENT_PASSWORD}`);
 
 const thinqTokenConfig = {
     baseURL: process.env.REACT_APP_THINQ_TOKEN_ISSUE_URL,
     headers: {
-        "Authorization" : `Basic ${credentials}`,
+        "Authorization" : `Basic ${thinqCredentials}`,
         "Content-Type" : "application/x-www-form-urlencoded"
     }
 };
@@ -47,7 +55,7 @@ const openapiServiceConfig = {
 };
 
 const openapiSearchCenterDivision = async () => {
-    const queryParams = `?ServiceKey=${process.env.REACT_APP_OPENAPI_API_KEY}&STAGE1=${process.env.REACT_APP_OPENAPI_STAGE1}&pageNo=1&numOfRows=1000`;
+    const queryParams = `?ServiceKey=${process.env.REACT_APP_OPENAPI_API_KEY}&STAGE1=${process.env.REACT_APP_OPENAPI_STAGE1}&pageNo=1&numOfRows=100`;
     const requestURL = `/getEmrrmRltmUsefulSckbdInfoInqire${queryParams}`;
     const {data: {response: {body: {items: {item}}}}} = await axios.get(requestURL, openapiServiceConfig);
     return item;
@@ -69,7 +77,7 @@ const openapiSearchCenterDisease = async (mkioskty) => {
     };
 
     const smType1 = mkiosktyToString[mkioskty[0]];
-    const queryParams = `?ServiceKey=${process.env.REACT_APP_OPENAPI_API_KEY}&STAGE1=${process.env.REACT_APP_OPENAPI_STAGE1}&SM_TYPE=${smType1}&pageNo=1&numOfRows=1000`;
+    const queryParams = `?ServiceKey=${process.env.REACT_APP_OPENAPI_API_KEY}&STAGE1=${process.env.REACT_APP_OPENAPI_STAGE1}&SM_TYPE=${smType1}&pageNo=1&numOfRows=100`;
     const requestURL = `/getSrsillDissAceptncPosblInfoInqire${queryParams}`;
     const {data: {response: {body: {items: {item}}}}} = await axios.get(requestURL, openapiServiceConfig);
 
@@ -86,7 +94,7 @@ const openapiSearchCenterDisease = async (mkioskty) => {
 };
 
 const openapiGetCenterInfo = async (hpid) => {
-    const queryParams = `?ServiceKey=${process.env.REACT_APP_OPENAPI_API_KEY}&HPID=${hpid}&pageNo=1&numOfRows=1000`;
+    const queryParams = `?ServiceKey=${process.env.REACT_APP_OPENAPI_API_KEY}&HPID=${hpid}&pageNo=1&numOfRows=10`;
     const requestURL = `/getEgytBassInfoInqire${queryParams}`;
     const {data: {response: {body: {items: {item}}}}} = await axios.get(requestURL, openapiServiceConfig);
     return item;
