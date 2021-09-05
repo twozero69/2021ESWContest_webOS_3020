@@ -42,7 +42,7 @@ const App = () => {
 					<Switch>
 						{/* <Route path="/add-patient"> */}
 						<Route exact path="/">
-							<AddPatient setPatient={setPatient} />
+							<AddPatient patient={patient} setPatient={setPatient} />
 						</Route>
 						<Route path="/select-hospital">
 							<SelectHospital patient={patient} />

@@ -38,7 +38,9 @@ const getHospitalList = async (mkioskty, location) => {
             ["A2900001"]
         ]
     );
+
     const hospitalList = await hospitalListPromise;
+    console.log('list', hospitalList);
 
     return await Promise.all(
         hospitalList.map(async ({hpid}) => {

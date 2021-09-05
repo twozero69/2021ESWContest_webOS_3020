@@ -11,7 +11,7 @@ import { getMockGeolocation } from "../../functions/mapMethods";
 import { getVideo, getAttributes } from "../../functions/visionMethods";
 import "./AddPatient.css";
 
-const AddPatient = ({setPatient}) => {
+const AddPatient = ({patient, setPatient}) => {
     const history = useHistory();
     const patientVideo = useRef();
     const imageCapture = useRef();
@@ -37,6 +37,12 @@ const AddPatient = ({setPatient}) => {
     const mkioskty = ["뇌출혈", "뇌경색", "심근경색", "복부손상", "사지접합", "응급내시경", "응급투석", "조산산모", "정신질환", "신생아", "중증화상"];
 
     useEffect(() => {
+        //설정된 환자가 있었는지 체크.
+        if(patient){
+            setPatient(null);
+        }
+
+        //카메라설정
         getVideo(patientVideo, imageCapture);
         faceContext.current = faceCanvas.current.getContext("2d");
     }, []);

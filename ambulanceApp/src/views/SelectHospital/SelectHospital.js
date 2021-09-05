@@ -26,12 +26,21 @@ const SelectHospital = ({patient}) => {
 
         const list = await getHospitalList(mkioskty, location);
         /*
+            -병원정보-
+            기관명              dutyName
+            주소                dutyAddr
+            기관ID              hpid
+            응급실 전화번호     dutyTel3
             병상수              dutyHano / hpbdn
             입원실              hvgc / hpgryn 
             입원실 가용여부      dutyHayn("1"-가능, "2"-불가능)
             수술실              hvoc / hpopyn
             응급실              hvec / hperyn
             응급실 운영여부     dutyEryn("1"-가능, "2"-불가능)
+            CT장비 소유여부     hvctayn
+            MRI장비 소유여부    hvmriayn
+            조영촬영기 소유여부 hvangioayn
+            인공호흡기 소유여부 hvventiayn
             주소                dutyAddr
             응급실전화          dutyTel3
             위도                wgs84Lat
@@ -45,15 +54,15 @@ const SelectHospital = ({patient}) => {
             //javascript sort에서는 return값이 1이상인 경우 a,b의 인덱스를 변경
             
             //외상환자
-            if(severity == "심각" && a.trauma == false){
-                if(b.trauma == true){
-                    return 1;
-                }
+            if(severity == "긴급" && a.trauma == false && b.trauma == true){
+                console.log(1);
+                return 1;
             }
 
             //응급실
             if(a.dutyEryn == "2"){
                 if(b.dutyEryn == "1"){
+                    console.log(2);
                     return 1;
                 }
             }
@@ -61,6 +70,7 @@ const SelectHospital = ({patient}) => {
             //입원실
             if(hospitalizaion == "O" && a.dutyHayn == "2"){
                 if(b.dutyHayn == "1"){
+                    console.log(3);
                     return 1;
                 }
             }
@@ -68,11 +78,13 @@ const SelectHospital = ({patient}) => {
             //수술실
             if(operation == "O" && a.hvoc < 1){
                 if(b.hvoc >= 1){
+                    console.log(4);
                     return 1;
                 }
             }
 
             //거리
+            console.log(5);
             return a.distance - b.distance;
         });
         

@@ -81,6 +81,8 @@ const openapiSearchCenterDisease = async (mkioskty) => {
     const requestURL = `/getSrsillDissAceptncPosblInfoInqire${queryParams}`;
     const {data: {response: {body: {items: {item}}}}} = await axios.get(requestURL, openapiServiceConfig);
 
+    console.log('item', item);
+
     if(mkioskty.length == 1){
         return item;
     }
@@ -99,5 +101,9 @@ const openapiGetCenterInfo = async (hpid) => {
     const {data: {response: {body: {items: {item}}}}} = await axios.get(requestURL, openapiServiceConfig);
     return item;
 };
+
+const naverGetDirection5 = () => {
+
+}
 
 export {thinqGetToken, thinqRequestVisionLabs, djangoGetVector, djangoFaceRecognition, openapiSearchCenterDivision, openapiSearchCenterDisease, openapiGetCenterInfo};

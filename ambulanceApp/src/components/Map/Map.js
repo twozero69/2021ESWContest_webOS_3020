@@ -2,8 +2,11 @@
 import { useEffect, useRef } from 'react';
 import patientMarkImg from "../../../resources/images/user-pin-regular-36.png";
 import hospitalMarkImg from "../../../resources/images/location-plus-regular-36.png";
-import hospitalSelectImg from "../../../resources/images/location-plus-regular-36-red.png";
 import "./Map.css";
+
+const myFunction = () => {
+    console.log("눌림");
+}
 
 const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSelectedIdx}) => {
     const map = useRef();
@@ -51,7 +54,7 @@ const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSel
             }
         });
 
-        const hospitalMarkers = hospitalLatLngs.map((hospitalLatLng, idx) => new navermaps.Marker({
+        const hospitalMarkers = hospitalLatLngs.map((hospitalLatLng) => new navermaps.Marker({
             map: map.current,
             position: hospitalLatLng,
             icon:{
@@ -61,10 +64,57 @@ const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSel
         }));
 
         //infowindow 생성
-        const hospitalInfoWindows = hospitalList.map(() => {
-            const contentString = "<div>JSX는 불가능한 것으로 보임</div>";
+        const hospitalInfoWindows = hospitalList.map(({dutyName, dutyTel3, dutyAddr, distance, trauma, dgidIdName}) => {
+            const contentString = [
+                '<div class="info-window">',
+                    '<div class="info-title">',
+                        `<h3>${dutyName} / ${trauma? "외상센터":"응급의료기관"}</h3>`,
+                    '</div>',
+                    '<div class="info-contents">',
+                        '<div class="left-contents">',
+                            '<div>',
+                                `<img src="${process.env.REACT_APP_IMAGE_BASE_URL}/phone-regular-24.png" />`,
+                                `<span>전화번호 ${dutyTel3}</span>`,
+                            '</div>',
+                            '<div>',
+                                `<img src="${process.env.REACT_APP_IMAGE_BASE_URL}/location-plus-regular-24.png" />`,
+                                `<span>주소 ${dutyAddr}</span>`,
+                            '</div>',
+                            '<div>',
+                                `<img src="${process.env.REACT_APP_IMAGE_BASE_URL}/trip-regular-24.png" />`,
+                                `<span>주행거리 ${distance}</span>`,
+                            '</div>',
+                            '<div>',
+                                `<img src="${process.env.REACT_APP_IMAGE_BASE_URL}/time-regular-24.png" />`,
+                                `<span>예상시간 ${distance}</span>`,
+                            '</div>',
+                        '</div>',
+                        '<div class="right-contents">',
+                            '<div>',
+                                `<img src="${process.env.REACT_APP_IMAGE_BASE_URL}/list-plus-regular-24.png" />`,
+                                '<span>진료과목</span>',
+                            '</div>',
+                            `<div>${dgidIdName}</div>`,
+                            '<div>',
+                                `<img src="${process.env.REACT_APP_IMAGE_BASE_URL}/list-plus-regular-24.png" />`,
+                                '<span>가능수술</span>',
+                            '</div>',
+                            '<div>',
+                                '<button id="connect-btn">병원선정</button>',
+                                '<button id="cancel-btn">닫기</button>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>'
+            ].join('');
+
             return new navermaps.InfoWindow({
-                content: contentString
+                content: contentString,
+                disableAutoPan: true,
+                borderWidth: 0,
+                backgroundColor: "transparent",
+                anchorColor: "#333D51",
+                maxWidth: 700
             });
         });
 
@@ -90,19 +140,27 @@ const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSel
             return;
         }
 
-        //선택된 병원을 맵 중앙으로 함.
-        map.current.setCenter(hospitalLatLngsRef.current[selectedIdx]);
+        //변수생성
+        const selectedInfoWindow = hospitalInfoWindowsRef.current[selectedIdx];
+        const selectedHospitalLatLng = hospitalLatLngsRef.current[selectedIdx]
 
-        //선택된 병원의 아이콘을 변경함.(검정색 -> 빨강색)
-        hospitalMarkersRef.current[selectedIdx].setIcon({
-            url: hospitalSelectImg
-        });
-        
-        //이전에 선택된 병원의 아이콘을 변경함.(빨강색 -> 검정색)
-        //추가예정
+        //선택된 병원을 맵 중앙으로 함.
+        map.current.setCenter(selectedHospitalLatLng);
 
         //선택된 병원의 infowindow를 지도에 출력. (infowindow는 지도에서 1개만 출력된다. 즉, 다른 infowindow를 출력하면 기존의 infowindow는 알아서 닫힘)
-        hospitalInfoWindowsRef.current[selectedIdx].open(map.current, hospitalMarkersRef.current[selectedIdx]);
+        selectedInfoWindow.open(map.current, hospitalMarkersRef.current[selectedIdx]);
+        
+        //infowindow의 "병원선정"버튼에 대한 이벤트 설정.
+        window.document.getElementById("connect-btn").onclick = () => {
+            //병원과 웹소켓 연결. firebase에서 hpid로 웹소켓의 ip/port읽어와서 연결시도
+            //병원에서 승인, 거절 시 상호작용 고려해야 함.
+        };
+
+        //infowindow의 "닫기"버튼에 대한 이벤트 설정.
+        window.document.getElementById("cancel-btn").onclick = () => {
+            selectedInfoWindow.close();
+            setSelectedIdx(-1);
+        };  
 
     }, [selectedIdx]);
 
