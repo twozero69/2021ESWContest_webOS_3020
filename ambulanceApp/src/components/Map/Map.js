@@ -2,14 +2,13 @@
 import { useEffect, useRef } from 'react';
 import patientMarkImg from "../../../resources/images/user-pin-regular-36.png";
 import hospitalMarkImg from "../../../resources/images/location-plus-regular-36.png";
+import { tmapGetRoutes } from '../../functions/axiosMethods';
 import "./Map.css";
 
-const myFunction = () => {
-    console.log("눌림");
-}
 
 const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSelectedIdx}) => {
     const map = useRef();
+    const patientLatLngRef = useRef();
     const hospitalLatLngsRef = useRef();
     const hospitalMarkersRef = useRef();
     const hospitalInfoWindowsRef = useRef();
@@ -130,6 +129,7 @@ const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSel
         });
 
         //ref에 대입
+        patientLatLngRef.current = patientLatLng;
         hospitalLatLngsRef.current = hospitalLatLngs;
         hospitalMarkersRef.current = hospitalMarkers;
         hospitalInfoWindowsRef.current = hospitalInfoWindows;
@@ -151,9 +151,11 @@ const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSel
         selectedInfoWindow.open(map.current, hospitalMarkersRef.current[selectedIdx]);
         
         //infowindow의 "병원선정"버튼에 대한 이벤트 설정.
-        window.document.getElementById("connect-btn").onclick = () => {
+        window.document.getElementById("connect-btn").onclick = async () => {
             //병원과 웹소켓 연결. firebase에서 hpid로 웹소켓의 ip/port읽어와서 연결시도
             //병원에서 승인, 거절 시 상호작용 고려해야 함.
+            const {data} = await tmapGetRoutes(patientLatLngRef.current, selectedHospitalLatLng);
+            console.log(data);
         };
 
         //infowindow의 "닫기"버튼에 대한 이벤트 설정.

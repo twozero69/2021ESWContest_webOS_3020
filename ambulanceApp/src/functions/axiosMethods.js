@@ -82,6 +82,9 @@ const openapiSearchCenterDisease = async (mkioskty) => {
     const {data: {response: {body: {items: {item}}}}} = await axios.get(requestURL, openapiServiceConfig);
 
     console.log('item', item);
+    /*
+        openapi를 사용한 결과 item이 비었을 경우에 예외처리 필요.
+    */
 
     if(mkioskty.length == 1){
         return item;
@@ -89,6 +92,11 @@ const openapiSearchCenterDisease = async (mkioskty) => {
     else{
         const smType2 = mkiosktyToString[mkioskty[1]];
         const smTypeString = `MKioskTy${smType2}`;
+
+        /*
+            두 번째 질병까지 필터링한 결과 해당하는 것이 없을 경우에 대한 예외처리 필요.
+            빈 배열이 리턴될 것이기 때문
+        */
         return item.filter(element => {
             return element[smTypeString] == "Y";
         });
@@ -102,8 +110,28 @@ const openapiGetCenterInfo = async (hpid) => {
     return item;
 };
 
-const naverGetDirection5 = () => {
-
+const tmapGetRoutes = (start, end) => {
+    return axios.get("/tmap/routes", {
+        baseURL: process.env.REACT_APP_TMAP_SERVICE_URL,
+        params: {
+            version: 1,
+            appKey: process.env.REACT_APP_TMAP_API_KEY,
+            startX: start._lng,
+            startY: start._lat,
+            endX: end._lng,
+            endY: end._lat,
+            trafficInfo: "Y"
+        }
+    });
 }
 
-export {thinqGetToken, thinqRequestVisionLabs, djangoGetVector, djangoFaceRecognition, openapiSearchCenterDivision, openapiSearchCenterDisease, openapiGetCenterInfo};
+export {
+    thinqGetToken,
+    thinqRequestVisionLabs,
+    djangoGetVector,
+    djangoFaceRecognition,
+    openapiSearchCenterDivision,
+    openapiSearchCenterDisease,
+    openapiGetCenterInfo,
+    tmapGetRoutes
+};

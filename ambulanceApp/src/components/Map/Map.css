@@ -17,3 +17,8 @@
 
 #map .info-window h3{
 }
+
+#map img{
+    width: 45px;
+    height: 45px;
+}

@@ -65,12 +65,4 @@ const getGeodistnace = (start, end) => {
     return Math.acos(Math.sin(startLatRad) * Math.sin(endLatRad) + Math.cos(startLatRad) * Math.cos(endLatRad) * Math.cos(startLonRad - endLonRad)) * earthRadius;
 }
 
-const importKakaoMapSDK = () => {
-    const script = window.document.createElement("script");
-    script.async = true;
-    script.type = "text/javascript";
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_JS_KEY}&autoload=false`;
-    window.document.head.appendChild(script);
-}
-
-export {getWPSGeolocation, getMockGeolocation, getHospitalList, importKakaoMapSDK};
+export {getWPSGeolocation, getMockGeolocation, getHospitalList};
