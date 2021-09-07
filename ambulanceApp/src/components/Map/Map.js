@@ -1,17 +1,17 @@
 /* eslint-disable */
 import { useEffect, useRef } from 'react';
-import patientMarkImg from "../../../resources/images/user-pin-regular-36.png";
-import hospitalMarkImg from "../../../resources/images/location-plus-regular-36.png";
+import patientMarkImg from "../../../resources/images/36/user-pin-regular-36.png";
+import hospitalMarkImg from "../../../resources/images/36/location-plus-regular-36.png";
 import { tmapGetRoutes } from '../../functions/axiosMethods';
 import "./Map.css";
 
 
-const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSelectedIdx}) => {
+const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSelectedIdx, setselectedHospitalInfo}) => {
     const map = useRef();
-    const patientLatLngRef = useRef();
     const hospitalLatLngsRef = useRef();
     const hospitalMarkersRef = useRef();
     const hospitalInfoWindowsRef = useRef();
+    const polylineRef = useRef();
 
     useEffect(() => {
         //LatLng 생성
@@ -33,7 +33,7 @@ const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSel
 
         //bounds 설정
         if(hospitalLatLngs.length > 0){
-            map.current.fitBounds(bounds, { top: 10, right: 10, bottom: 10, left: 10});
+            map.current.fitBounds(bounds, { top: 50, right: 50, bottom: 50, left: 50});
         }
 
         //marker 설정
@@ -43,7 +43,7 @@ const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSel
             anchor: new navermaps.Point(23, 45)
         };
 
-        //marker 생성
+        //환자위치에 marker 생성
         const patientMarker = new navermaps.Marker({
             map: map.current,
             position: patientLatLng,
@@ -53,6 +53,7 @@ const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSel
             }
         });
 
+        //병원위치에 marker 생성
         const hospitalMarkers = hospitalLatLngs.map((hospitalLatLng) => new navermaps.Marker({
             map: map.current,
             position: hospitalLatLng,
@@ -63,57 +64,20 @@ const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSel
         }));
 
         //infowindow 생성
-        const hospitalInfoWindows = hospitalList.map(({dutyName, dutyTel3, dutyAddr, distance, trauma, dgidIdName}) => {
-            const contentString = [
-                '<div class="info-window">',
-                    '<div class="info-title">',
-                        `<h3>${dutyName} / ${trauma? "외상센터":"응급의료기관"}</h3>`,
-                    '</div>',
-                    '<div class="info-contents">',
-                        '<div class="left-contents">',
-                            '<div>',
-                                `<img src="${process.env.REACT_APP_IMAGE_BASE_URL}/phone-regular-24.png" />`,
-                                `<span>전화번호 ${dutyTel3}</span>`,
-                            '</div>',
-                            '<div>',
-                                `<img src="${process.env.REACT_APP_IMAGE_BASE_URL}/location-plus-regular-24.png" />`,
-                                `<span>주소 ${dutyAddr}</span>`,
-                            '</div>',
-                            '<div>',
-                                `<img src="${process.env.REACT_APP_IMAGE_BASE_URL}/trip-regular-24.png" />`,
-                                `<span>주행거리 ${distance}</span>`,
-                            '</div>',
-                            '<div>',
-                                `<img src="${process.env.REACT_APP_IMAGE_BASE_URL}/time-regular-24.png" />`,
-                                `<span>예상시간 ${distance}</span>`,
-                            '</div>',
-                        '</div>',
-                        '<div class="right-contents">',
-                            '<div>',
-                                `<img src="${process.env.REACT_APP_IMAGE_BASE_URL}/list-plus-regular-24.png" />`,
-                                '<span>진료과목</span>',
-                            '</div>',
-                            `<div>${dgidIdName}</div>`,
-                            '<div>',
-                                `<img src="${process.env.REACT_APP_IMAGE_BASE_URL}/list-plus-regular-24.png" />`,
-                                '<span>가능수술</span>',
-                            '</div>',
-                            '<div>',
-                                '<button id="connect-btn">병원선정</button>',
-                                '<button id="cancel-btn">닫기</button>',
-                            '</div>',
-                        '</div>',
-                    '</div>',
-                '</div>'
-            ].join('');
+        const hospitalInfoWindows = hospitalList.map(({dutyName}) => {
+            const contentString = `<h5>${dutyName}</h5>`;
 
             return new navermaps.InfoWindow({
                 content: contentString,
                 disableAutoPan: true,
                 borderWidth: 0,
+                borderColor: "transparent",
                 backgroundColor: "transparent",
                 anchorColor: "#333D51",
-                maxWidth: 700
+                anchorSize: {
+                    width: 10,
+                    height: 10
+                }
             });
         });
 
@@ -129,41 +93,71 @@ const Map = ({hospitalList, location: {latitude, longitude}, selectedIdx, setSel
         });
 
         //ref에 대입
-        patientLatLngRef.current = patientLatLng;
         hospitalLatLngsRef.current = hospitalLatLngs;
         hospitalMarkersRef.current = hospitalMarkers;
         hospitalInfoWindowsRef.current = hospitalInfoWindows;
+
     }, []);
 
-    useEffect(() => {
+    useEffect(async () => {
         if(selectedIdx == -1){
             return;
         }
 
         //변수생성
         const selectedInfoWindow = hospitalInfoWindowsRef.current[selectedIdx];
-        const selectedHospitalLatLng = hospitalLatLngsRef.current[selectedIdx]
+        const selectedHospitalLatLng = hospitalLatLngsRef.current[selectedIdx];
+        const selectedHospitalInfo = hospitalList[selectedIdx];
 
-        //선택된 병원을 맵 중앙으로 함.
-        map.current.setCenter(selectedHospitalLatLng);
+        //지도에 선택된 병원과 환자의 위치가 나오도록 지도를 이동.
+        const bounds = new window.naver.maps.LatLngBounds();
+        bounds.extend({lat: latitude, lng: longitude});
+        bounds.extend(selectedHospitalLatLng);
+        map.current.fitBounds(bounds, { top: 50, right: 50, bottom: 50, left: 50});
 
         //선택된 병원의 infowindow를 지도에 출력. (infowindow는 지도에서 1개만 출력된다. 즉, 다른 infowindow를 출력하면 기존의 infowindow는 알아서 닫힘)
+        //디버깅 필요! 자동으로 닫힌다면 메모리 누수는 혹시 있는가?
         selectedInfoWindow.open(map.current, hospitalMarkersRef.current[selectedIdx]);
+
+        //주행관련 정보가 있는지 체크하고 없으면 길찾기 api를 호출하여 
+        if(!selectedHospitalInfo.drivingPath){
+            const {data: {features}} = await tmapGetRoutes({_lng: longitude, _lat: latitude}, selectedHospitalLatLng);
+            const {properties: {totalDistance, totalTime}} = features[0];
+            selectedHospitalInfo.drivingDistance = totalDistance;
+            selectedHospitalInfo.drivingTime = totalTime;
+            selectedHospitalInfo.drivingPath = [];
+            features.forEach(({geometry: {type, coordinates}}) => {
+                if(type == "Point"){
+                    selectedHospitalInfo.drivingPath.push(coordinates);
+                }
+                else if(type == "LineString") {
+                    selectedHospitalInfo.drivingPath.push(...coordinates);
+                }
+                else{
+                    console.log("err", type, coordinates);
+                }
+            });
+        }
+
+        //이전에 그려진 polyline을 지우기.
+        if(polylineRef.current){
+            polylineRef.current.setMap(null);
+            polylineRef.current = null;
+        }
+
+        //선택된 병원까지의 경로를 polyline으로 지도에 출력.
+        polylineRef.current = new window.naver.maps.Polyline({
+            map: map.current,
+            path: selectedHospitalInfo.drivingPath,
+            strokeColor: "#354649",
+            strokeOpacity: 0.7,
+            strokeLineCap: "round",
+            strokeWeight: 5
+        });
+
+        //선택된 병원정보 상태관리
+        setselectedHospitalInfo(selectedHospitalInfo);
         
-        //infowindow의 "병원선정"버튼에 대한 이벤트 설정.
-        window.document.getElementById("connect-btn").onclick = async () => {
-            //병원과 웹소켓 연결. firebase에서 hpid로 웹소켓의 ip/port읽어와서 연결시도
-            //병원에서 승인, 거절 시 상호작용 고려해야 함.
-            const {data} = await tmapGetRoutes(patientLatLngRef.current, selectedHospitalLatLng);
-            console.log(data);
-        };
-
-        //infowindow의 "닫기"버튼에 대한 이벤트 설정.
-        window.document.getElementById("cancel-btn").onclick = () => {
-            selectedInfoWindow.close();
-            setSelectedIdx(-1);
-        };  
-
     }, [selectedIdx]);
 
     return(

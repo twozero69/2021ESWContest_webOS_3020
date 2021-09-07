@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { useEffect } from "react";
-import "./HospitalInfo.css";
+import { getDistanceString } from "../../functions/mapMethods";
+import "./HospitalBriefInfo.css";
 
 const HospitalInfo = ({hospitalInfo, idx, selectedIdx, setSelectedIdx}) => {
     useEffect(() => {
@@ -9,15 +10,15 @@ const HospitalInfo = ({hospitalInfo, idx, selectedIdx, setSelectedIdx}) => {
         }
 
         if(selectedIdx == idx){
-            
+            //버튼이 눌린 효과를 추가할 것.
         }
         else{
-
+            //효과 제거를 추가할 것.
         }
 
     }, [selectedIdx]);
 
-    const {dutyName, dutyAddr, distance} = hospitalInfo;
+    const {dutyName, dutyAddr, geodistance} = hospitalInfo;
 
     const onClick = () => {
         setSelectedIdx(idx);
@@ -26,11 +27,10 @@ const HospitalInfo = ({hospitalInfo, idx, selectedIdx, setSelectedIdx}) => {
     return(
         <div className="hospital-information" onClick={onClick}>
             <div className="hospital-head">
-                <div></div>
-                <div className="hospital-name">{dutyName}</div>
+                <h3>{dutyName}</h3>
             </div>
             <div className="hospital-location">
-                <div className="hospital-distance">{`${distance}km`}</div>
+                <div className="hospital-distance">{getDistanceString(geodistance, "km")}</div>
                 <div className="hospital-address">{dutyAddr}</div>
             </div>
         </div>

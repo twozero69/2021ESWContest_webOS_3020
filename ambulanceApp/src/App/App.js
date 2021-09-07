@@ -45,7 +45,7 @@ const App = () => {
 							<AddPatient patient={patient} setPatient={setPatient} />
 						</Route>
 						<Route path="/select-hospital">
-							<SelectHospital patient={patient} />
+							<SelectHospital patient={patient} setHospital={setHospital} />
 						</Route>
 						<Route path="/control-hospital">
 							<ControlHospital />

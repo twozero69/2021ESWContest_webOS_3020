@@ -1,17 +1,19 @@
 /* eslint-disable */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { RenderAfterNavermapsLoaded } from "react-naver-maps";
 import ContentsBox from "../../components/ContentsBox/ContentsBox";
 import Header from "../../components/Header/Header";
-import HospitalInfo from "../../components/HospitalInfo/HospitalInfo";
+import HospitalBriefInfo from "../../components/HospitalBriefInfo/HospitalBriefInfo";
+import HospitalDetailInfo from "../../components/HospitalDetailInfo/HospitalDetailInfo";
 import Map from "../../components/Map/Map";
 import { getHospitalList } from "../../functions/mapMethods";
 import "./SelectHospital.css"
 
-const SelectHospital = ({patient}) => {
+const SelectHospital = ({patient, setHospital}) => {
     const [loading, setLoading] = useState(true);
     const [hospitalList, setHospitalList] = useState(null);
     const [selectedIdx, setSelectedIdx] = useState(-1);
+    const [selectedHospitalInfo, setselectedHospitalInfo] = useState(null);
 
     useEffect(async () => {
         const {
@@ -47,22 +49,24 @@ const SelectHospital = ({patient}) => {
             경도                wgs84Lon
             진료과목            dgidIdName
             외상센터 여부       trauma
-            거리                distance
+            직선거리            geodistance(km)
+            주행거리            drivingDistance(m, 최초에는 undefined -> 병원정보 선택 시 api를 호출하여 추가함.)
+            주행시간            drivingTime(sec, 최초에는 undefined -> 병원정보 선택 시 api를 호출하여 추가함.)
+            주행경로            drivingPath([lng, lat]배열, 최초에는 undefined -> 병원정보 선택 시 api를 호출하여 추가함.)
         */
        
-       list.sort((a, b) => {
+        list.sort((a, b) => {
             //javascript sort에서는 return값이 1이상인 경우 a,b의 인덱스를 변경
+            //정렬이 잘 동작하지 않는 것 같음. 추후에 디버깅할 것.
             
             //외상환자
             if(severity == "긴급" && a.trauma == false && b.trauma == true){
-                console.log(1);
                 return 1;
             }
 
             //응급실
             if(a.dutyEryn == "2"){
                 if(b.dutyEryn == "1"){
-                    console.log(2);
                     return 1;
                 }
             }
@@ -70,7 +74,6 @@ const SelectHospital = ({patient}) => {
             //입원실
             if(hospitalizaion == "O" && a.dutyHayn == "2"){
                 if(b.dutyHayn == "1"){
-                    console.log(3);
                     return 1;
                 }
             }
@@ -78,14 +81,12 @@ const SelectHospital = ({patient}) => {
             //수술실
             if(operation == "O" && a.hvoc < 1){
                 if(b.hvoc >= 1){
-                    console.log(4);
                     return 1;
                 }
             }
 
             //거리
-            console.log(5);
-            return a.distance - b.distance;
+            return a.geodistance - b.geodistance;
         });
         
         setHospitalList(list);
@@ -106,10 +107,13 @@ const SelectHospital = ({patient}) => {
             <div className="select-hospital">
                 <RenderAfterNavermapsLoaded ncpClientId={process.env.REACT_APP_NAVER_CLIENT_ID}>
                     <ContentsBox className="map-contents" title="지도">
-                        <Map hospitalList={hospitalList} location={patient.location} selectedIdx={selectedIdx} setSelectedIdx={setSelectedIdx} />
+                        <Map hospitalList={hospitalList} location={patient.location} selectedIdx={selectedIdx} setSelectedIdx={setSelectedIdx} setselectedHospitalInfo={setselectedHospitalInfo}/>
                     </ContentsBox>
                     <ContentsBox className="list-contents" title="병원 목록">
-                        {hospitalList.map((hospitalInfo, idx) => <HospitalInfo key={idx} hospitalInfo={hospitalInfo} idx={idx} selectedIdx={selectedIdx} setSelectedIdx={setSelectedIdx} />)}
+                        {hospitalList.map((hospitalInfo, idx) => <HospitalBriefInfo key={idx} hospitalInfo={hospitalInfo} idx={idx} selectedIdx={selectedIdx} setSelectedIdx={setSelectedIdx} />)}
+                    </ContentsBox>
+                    <ContentsBox className="detail-contents" title="상세 정보">
+                        <HospitalDetailInfo selectedHospitalInfo={selectedHospitalInfo} setHospital={setHospital} />
                     </ContentsBox>
                 </RenderAfterNavermapsLoaded>
             </div>

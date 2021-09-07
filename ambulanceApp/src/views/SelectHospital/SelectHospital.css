@@ -3,16 +3,26 @@
     height: 90%;
     padding: 75px;
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 7fr 2fr;
+    grid-template-rows: 40vh calc(45vh - 75px);
+    /* grid-template-rows: 40% calc(60% = 75px); */
     grid-gap: 75px;
 }
 
 .select-hospital .map-contents{
     grid-column: 1;
+    grid-row: 1 / 3;
     color: #F4F3EA;
 }
 
 .select-hospital .list-contents{
     grid-column: 2;
+    grid-row: 1;
+    color: #F4F3EA;
+}
+
+.select-hospital .detail-contents{
+    grid-column: 2;
+    grid-row: 2;
     color: #F4F3EA;
 }
