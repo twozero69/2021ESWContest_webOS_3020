@@ -18,7 +18,77 @@ const App = () => {
 	const [loginFlag, setLoginFlag] = useState(false);
 	const [user, setUser] = useState(null);
 	const [patient, setPatient] = useState(null);
-	const [hospital, setHospital] = useState(null);
+	const [hospital, setHospital] = useState({
+		wards: {
+			ward_101: {
+				availability: true
+			},
+			ward_102: {
+				availability: true
+			},
+			ward_103: {
+				availability: true
+			},
+			ward_104: {
+				availability: true
+			},
+			ward_105: {
+				availability: true
+			},
+			ward_106: {
+				availability: true
+			},
+			ward_107: {
+				availability: true
+			},
+			ward_108: {
+				availability: true
+			},
+			ward_109: {
+				availability: true
+			},
+			ward_110: {
+				availability: true
+			},
+			ward_111: {
+				availability: true
+			},
+			ward_112: {
+				availability: true
+			},
+			ward_113: {
+				availability: true
+			},
+			ward_114: {
+				availability: true
+			},
+			ward_115: {
+				availability: true
+			},
+			ward_116: {
+				availability: true
+			},
+		},
+		equipmentRooms: {
+			ctRoom: {
+				availability: true 
+			},
+			mriRoom: {
+				availability: true 
+			},
+			endoscopeRoom: {
+				availability: true 
+			}
+		},
+		operatingRooms: {
+			operaingRoom_1: {
+				availability: true 
+			},
+			operaingRoom_2: {
+				availability: true 
+			}
+		}
+	});
 
 	useEffect(() => {
 		//thinq AI Token 획득
@@ -48,7 +118,7 @@ const App = () => {
 							<SelectHospital patient={patient} setHospital={setHospital} />
 						</Route>
 						<Route path="/control-hospital">
-							<ControlHospital />
+							<ControlHospital hospital={hospital} setHospital={setHospital} />
 						</Route>
 						<Route path="/telemedicine">
 							<Telemedicine />

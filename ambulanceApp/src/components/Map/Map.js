@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { useEffect, useRef } from 'react';
-import patientMarkImg from "../../../resources/images/36/user-pin-regular-36.png";
-import hospitalMarkImg from "../../../resources/images/36/location-plus-regular-36.png";
+import patientMarkImg from "../../../resources/images/icons/36/user-pin-regular-36.png";
+import hospitalMarkImg from "../../../resources/images/icons/36/location-plus-regular-36.png";
 import { tmapGetRoutes } from '../../functions/axiosMethods';
 import "./Map.css";
 
