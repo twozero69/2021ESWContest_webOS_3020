@@ -9,6 +9,7 @@ import Telemedicine from "../views/Telemedicine/Telemedicine"
 import SignIn from "../views/SignIn/SignIn";
 import SignUp from "../views/SignUp/SignUp";
 import { thinqGetToken } from "../functions/axiosMethods";
+import hospitalImage from "../../resources/images/hospital.png";
 import "./App.css"
 
 
@@ -18,76 +19,127 @@ const App = () => {
 	const [loginFlag, setLoginFlag] = useState(false);
 	const [user, setUser] = useState(null);
 	const [patient, setPatient] = useState(null);
-	const [hospital, setHospital] = useState({
-		wards: {
-			ward_101: {
-				availability: true
+	const [hospitalData, setHospitalData] = useState({
+		hospitalImage: hospitalImage,
+		wards: [
+			{
+				x: 72,
+				y: 60,
+				wardNo: 101
 			},
-			ward_102: {
-				availability: true
+			{
+				x: 72,
+				y: 97,
+				wardNo: 102
 			},
-			ward_103: {
-				availability: true
+			{
+				x: 72,
+				y: 134,
+				wardNo: 103
 			},
-			ward_104: {
-				availability: true
+			{
+				x: 72,
+				y: 171,
+				wardNo: 104
 			},
-			ward_105: {
-				availability: true
+			
+			{
+				x: 151,
+				y: 60,
+				wardNo: 105
 			},
-			ward_106: {
-				availability: true
+			{
+				x: 151,
+				y: 97,
+				wardNo: 106
 			},
-			ward_107: {
-				availability: true
+			{
+				x: 151,
+				y: 134,
+				wardNo: 107
 			},
-			ward_108: {
-				availability: true
+			{
+				x: 151,
+				y: 171,
+				wardNo: 108
 			},
-			ward_109: {
-				availability: true
+
+			{
+				x: 212,
+				y: 60,
+				wardNo: 109
 			},
-			ward_110: {
-				availability: true
+			{
+				x: 212,
+				y: 97,
+				wardNo: 110
 			},
-			ward_111: {
-				availability: true
+			{
+				x: 212,
+				y: 134,
+				wardNo: 111
 			},
-			ward_112: {
-				availability: true
+			{
+				x: 212,
+				y: 171,
+				wardNo: 112
 			},
-			ward_113: {
-				availability: true
+
+			{
+				x: 291,
+				y: 60,
+				wardNo: 113
 			},
-			ward_114: {
-				availability: true
+			{
+				x: 291,
+				y: 97,
+				wardNo: 114
 			},
-			ward_115: {
-				availability: true
+			{
+				x: 291,
+				y: 134,
+				wardNo: 115
 			},
-			ward_116: {
-				availability: true
-			},
-		},
-		equipmentRooms: {
-			ctRoom: {
-				availability: true 
-			},
-			mriRoom: {
-				availability: true 
-			},
-			endoscopeRoom: {
-				availability: true 
+			{
+				x: 291,
+				y: 171,
+				wardNo: 116
 			}
-		},
-		operatingRooms: {
-			operaingRoom_1: {
-				availability: true 
+		],
+		equipmentRooms: [
+			{
+				textX: 218,
+				textY: 315,
+				points: "184 293, 253 293, 253 309, 285 309, 285 377, 220 377, 220 330, 196 330, 196 377, 184 377",
+				roomKind: "CT검사실"
 			},
-			operaingRoom_2: {
-				availability: true 
+			{
+				textX: 102,
+				textY: 295,
+				points: "146 238, 146 316, 56 316, 56 271, 115 271, 115 238",
+				roomKind: "MRI검사실"
+			},
+			{
+				textX: 234,
+				textY: 260,
+				points: "184 226, 285 226, 285 304, 258 304, 258 288, 184 288",
+				roomKind: "내시경검사실"
 			}
-		}
+		],
+		operatingRooms: [
+			{
+				textX: 403,
+				textY: 165,
+				points: "351 122, 540 122, 540 153, 449 153, 449 201, 351 201",
+				roomNo: 1
+			},
+			{
+				textX: 364,
+				textY: 264,
+				points: "310 226, 417 226, 417 297, 310, 297",
+				roomNo: 2
+			},
+		]
 	});
 
 	useEffect(() => {
@@ -115,10 +167,10 @@ const App = () => {
 							<AddPatient patient={patient} setPatient={setPatient} />
 						</Route>
 						<Route path="/select-hospital">
-							<SelectHospital patient={patient} setHospital={setHospital} />
+							<SelectHospital patient={patient} setHospitalData={setHospitalData} />
 						</Route>
 						<Route path="/control-hospital">
-							<ControlHospital hospital={hospital} setHospital={setHospital} />
+							<ControlHospital hospitalData={hospitalData} setHospitalData={setHospitalData} />
 						</Route>
 						<Route path="/telemedicine">
 							<Telemedicine />
