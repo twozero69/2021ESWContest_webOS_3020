@@ -1,10 +1,9 @@
 /* eslint-disable */
 import { useHistory } from "react-router";
-import { getDistanceString, getTimeString } from "../../functions/mapMethods";
 import Button from "../Button/Button";
 import "./HospitalDetailInfo.css"
 
-const HospitalDetailInfo = ({selectedHospitalInfo, setHospital}) => {
+const HospitalDetailInfo = ({selectedHospitalInfo}) => {
     if(!selectedHospitalInfo){
         return(
             <h3>병원을 선택하세요</h3>
@@ -17,7 +16,6 @@ const HospitalDetailInfo = ({selectedHospitalInfo, setHospital}) => {
         //여기서 병원과 소켓연결
 
         //성공시 아래처리
-        setHospital(selectedHospitalInfo.hpid);
         history.push("control-Hospital");
     }
 

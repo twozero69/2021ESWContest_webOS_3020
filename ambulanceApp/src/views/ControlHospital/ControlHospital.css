@@ -10,13 +10,14 @@
 }
 
 .control-hospital .hospital-model-contents{
-    grid-column: 1;
+    /* grid-column: 1; */
+    grid-column: 1 / 3;
     grid-row: 1;
     color: #F4F3EA;
 }
 
-.control-hospital .control-record-contents{
+/* .control-hospital .control-record-contents{
     grid-column: 2;
     grid-row: 1;
     color: #F4F3EA;
-}
+} */

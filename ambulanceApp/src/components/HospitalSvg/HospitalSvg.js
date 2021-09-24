@@ -3,13 +3,14 @@ import EquipmentRoom from "./EquipmentRoom/EquipmentRoom";
 import OperaingRoom from "./OperatingRoom/OperatingRoom";
 import Ward from "./Ward/Ward"
 
-const HospitalSvg = ({hospitalData: {hospitalImage, wards, equipmentRooms, operatingRooms}, setHospitalData}) => {
+const HospitalSvg = ({hospitalData}) => {
+    console.log("svg 재렌더링");
     return(
         <svg width="100%" height="100%" viewBox="0 0 600 500">
-            <image width="100%" height="100%" href={hospitalImage} />
-            {wards.map(wardInfo => <Ward {...wardInfo} />)}
-            {equipmentRooms.map(equipmentRoomInfo => <EquipmentRoom {...equipmentRoomInfo} />)}
-            {operatingRooms.map(operatingRoomInfo => <OperaingRoom {...operatingRoomInfo} />)}
+            <image width="100%" height="100%" href={hospitalData.hospitalImage} />
+            {hospitalData.wards.map((wardInfo, idx) => <Ward key={idx} {...wardInfo} idx={idx} />)}
+            {hospitalData.equipmentRooms.map((equipmentRoomInfo, idx) => <EquipmentRoom key={idx} {...equipmentRoomInfo} idx={idx} />)}
+            {hospitalData.operatingRooms.map((operatingRoomInfo, idx) => <OperaingRoom key={idx} {...operatingRoomInfo} idx={idx} />)}
         </svg>
     );
 };

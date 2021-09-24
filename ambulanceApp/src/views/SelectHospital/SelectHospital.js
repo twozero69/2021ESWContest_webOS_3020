@@ -9,7 +9,7 @@ import Map from "../../components/Map/Map";
 import { getHospitalList } from "../../functions/mapMethods";
 import "./SelectHospital.css"
 
-const SelectHospital = ({patient, setHospital}) => {
+const SelectHospital = ({patient}) => {
     const [loading, setLoading] = useState(true);
     const [hospitalList, setHospitalList] = useState(null);
     const [selectedIdx, setSelectedIdx] = useState(-1);
@@ -113,7 +113,7 @@ const SelectHospital = ({patient, setHospital}) => {
                         {hospitalList.map((hospitalInfo, idx) => <HospitalBriefInfo key={idx} hospitalInfo={hospitalInfo} idx={idx} selectedIdx={selectedIdx} setSelectedIdx={setSelectedIdx} />)}
                     </ContentsBox>
                     <ContentsBox className="detail-contents" title="상세 정보">
-                        <HospitalDetailInfo selectedHospitalInfo={selectedHospitalInfo} setHospital={setHospital} />
+                        <HospitalDetailInfo selectedHospitalInfo={selectedHospitalInfo} />
                     </ContentsBox>
                 </RenderAfterNavermapsLoaded>
             </div>
