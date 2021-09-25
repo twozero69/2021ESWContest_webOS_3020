@@ -1,0 +1,233 @@
+.navigation-bar{
+    /*
+        background-color : 배경색상을 지정
+        background : background-color + background-image + background-repeat + background-attachment + background-position
+        (한번에 설정가능)
+    */
+    background-color: #333D51;
+    color: #CBD0D8;
+    height: 100%;
+    width: 4%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all 0.4s;
+}
+
+.navigation-bar.active{
+    width: 17%
+}
+
+.navigation-bar .navigation-head{
+    display: flex;
+    align-items: center;
+    height: 150px;
+    margin: 30px;
+    padding-right: 0;
+}
+
+.navigation-bar.active .navigation-head{
+    width: 100%;
+}
+
+.navigation-bar .navigation-head .logo{
+    display: none;
+}
+
+.navigation-bar.active .navigation-head .logo{
+    display: flex;
+}
+
+.navigation-bar .navigation-head .btn{
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+    width: 150px;
+    height: 150px;
+    border-radius: 45px;
+    transition: all 0.4s;
+}
+
+.navigation-bar.active .navigation-head .btn{
+    position: absolute;
+    right: 15px;
+    transform: translate(0%);
+}
+
+.navigation-bar .navigation-head .btn:hover{
+    color: #202633;
+    background-color: #CBD0D8;
+}
+
+.navigation-bar .navigation-head .btn svg{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+
+.navigation-bar .navigation-head .btn .menu-btn{
+    font-size: 120px;
+    display: block;
+}
+
+.navigation-bar.active .navigation-head .btn .menu-btn{
+    display: none;
+}
+
+.navigation-bar .navigation-head .x-btn{
+    font-size: 150px;
+    display: none;
+}
+
+.navigation-bar.active .navigation-head .x-btn{
+    display: block;
+}
+
+
+.navigation-bar ul{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.navigation-bar ul li{
+    width: 150px;
+    height: 150px;
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 45px;
+    font-size: 70px;
+
+    /*
+        transition : css3부터 지원하는 요소의 속성값을 부드럽게 변화시키는 속성. 다음의 transition의 내부에 아래의 속성들이 있음.
+        - transition-delay : 변화가 시작되기 전까지의 지연시간.
+        - transition-duration : 속성값이 변화하는데 걸리는 시간.
+        - transition-property : transition을 적용할 속성을 명시.
+        - transition-timing-function : 효과의 시간당 속도.
+            1. linear : 전환(transition) 효과가 처음부터 끝까지 일정한 속도로 진행됩니다.
+            2. ease : 기본값으로, 전환(transition) 효과가 천천히 시작되어, 그다음에는 빨라지고, 마지막에는 다시 느려집니다.
+            3. ease-in : 전환(transition) 효과가 천천히 시작됩니다.
+            4. ease-out : 전환(transition) 효과가 천천히 끝납니다.
+            5. ease-in-out : 전환(transition) 효과가 천천히 시작되어, 천천히 끝납니다.
+            6. cubic-bezier(n,n,n,n) : 전환(transition) 효과가 사용자가 정의한 cubic-bezier 함수에 따라 진행됩니다.
+    */
+    transition: all 0.4s;
+}
+
+.navigation-bar.active ul li{
+    width: 80%;
+}
+
+/*
+    css의사클래스 : html요소의 특별한 상태를 명실할 때 사용.
+    hover : 마우스 커서가 요소에 올라가 있을 때 동작.
+*/
+.navigation-bar ul li:hover{
+    color: #202633;
+    background-color: #CBD0D8;
+}
+
+.navigation-bar ul li svg{
+    font-size: 105px;
+    margin-right: 0;
+}
+
+.navigation-bar.active ul li svg{
+    margin-right: 20px;
+}
+
+/* 
+    span은 inline element이므로 공간(width, height)을 가지지 않는다.
+    따라서 span대신에 div를 사용하였다.
+    span을 꼭 사용하고 싶다면 display: inline-block을 통해서 inline element를 block element로 변경할 수 있다.
+*/
+.navigation-bar ul li div{
+    display: none;
+}
+
+.navigation-bar.active ul li div{
+    min-width: 300px;
+    max-height: 150px;
+    display: block;
+}
+
+.navigation-bar .profile{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #CBD0D8;
+    background-color: #202633;
+    width: 100%;
+    min-height: 225px;
+    display: flex;
+    align-items: center;
+}
+
+.navigation-bar .profile img{
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 45px;
+    margin-left: 30px;
+    display: none;
+}
+
+.navigation-bar.active .profile img{
+    display: block;
+}
+
+.navigation-bar .profile .name-job{
+    margin-left: 30px;
+    display: none;
+}
+
+.navigation-bar.active .profile .name-job{
+    display: block;
+}
+
+.navigation-bar .profile .name-job .name{
+    font-size: 60px;
+    font-weight: 600;
+    max-height: 75px;
+}
+
+.navigation-bar .profile .name-job .job{
+    font-size: 45px;
+    font-weight: 600;
+    max-height: 75px;
+}
+
+.navigation-bar .profile .logout{
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+    width: 150px;
+    height: 150px;
+    border-radius: 45px;
+    transition: all 0.4s;
+}
+
+.navigation-bar.active .profile .logout{
+    right: 15px;
+    transform: translateX(0%);
+}
+
+.navigation-bar .profile .logout:hover{
+    color: #202633;
+    background-color: #CBD0D8;
+}
+
+.navigation-bar .profile .logout svg{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    font-size: 105px;
+}
+

@@ -1,0 +1,65 @@
+.telemedicine{
+    width: 100%;
+    height: 90%;
+    padding: 75px;
+
+    /*
+        grid: css 레이아웃 중 하나로 세로 열과 가로 행 기준으로 요소를 정렬.
+        (과거의 table과 비슷한 기능.)
+
+        grid의 속성에는 '1. 컨테이너에 적용하는 속성', '2. 아이템에 적용하는 속성'이 있다.
+
+        1. 컨테이너에 적용하는 속성
+            grid-template-rows: grid트랙(grid의 행 또는 열) 중 행의 크기를 지정해주는 속성. "repeat(5, 1fr)"과 같은 함수를 값으로 넣을 수 있다.
+            grid-template-cols: grid트랙 중 열의 크기를 지정해주는 속성.
+
+
+    */
+    display: grid;
+    grid-template-rows: 9fr 9fr;
+    grid-template-columns: 32fr 16fr;
+    grid-gap: 75px;
+}
+
+.telemedicine video{
+    width: 100%;
+    border-radius: 45px;
+}
+
+.telemedicine .hospital-contents{
+    grid-row: 1 / 3;
+    grid-column: 1;
+    color: #F4F3EA;
+}
+
+.telemedicine .patient-contents{
+    grid-row: 1;
+    grid-column: 2;
+    color: #F4F3EA;
+}
+
+.telemedicine .controll-contents{
+    grid-row: 2;
+    grid-column: 2;
+    color: #F4F3EA;
+}
+
+.telemedicine .controll-contents .contents{
+    justify-content: center;
+}
+
+.telemedicine .controll-contents button{
+    margin: 30px 0;
+}
+
+.telemedicine .controll-contents button.green-button:enabled{
+    background-color: #5cdb5c;
+}
+
+.telemedicine .controll-contents button.red-button:enabled{
+    background-color: #ff0021;
+}
+
+.telemedicine .contents-box .scroll::-webkit-scrollbar-track-piece:start{
+    margin-top: 7px;
+}

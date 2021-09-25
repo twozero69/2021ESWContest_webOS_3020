@@ -113,7 +113,7 @@ const SelectHospital = ({patient}) => {
                         {hospitalList.map((hospitalInfo, idx) => <HospitalBriefInfo key={idx} hospitalInfo={hospitalInfo} idx={idx} selectedIdx={selectedIdx} setSelectedIdx={setSelectedIdx} />)}
                     </ContentsBox>
                     <ContentsBox className="detail-contents" title="상세 정보">
-                        <HospitalDetailInfo selectedHospitalInfo={selectedHospitalInfo} />
+                        <HospitalDetailInfo selectedHospitalInfo={selectedHospitalInfo} patient={patient} />
                     </ContentsBox>
                 </RenderAfterNavermapsLoaded>
             </div>

@@ -1,0 +1,22 @@
+{
+	"id": "com.goldentime.hospital-app",
+	"version": "1.0.0",
+	"vendor": "LGE-SVL",
+	"type": "web",
+	"main": "index.html",
+	"title": "A2H-hospital",
+	"icon": "icon.png",
+	"miniicon": "icon-mini.png",
+	"largeIcon": "icon-large.png",
+	"uiRevision": 2,
+	"allowAudioCapture": true,
+	"allowVideoCapture": true,
+	"requiredPermissions": [
+		"time.query",
+		"activity.operation",
+		"notification.operation",
+		"database.operation"
+	]
+}
+
+

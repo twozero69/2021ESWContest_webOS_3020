@@ -9,7 +9,6 @@ import Telemedicine from "../views/Telemedicine/Telemedicine"
 import SignIn from "../views/SignIn/SignIn";
 import SignUp from "../views/SignUp/SignUp";
 import { thinqGetToken } from "../functions/axiosMethods";
-import hospitalImage from "../../resources/images/hospital.png";
 import { socket } from "../socket";
 import "./App.css"
 
@@ -22,149 +21,12 @@ const App = () => {
 	const [user, setUser] = useState(null);
 	const [patient, setPatient] = useState(null);
 	const [hospitalData, setHospitalData] = useState({
-		hospitalImage: hospitalImage,
-		wards: [
-			{
-				x: 72,
-				y: 60,
-				wardNo: 101,
-				state: 0
-			},
-			{
-				x: 72,
-				y: 97,
-				wardNo: 102,
-				state: 0
-			},
-			{
-				x: 72,
-				y: 134,
-				wardNo: 103,
-				state: 0
-			},
-			{
-				x: 72,
-				y: 171,
-				wardNo: 104,
-				state: 0
-			},
-			
-			{
-				x: 151,
-				y: 60,
-				wardNo: 105,
-				state: 0
-			},
-			{
-				x: 151,
-				y: 97,
-				wardNo: 106,
-				state: 0
-			},
-			{
-				x: 151,
-				y: 134,
-				wardNo: 107,
-				state: 0
-			},
-			{
-				x: 151,
-				y: 171,
-				wardNo: 108,
-				state: 0
-			},
-
-			{
-				x: 212,
-				y: 60,
-				wardNo: 109,
-				state: 0
-			},
-			{
-				x: 212,
-				y: 97,
-				wardNo: 110,
-				state: 0
-			},
-			{
-				x: 212,
-				y: 134,
-				wardNo: 111,
-				state: 0
-			},
-			{
-				x: 212,
-				y: 171,
-				wardNo: 112,
-				state: 0
-			},
-
-			{
-				x: 291,
-				y: 60,
-				wardNo: 113,
-				state: 0
-			},
-			{
-				x: 291,
-				y: 97,
-				wardNo: 114,
-				state: 0
-			},
-			{
-				x: 291,
-				y: 134,
-				wardNo: 115,
-				state: 0
-			},
-			{
-				x: 291,
-				y: 171,
-				wardNo: 116,
-				state: 0
-			}
-		],
-		equipmentRooms: [
-			{
-				textX: 218,
-				textY: 315,
-				points: "184 293, 253 293, 253 309, 285 309, 285 377, 220 377, 220 330, 196 330, 196 377, 184 377",
-				roomKind: "CT검사실",
-				state: 0
-			},
-			{
-				textX: 102,
-				textY: 295,
-				points: "146 238, 146 316, 56 316, 56 271, 115 271, 115 238",
-				roomKind: "MRI검사실",
-				state: 0
-			},
-			{
-				textX: 234,
-				textY: 260,
-				points: "184 226, 285 226, 285 304, 258 304, 258 288, 184 288",
-				roomKind: "내시경검사실",
-				state: 0
-			}
-		],
-		operatingRooms: [
-			{
-				textX: 403,
-				textY: 165,
-				points: "351 122, 540 122, 540 153, 449 153, 449 201, 351 201",
-				roomNo: 1,
-				state: 0
-			},
-			{
-				textX: 364,
-				textY: 264,
-				points: "310 226, 417 226, 417 297, 310, 297",
-				roomNo: 2,
-				state: 0
-			},
-		]
+		wards: [],
+		equipmentRooms: [],
+		operatingRooms: []
 	});
-	const [ambulanceDistance, setAmbulanceDistance] = useState(null);
+	const hospitalSocket = useRef();
+	const [ambulanceDistance, setAmbulanceDistance] = useState();
 
 	useEffect(() => {
 		//thinq AI Token 획득
@@ -176,7 +38,36 @@ const App = () => {
 
 		//소켓 섷정
 		socket.on("connect", () => {
-			socket.emit("deviceType", "hospital");
+			console.log(socket.id);
+			socket.emit("deviceType", "ambulance");
+		});
+
+		socket.on("hospitalData", data => {
+			data.wards.forEach((ward, idx) => {
+				const newHospitalData = {
+					...hospitalData
+				};
+
+				newHospitalData["wards"][idx] = ward;
+			});
+
+			data.equipmentRooms.forEach((equipmentRoom, idx) => {
+				const newHospitalData = {
+					...hospitalData
+				};
+
+				newHospitalData["equipmentRooms"][idx] = equipmentRoom;
+			});
+
+			data.wards.forEach((operaingRoom, idx) => {
+				const newHospitalData = {
+					...hospitalData
+				};
+
+				newHospitalData["operatingRooms"][idx] = operaingRoom;
+			});
+
+			hospitalSocket.current = data.hospitalSocket;
 		});
 
 		socket.on("ambulanceDistance", ({dist}) => {
@@ -275,9 +166,9 @@ const App = () => {
 			const newHospitalData = {
 				...hospitalData
 			};
+
 			newHospitalData[roomType][roomIdx].state = data;
 			setHospitalData(newHospitalData);
-			console.log(hospitalData);
 		});
 		
 		return () => {
@@ -304,7 +195,7 @@ const App = () => {
 								<ControlHospital hospitalData={hospitalData} />
 							</Route>
 							<Route path="/telemedicine">
-								<Telemedicine />
+								<Telemedicine hospitalSocket={hospitalSocket.current} />
 							</Route>
 							<Redirect to="/" />
 						</Switch>

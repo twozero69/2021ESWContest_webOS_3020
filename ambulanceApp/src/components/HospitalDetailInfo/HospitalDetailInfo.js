@@ -1,9 +1,11 @@
 /* eslint-disable */
 import { useHistory } from "react-router";
+import { getDistanceString, getTimeString } from "../../functions/mapMethods";
+import { socket } from "../../socket";
 import Button from "../Button/Button";
 import "./HospitalDetailInfo.css"
 
-const HospitalDetailInfo = ({selectedHospitalInfo}) => {
+const HospitalDetailInfo = ({selectedHospitalInfo, patient}) => {
     if(!selectedHospitalInfo){
         return(
             <h3>병원을 선택하세요</h3>
@@ -14,6 +16,10 @@ const HospitalDetailInfo = ({selectedHospitalInfo}) => {
 
     const onClick = () => {
         //여기서 병원과 소켓연결
+        socket.emit("patientData", {
+            patientSocket: socket.id,
+            ...patient
+        });
 
         //성공시 아래처리
         history.push("control-Hospital");

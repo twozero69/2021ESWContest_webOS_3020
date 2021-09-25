@@ -1,0 +1,29 @@
+input{
+    height: 150px;
+    border: none;
+
+    /*
+        background-color에 넣을 수 있는 전역 값
+            inherit: 부모요소의 해당 속성값을 상속받아 사용.
+            initial: 브라우저가 지정한 해당 요소의 속성 기본 값.(브라우저마다 다를 수 있으므로 추천하지 않음.)
+            unset: 부모요소의 해당 속성이 존재하면 inherit으로 동작, 없다면 initial로 동작.
+
+        background-color에 넣을 수 있는 특별 키워드 값
+            currentColor: 이 요소에 설정된 color속성의 값.
+            transpacrent: 투명, rgba(0,0,0,0)과 같음.
+    */
+    font-size: 60px;
+    background-color: transparent;
+    color: #333D51;
+    box-shadow: inset 0px -5px 0px 0px #CBD0D8;
+    transition: box-shadow 0.2s;
+}
+
+input:hover{
+    box-shadow: inset 0px -5px 0px 0px #333D51;
+}
+
+input:focus{
+    outline: none;
+    box-shadow: inset 0px -5px 0px 0px #333D51;
+}
