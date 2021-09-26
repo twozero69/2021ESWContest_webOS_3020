@@ -21,8 +21,8 @@
 .navigation-bar .navigation-head{
     display: flex;
     align-items: center;
-    height: 150px;
-    margin: 30px;
+    height: 75px;
+    margin: 15px;
     padding-right: 0;
 }
 
@@ -42,15 +42,15 @@
     position: absolute;
     right: 50%;
     transform: translateX(50%);
-    width: 150px;
-    height: 150px;
-    border-radius: 45px;
+    width: 75px;
+    height: 75px;
+    border-radius: 23px;
     transition: all 0.4s;
 }
 
 .navigation-bar.active .navigation-head .btn{
     position: absolute;
-    right: 15px;
+    right: 8px;
     transform: translate(0%);
 }
 
@@ -67,7 +67,7 @@
 }
 
 .navigation-bar .navigation-head .btn .menu-btn{
-    font-size: 120px;
+    font-size: 60px;
     display: block;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .navigation-bar .navigation-head .x-btn{
-    font-size: 150px;
+    font-size: 75px;
     display: none;
 }
 
@@ -95,14 +95,14 @@
 }
 
 .navigation-bar ul li{
-    width: 150px;
-    height: 150px;
-    margin: 30px;
+    width: 75px;
+    height: 75px;
+    margin: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 45px;
-    font-size: 70px;
+    border-radius: 23px;
+    font-size: 35px;
 
     /*
         transition : css3부터 지원하는 요소의 속성값을 부드럽게 변화시키는 속성. 다음의 transition의 내부에 아래의 속성들이 있음.
@@ -134,12 +134,12 @@
 }
 
 .navigation-bar ul li svg{
-    font-size: 105px;
+    font-size: 53px;
     margin-right: 0;
 }
 
 .navigation-bar.active ul li svg{
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 /* 
@@ -152,8 +152,8 @@
 }
 
 .navigation-bar.active ul li div{
-    min-width: 300px;
-    max-height: 150px;
+    min-width: 150px;
+    max-height: 75px;
     display: block;
 }
 
@@ -164,17 +164,17 @@
     color: #CBD0D8;
     background-color: #202633;
     width: 100%;
-    min-height: 225px;
+    min-height: 113px;
     display: flex;
     align-items: center;
 }
 
 .navigation-bar .profile img{
-    height: 150px;
-    width: 150px;
+    height: 75px;
+    width: 75px;
     object-fit: cover;
-    border-radius: 45px;
-    margin-left: 30px;
+    border-radius: 23px;
+    margin-left: 15px;
     display: none;
 }
 
@@ -183,7 +183,7 @@
 }
 
 .navigation-bar .profile .name-job{
-    margin-left: 30px;
+    margin-left: 15px;
     display: none;
 }
 
@@ -192,29 +192,29 @@
 }
 
 .navigation-bar .profile .name-job .name{
-    font-size: 60px;
+    font-size: 30px;
     font-weight: 600;
-    max-height: 75px;
+    max-height: 38px;
 }
 
 .navigation-bar .profile .name-job .job{
-    font-size: 45px;
+    font-size: 23px;
     font-weight: 600;
-    max-height: 75px;
+    max-height: 38px;
 }
 
 .navigation-bar .profile .logout{
     position: absolute;
     right: 50%;
     transform: translateX(50%);
-    width: 150px;
-    height: 150px;
-    border-radius: 45px;
+    width: 75px;
+    height: 75px;
+    border-radius: 23px;
     transition: all 0.4s;
 }
 
 .navigation-bar.active .profile .logout{
-    right: 15px;
+    right: 8px;
     transform: translateX(0%);
 }
 
@@ -228,6 +228,6 @@
     top:50%;
     left:50%;
     transform: translate(-50%, -50%);
-    font-size: 105px;
+    font-size: 53px;
 }
 

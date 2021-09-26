@@ -1,7 +1,8 @@
-import { LS2createAlert } from "../../../functions/ls2Methods";
+import { LS2createToast } from "../../../functions/ls2Methods";
 import { socket } from "../../../socket";
 
-const OperaingRoom = ({textX, textY, points, roomNo, state, idx}) => {
+const OperatingRoom = ({textX, textY, points, roomNo, state, idx}) => {
+    console.log(idx);
     const onClick = () => {
         const roomNumberConverter = ["17", "21"];
         const dataConverter = {
@@ -15,12 +16,12 @@ const OperaingRoom = ({textX, textY, points, roomNo, state, idx}) => {
             data: dataConverter[state]
         });
 
-        if(data == "1"){
-            LS2createAlert("예약을 완료했습니다.");
-        }
-        else{
-            LS2createAlert("예약을 취소했습니다.");
-        }
+        // if(data == "1"){
+        //     LS2createToast("예약을 완료했습니다.");
+        // }
+        // else{
+        //     LS2createToast("예약을 취소했습니다.");
+        // }
     };
 
 
@@ -32,4 +33,4 @@ const OperaingRoom = ({textX, textY, points, roomNo, state, idx}) => {
     );
 }
 
-export default OperaingRoom;
+export default OperatingRoom;

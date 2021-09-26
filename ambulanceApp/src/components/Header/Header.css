@@ -1,15 +1,34 @@
 .header{
     width: 100%;
     height: 10%;
-    padding: 43px 75px;
+    padding: 22px 38px;
 }
 
 .header .view-name{
     color: #333D51;
-    font-size: 80px;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.header progress{
+    margin-top: 5px;
+    appearance: none;
+    width: 100%;
+    height: 15px;
+}
+
+.header progress::-webkit-progress-bar{
+    background-color: white;
+    border-radius: 25px;
+}
+
+.header progress::-webkit-progress-value{
+    background-color: #5cdb5c;
+    border-radius: 25px;
+    transition: width 1s ease;
 }
 
 .header .view-outline{
     color: #333D51;
-    font-size: 45px;
+    font-size: 23px;
 }

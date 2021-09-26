@@ -156,6 +156,7 @@ const hospitalData = {
 }
 
 io.on("connection", (socket) => {
+    console.log("connect!!!");
     //connection init event
     socket.on("deviceType", type => {
         if(type == "hospital"){

@@ -1,4 +1,4 @@
-import { LS2createAlert } from "../../../functions/ls2Methods";
+import { LS2createToast } from "../../../functions/ls2Methods";
 import { socket } from "../../../socket";
 
 const Ward = ({x, y, wardNo, state, idx}) => {
@@ -15,12 +15,12 @@ const Ward = ({x, y, wardNo, state, idx}) => {
             data
         });
 
-        if(data == "1"){
-            LS2createAlert("예약을 완료했습니다.");
-        }
-        else{
-            LS2createAlert("예약을 취소했습니다.");
-        }
+        // if(data == "1"){
+        //     LS2createToast("예약을 완료했습니다.");
+        // }
+        // else{
+        //     LS2createToast("예약을 취소했습니다.");
+        // }
     };
 
     return (

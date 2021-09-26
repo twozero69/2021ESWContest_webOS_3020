@@ -22,11 +22,12 @@ const thinqTokenConfig = {
 const thinqGetToken = async () => {
     const {data : {access_token}} = await axios.post("/v1/cognito", {}, thinqTokenConfig);
 	thinqServiceConfig.headers.Authorization = access_token;
+    console.log(access_token);
 }
 
 
 const thinqServiceConfig = {
-    // baseURL: process.env.REACT_APP_THINQ_SERVICE_URL,
+    baseURL: process.env.REACT_APP_THINQ_SERVICE_URL,
     headers: {
         "x-api-key" : process.env.REACT_APP_THINQ_API_KEY,
         "Authorization" : null,
@@ -35,6 +36,7 @@ const thinqServiceConfig = {
 };
 
 const thinqRequestVisionLabs = (byteArray) => {
+    console.log("thinqRequestVisionLabs");
     return axios.post("/vision/face/v1/estimation", byteArray, thinqServiceConfig);
 };
 
@@ -51,7 +53,7 @@ const djangoFaceRecognition = (base64, faceInfo, landmark) => {
 };
 
 const openapiServiceConfig = {
-    // baseURL: process.env.REACT_APP_OPENAPI_SERVICE_URL
+    baseURL: process.env.REACT_APP_OPENAPI_SERVICE_URL
 };
 
 const openapiSearchCenterDivision = async () => {

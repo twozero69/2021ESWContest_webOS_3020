@@ -59,12 +59,12 @@ const App = () => {
 				newHospitalData["equipmentRooms"][idx] = equipmentRoom;
 			});
 
-			data.wards.forEach((operaingRoom, idx) => {
+			data.operatingRooms.forEach((operatingRoom, idx) => {
 				const newHospitalData = {
 					...hospitalData
 				};
 
-				newHospitalData["operatingRooms"][idx] = operaingRoom;
+				newHospitalData["operatingRooms"][idx] = operatingRoom;
 			});
 
 			hospitalSocket.current = data.hospitalSocket;
@@ -186,16 +186,16 @@ const App = () => {
 						<Switch>
 							{/* <Route path="/add-patient"> */}
 							<Route exact path="/">
-								<AddPatient patient={patient} setPatient={setPatient} />
+								<AddPatient patient={patient} setPatient={setPatient} ambulanceDistance={ambulanceDistance} />
 							</Route>
 							<Route path="/select-hospital">
-								<SelectHospital patient={patient} />
+								<SelectHospital patient={patient} setPatient={setPatient} ambulanceDistance={ambulanceDistance} />
 							</Route>
 							<Route path="/control-hospital">
-								<ControlHospital hospitalData={hospitalData} />
+								<ControlHospital patient={patient} setPatient={setPatient} hospitalData={hospitalData} ambulanceDistance={ambulanceDistance} />
 							</Route>
 							<Route path="/telemedicine">
-								<Telemedicine hospitalSocket={hospitalSocket.current} />
+								<Telemedicine patient={patient} setPatient={setPatient} hospitalSocket={hospitalSocket.current} ambulanceDistance={ambulanceDistance} />
 							</Route>
 							<Redirect to="/" />
 						</Switch>

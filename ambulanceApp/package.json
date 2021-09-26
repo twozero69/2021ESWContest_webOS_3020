@@ -33,11 +33,6 @@
 		"dist/*"
 	],
 	"dependencies": {
-		"@enact/core": "^4.0.0",
-		"@enact/i18n": "^4.0.0",
-		"@enact/sandstone": "^2.0.0-alpha.3",
-		"@enact/spotlight": "^4.0.0",
-		"@enact/ui": "^4.0.0",
 		"@enact/webos": "^4.0.0",
 		"axios": "^0.21.1",
 		"axios-retry": "^3.1.9",
@@ -52,6 +47,5 @@
 		"simple-peer": "^9.6.2",
 		"socket.io-client": "^4.2.0",
 		"uuid": "^8.3.2"
-	},
-	"proxy": "http://apis.data.go.kr/B552657/ErmctInfoInqireService"
+	}
 }

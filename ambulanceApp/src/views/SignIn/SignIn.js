@@ -6,6 +6,7 @@ import Input from "../../components/Input/Input";
 import Logo from "../../components/Logo/Logo";
 import Scroll from "../../components/Scroll/Scroll";
 import { readUserdataFromEmail } from "../../functions/firebaseMethods";
+import { LS2createToast } from "../../functions/ls2Methods";
 import { getVideo, visionSignIn } from "../../functions/visionMethods";
 
 import "./SignIn.css"
@@ -31,29 +32,29 @@ const SignIn = ({setLoginFlag, setUser}) => {
 
     const onSignIn = async () => {
         if(email == ""){
-            alert("이메일을 입력하세요.");
+            LS2createToast("이메일을 입력하세요.");
             return;
         }
 
         if(password == ""){
-            alert("비밀번호를 입력하세요.");
+            LS2createToast("비밀번호를 입력하세요.");
             return;
         }
 
         const {docs} = await readUserdataFromEmail(email);
         if(docs.length != 1){
             if(docs.length == 0){
-                alert("가입하지 않은 이메일입니다.");
+                LS2createToast("가입하지 않은 이메일입니다.");
             }
             else{
-                alert("치명적오류 : 이메일중복");
+                LS2createToast("치명적오류 : 이메일중복");
             }
             return;
         }
 
         const userdata = docs[0].data();
         if(password != userdata.password){
-            alert("비밀번호가 일치하지 않습니다.");
+            LS2createToast("비밀번호가 일치하지 않습니다.");
             return;
         }
 

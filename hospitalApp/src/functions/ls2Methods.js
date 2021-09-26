@@ -28,4 +28,15 @@ const LS2createToast = (message) => {
     });
 };
 
-export {LS2createAlert, LS2createToast};
+const LS2speakTts = (text) => {
+    LS2.send({
+        service: "luna://com.webos.service.tts",
+        method: "speak",
+        parameters: {
+            text,
+            language: "ko-KR"
+        }
+    });
+};
+
+export {LS2createAlert, LS2createToast, LS2speakTts};

@@ -1,3 +1,4 @@
+import { LS2createToast, LS2speakTts } from "../../../functions/ls2Methods";
 import { socket } from "../../../socket";
 
 const EquipmentRoom = ({textX, textY, points, roomKind, state, idx}) => {
@@ -8,10 +9,20 @@ const EquipmentRoom = ({textX, textY, points, roomKind, state, idx}) => {
             "1": "0"
         };
 
+        const data = dataConverter[state];
         socket.emit("hospitalLed", {
             roomNumber: roomNumberConverter[idx],
             data: dataConverter[state]
         });
+
+        if(data == "1"){
+            LS2createToast("시설이 예약되었습니다.");
+            LS2speakTts("시설이 예약되었습니다.")
+        }
+        else{
+            LS2createToast("시설 예약이 취소되었습니다.");
+            LS2speakTts("시설 예약이 취소되었습니다.");
+        }
     };
 
     return (

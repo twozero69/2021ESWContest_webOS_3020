@@ -1,19 +1,19 @@
 .add-patient{
     width: 100%;
     height: 90%;
-    padding: 75px;
+    padding: 38px;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 75px;
+    grid-gap: 38px;
 }
 
 .add-patient label{
     align-self: start;
-    padding-left: 45px;
-    font-size: 60px;
+    padding-left: 23px;
+    font-size: 30px;
     color: #CBD0D8;
-    margin-top: 60px;
+    margin-top: 30px;
 }
 
 .add-patient input{
@@ -26,7 +26,7 @@
 
 .add-patient .guide{
     width: 100%;
-    font-size: 60px;
+    font-size: 30px;
     font-weight: 600;
     color: #333D51;
 }
@@ -39,24 +39,24 @@
 
 .add-patient .image-contents video{
     width: 100%;
-    border-radius: 45px;
+    border-radius: 23px;
 }
 
 .add-patient .image-contents canvas{
-    border-radius: 45px;
+    border-radius: 23px;
     width: 100%;
     display: none;
 }
 
 .add-patient .image-contents .vision-message{
-    margin-top: 30px;
+    margin-top: 15px;
     color: #333D51;
-    font-size: 60px;
+    font-size: 30px;
     font-weight: 600; 
 }
 
 .add-patient button{
-    margin-top: 60px;
+    margin-top: 30px;
 }
 
 .add-patient .information-contents{
@@ -90,5 +90,5 @@
 }
 
 .add-patient .contents-box .scroll::-webkit-scrollbar-track-piece:start{
-    margin-top: 7px;
+    margin-top: 4px;
 }

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import EquipmentRoom from "./EquipmentRoom/EquipmentRoom";
-import OperaingRoom from "./OperatingRoom/OperatingRoom";
+import OperatingRoom from "./OperatingRoom/OperatingRoom";
 import Ward from "./Ward/Ward"
 import hospitalImage from "../../../resources/images/hospital.png"
 
@@ -11,7 +11,7 @@ const HospitalSvg = ({hospitalData}) => {
             <image width="100%" height="100%" href={hospitalImage} />
             {hospitalData.wards.map((wardInfo, idx) => <Ward key={idx} {...wardInfo} idx={idx} />)}
             {hospitalData.equipmentRooms.map((equipmentRoomInfo, idx) => <EquipmentRoom key={idx} {...equipmentRoomInfo} idx={idx} />)}
-            {hospitalData.operatingRooms.map((operatingRoomInfo, idx) => <OperaingRoom key={idx} {...operatingRoomInfo} idx={idx} />)}
+            {hospitalData.operatingRooms.map((operatingRoomInfo, idx) => <OperatingRoom key={idx} {...operatingRoomInfo} idx={idx} />)}
         </svg>
     );
 };

@@ -1,13 +1,13 @@
 select{
-    height: 150px;
-    font-size: 60px;
+    height: 75px;
+    font-size: 30px;
     border: none;
     background-color: transparent;
     color: #333D51;
-    box-shadow: inset 0px -5px 0px 0px #CBD0D8;
+    box-shadow: inset 0px -3px 0px 0px #CBD0D8;
     outline: none;
 }
 
 select:hover{
-    box-shadow: inset 0px -5px 0px 0px #333D51;
+    box-shadow: inset 0px -3px 0px 0px #333D51;
 }

@@ -9,7 +9,7 @@ import Map from "../../components/Map/Map";
 import { getHospitalList } from "../../functions/mapMethods";
 import "./SelectHospital.css"
 
-const SelectHospital = ({patient}) => {
+const SelectHospital = ({patient, setPatient, ambulanceDistance}) => {
     const [loading, setLoading] = useState(true);
     const [hospitalList, setHospitalList] = useState(null);
     const [selectedIdx, setSelectedIdx] = useState(-1);
@@ -103,7 +103,7 @@ const SelectHospital = ({patient}) => {
 
     return(
         <>
-            <Header name="병원선정" outline="환자를 수송할 병원을 선택합니다." />
+            <Header patient={patient} setPatient={setPatient} name="병원선정" outline="환자를 수송할 병원을 선택합니다." ambulanceDistance={ambulanceDistance} />
             <div className="select-hospital">
                 <RenderAfterNavermapsLoaded ncpClientId={process.env.REACT_APP_NAVER_CLIENT_ID}>
                     <ContentsBox className="map-contents" title="지도">

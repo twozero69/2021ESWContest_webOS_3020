@@ -7,11 +7,12 @@ import ContentsBox from "../../components/ContentsBox/ContentsBox";
 import Header from "../../components/Header/Header"
 import Input from "../../components/Input/Input";
 import Select from "../../components/Select/Select";
+import { LS2createToast, LS2speakTts } from "../../functions/ls2Methods";
 import { getMockGeolocation } from "../../functions/mapMethods";
 import { getVideo, getAttributes } from "../../functions/visionMethods";
 import "./AddPatient.css";
 
-const AddPatient = ({patient, setPatient}) => {
+const AddPatient = ({patient, setPatient, ambulanceDistance}) => {
     const history = useHistory();
     const patientVideo = useRef();
     const imageCapture = useRef();
@@ -83,13 +84,13 @@ const AddPatient = ({patient, setPatient}) => {
         }
 
         setRetryFlag(true);
-    }
+    };
 
     const onRetry = () => {
         faceImage.current = null;
         setRetryFlag(true);
         setvisionMessage("버튼을 눌러 사진을 촬영하세요.");
-    }
+    };
 
     const onSeverity = () => {
         if(breath=="비정상" || bleeding=="지혈 불가능" || burn=="기도화상" || organDamage=="있음" || headInjury=="함몰"){
@@ -103,7 +104,7 @@ const AddPatient = ({patient, setPatient}) => {
         }
 
         setSeverity("비응급");
-    }
+    };
 
     const onRegister = async () => {
         if(severity==""){
@@ -150,12 +151,14 @@ const AddPatient = ({patient, setPatient}) => {
         };
 
         setPatient(patientData);
+        LS2createToast("환자가 등록되었습니다.");
+        LS2speakTts("환자가 등록되었습니다.");
         history.push("select-hospital");
-    }
+    };
 
     return(
         <>
-            <Header name="환자등록" outline="응급환자의 정보를 등록합니다." />
+            <Header patient={patient} setPatient={setPatient} name="환자등록" outline="응급환자의 정보를 등록합니다." ambulanceDistance={ambulanceDistance} />
             <div className="add-patient">
                 <ContentsBox className="image-contents" title="환자사진"> 
                     <video ref={patientVideo} playsInline autoPlay onPlay={onPlay} />

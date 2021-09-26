@@ -10,7 +10,7 @@ const NavigationBar = ({user, setUser, setLoginFlag, appContents}) => {
     const navigationBar = useRef();
 
     const onClickControlHospital = () => {
-        history.push("/");
+        history.push("/control-hospital");
     };
 
     const onClickTelemedicine = () => {

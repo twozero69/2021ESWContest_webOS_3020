@@ -27,6 +27,7 @@ const getVideoWithAudio = (webcamVideoRef) => {
 
 
 const getVisionProcessResult = async (blob) => {
+    console.log("getVisionProcessResult");
     const buffer = await blob.arrayBuffer();
     const byteArray = new Uint8Array(buffer);
     const {data: {
@@ -41,6 +42,7 @@ const getVisionProcessResult = async (blob) => {
 }
 
 const visionSignIn = async (imageCaptureRef) => {
+    console.log("로그인 시작");
     let result = false;
     let message = ""; 
     
@@ -72,6 +74,7 @@ const visionSignIn = async (imageCaptureRef) => {
         }
     }
 
+    console.log("얼굴인식 시작");
     const {data: {returnValue, userdata}} = await getFaceRecognition(blob, faceInfo, getProcessedLandmark(landmark, faceInfo));
     if(!returnValue){
         message = "데이터베이스에 해당하는 얼굴이 없습니다.";
@@ -194,6 +197,7 @@ const getVector = async (blob, faceInfo, landmark) => {
 }
 
 const getFaceRecognition = async (blob, faceInfo, landmark) => {
+    console.log("getFaceRecognition");
     const base64 = await convertBlobToBase64(blob);
     return djangoFaceRecognition(base64, faceInfo, landmark);
 }

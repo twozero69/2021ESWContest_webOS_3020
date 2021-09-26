@@ -11,11 +11,11 @@
 	"uiRevision": 2,
 	"allowAudioCapture": true,
 	"allowVideoCapture": true,
-	"allowGeolocation": true,
 	"requiredPermissions": [
 		"time.query",
 		"activity.operation",
-		"location.operation"
+		"notification.operation",
+		"tts.operation"
 	]
 }
 

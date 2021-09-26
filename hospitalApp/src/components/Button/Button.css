@@ -2,11 +2,11 @@ button{
     background-color: #D3AC2B;
     color: #F4F3EA;
     font-weight: 600;
-    font-size: 60px;
-    border-radius: 45px;
+    font-size: 30px;
+    border-radius: 23px;
     border-width: 0;
-    width: 450px;
-    min-height: 105px;
+    width: 225px;
+    min-height: 53px;
     transition: filter 0.2s;
 }
 

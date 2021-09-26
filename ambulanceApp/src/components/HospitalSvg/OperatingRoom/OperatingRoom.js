@@ -1,6 +1,8 @@
+import { LS2createToast, LS2speakTts } from "../../../functions/ls2Methods";
 import { socket } from "../../../socket";
 
-const OperaingRoom = ({textX, textY, points, roomNo, state, idx}) => {
+const OperatingRoom = ({textX, textY, points, roomNo, state, idx}) => {
+    console.log(idx);
     const onClick = () => {
         const roomNumberConverter = ["17", "21"];
         const dataConverter = {
@@ -8,12 +10,21 @@ const OperaingRoom = ({textX, textY, points, roomNo, state, idx}) => {
             "1": "0"
         };
 
+        const data = dataConverter[state];
         socket.emit("hospitalLed", {
             roomNumber: roomNumberConverter[idx],
             data: dataConverter[state]
         });
-    };
 
+        if(data == "1"){
+            LS2createToast("수술실이 예약되었습니다.");
+            LS2speakTts("수술실이 예약되었습니다.")
+        }
+        else{
+            LS2createToast("수술실 예약이 취소되었습니다.");
+            LS2speakTts("수술실 예약이 취소되었습니다.");
+        }
+    };
 
     return (
         <>
@@ -23,4 +34,4 @@ const OperaingRoom = ({textX, textY, points, roomNo, state, idx}) => {
     );
 }
 
-export default OperaingRoom;
+export default OperatingRoom;

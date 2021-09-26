@@ -8,7 +8,7 @@ import { socket } from "../../socket";
 import "./Telemedicine.css";
 
 
-const Telemedicine = ({hospitalSocket, ambulanceDistance}) => {
+const Telemedicine = ({patientData, ambulanceDistance}) => {
     const patientVideo = useRef();
     const hospitalVideo = useRef();
     const connection = useRef();
@@ -58,7 +58,7 @@ const Telemedicine = ({hospitalSocket, ambulanceDistance}) => {
             socket.emit("makeCall", {
                 signal,
                 from: socket.id,
-                to: hospitalSocket
+                to: patientData.current.patientSocket
             });
         });
 
@@ -184,13 +184,13 @@ const Telemedicine = ({hospitalSocket, ambulanceDistance}) => {
 
     return(
         <>
-            <Header name="원격진료" outline="구급차와 영상을 연결하여 환자를 원격진료합니다." ambulanceDistance={ambulanceDistance} />
+            <Header patientData={patientData} name="원격진료" outline="구급차와 영상을 연결하여 환자를 원격진료합니다." ambulanceDistance={ambulanceDistance} />
             <div className="telemedicine">
                 <ContentsBox className="hospital-contents" title="구급차영상" >
                     {callFlag && <video ref={hospitalVideo} playsInline autoPlay />}
                 </ContentsBox>
                 <ContentsBox className="patient-contents" title="병원영상" >
-                    <video ref={patientVideo} playsInline autoPlay />
+                    <video ref={patientVideo} playsInline autoPlay muted />
                 </ContentsBox>
                 <ContentsBox className="controll-contents" title="컨트롤바">
                     <Button className="green-button" onClick={onGreenClick} disabled={callFlag}>원격진료 연결</Button>

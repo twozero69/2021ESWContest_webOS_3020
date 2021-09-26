@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { useHistory } from "react-router";
+import { LS2createToast, LS2speakTts } from "../../functions/ls2Methods";
 import { getDistanceString, getTimeString } from "../../functions/mapMethods";
 import { socket } from "../../socket";
 import Button from "../Button/Button";
@@ -22,6 +23,8 @@ const HospitalDetailInfo = ({selectedHospitalInfo, patient}) => {
         });
 
         //성공시 아래처리
+        LS2createToast("병원과 연결되었습니다.");
+        LS2speakTts("병원과 연결되었습니다.");
         history.push("control-Hospital");
     }
 

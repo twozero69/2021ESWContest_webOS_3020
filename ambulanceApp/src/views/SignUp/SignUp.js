@@ -7,6 +7,7 @@ import Input from "../../components/Input/Input";
 import Scroll from "../../components/Scroll/Scroll";
 import Select from "../../components/Select/Select";
 import { createUserdataInFirestore } from "../../functions/firebaseMethods";
+import { LS2createToast } from "../../functions/ls2Methods";
 import { getVideo, visionSignUp } from "../../functions/visionMethods";
 
 import "./SignUp.css"
@@ -67,32 +68,32 @@ const SignUp = () => {
 
     const onSignUp = () => {
         if(name.length == 0){
-            alert("이름을 입력하세요.");
+            LS2createToast("이름을 입력하세요.");
             return;
         }
 
         if(job == ""){
-            alert("직업을 선택하세요.");
+            LS2createToast("직업을 선택하세요.");
             return;
         }
 
         if(email.length < 5){
-            alert("이메일을 5글자 이상 입력하세요.");
+            LS2createToast("이메일을 5글자 이상 입력하세요.");
             return;
         }
 
         if(password.length <5){
-            alert("비밀번호를 5글자 이상 입력하세요.");
+            LS2createToast("비밀번호를 5글자 이상 입력하세요.");
             return;
         }
 
         if(password != confirmPassword){
-            alert("비밀번호가 일치하지 않습니다.");
+            LS2createToast("비밀번호가 일치하지 않습니다.");
             return;
         }
 
         if(!faceImage.current || !faceInfo.current || !faceLandmark.current || !faceVector.current){
-            alert("사진을 촬영해주세요.");
+            LS2createToast("사진을 촬영해주세요.");
             return;
         }
 

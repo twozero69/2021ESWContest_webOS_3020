@@ -9,6 +9,7 @@ import SignUp from "../views/SignUp/SignUp";
 import { thinqGetToken } from "../functions/axiosMethods";
 import { socket } from "../socket";
 import "./App.css"
+import { LS2createToast, LS2speakTts } from "../functions/ls2Methods";
 
 const App = () => {
 	console.log("앱 재렌더링");
@@ -21,7 +22,6 @@ const App = () => {
 		equipmentRooms: [],
 		operatingRooms: []
 	});
-	const hospitalSocket = useRef();
 	const patientData = useRef();
 	const [ambulanceDistance, setAmbulanceDistance] = useState(30);
 
@@ -42,6 +42,8 @@ const App = () => {
 		socket.on("patientData", data => {
 			patientData.current = data;
 			console.log(patientData.current);
+			LS2createToast("새로운 환자가 연결되었습니다.");
+			LS2speakTts("새로운 환자가 연결되었습니다.");
 		})
 
 		socket.on("hospitalData", data => {
@@ -61,15 +63,13 @@ const App = () => {
 				newHospitalData["equipmentRooms"][idx] = equipmentRoom;
 			});
 
-			data.wards.forEach((operaingRoom, idx) => {
+			data.operatingRooms.forEach((operatingRoom, idx) => {
 				const newHospitalData = {
 					...hospitalData
 				};
 
-				newHospitalData["operatingRooms"][idx] = operaingRoom;
+				newHospitalData["operatingRooms"][idx] = operatingRoom;
 			});
-
-			hospitalSocket.current = data.hospitalSocket;
 		});
 
 		socket.on("ambulanceDistance", ({dist}) => {
@@ -171,6 +171,23 @@ const App = () => {
 
 			newHospitalData[roomType][roomIdx].state = data;
 			setHospitalData(newHospitalData);
+
+			const roomStringConverter = {
+				wards: "병실",
+				equipmentRooms: "시설",
+				operatingRooms: "수술실"
+			}
+
+			const dataStringConverter = {
+				"0": "예약이 취소", 
+				"1": "예약"
+			}
+
+			const roomString = roomStringConverter[roomType];
+			const dataString = dataStringConverter[data];
+			const message = `${roomString} ${dataString}되었습니다.`;
+			LS2createToast(message);
+			LS2speakTts(message);
 		});
 		
 		return () => {
@@ -188,10 +205,10 @@ const App = () => {
 						<Switch>
 							{/* <Route path="/add-patient"> */}
 							<Route exact path="/">
-								<ControlHospital hospitalData={hospitalData} ambulanceDistance={ambulanceDistance} />
+								<ControlHospital patientData={patientData} hospitalData={hospitalData} ambulanceDistance={ambulanceDistance} />
 							</Route>
 							<Route path="/telemedicine">
-								<Telemedicine hospitalSocket={hospitalSocket.current} patientData={patientData} ambulanceDistance={ambulanceDistance} />
+								<Telemedicine patientData={patientData} ambulanceDistance={ambulanceDistance} />
 							</Route>
 							<Redirect to="/" />
 						</Switch>

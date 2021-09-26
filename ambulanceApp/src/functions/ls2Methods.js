@@ -2,24 +2,41 @@ import LS2Request from "@enact/webos/LS2Request";
 
 const LS2 = new LS2Request();
 
-const LS2LocationEnable = () => {
+const LS2createAlert = (message) => {
     LS2.send({
-        service: "luna://com.webos.service.location",
-        method: "setState",
+        service: "luna://com.webos.notification",
+        method: "createAlert",
         parameters: {
-            Handler: "network",
-            state: true
-        },
-        onComplete: (res) => {
-            if(res.returnValue){
-                console.log("locations enable");
-            }
-            else{
-                console.log(res);
-            }
+            message,
+            buttons: [
+                {
+                    label: "확인",
+                    focus: true
+                }
+            ]
         }
-    })
-}
+    });
+};
 
-export default LS2;
-export {LS2LocationEnable};
+const LS2createToast = (message) => {
+    LS2.send({
+        service: "luna://com.webos.notification",
+        method: "createToast",
+        parameters: {
+            message
+        }
+    });
+};
+
+const LS2speakTts = (text) => {
+    LS2.send({
+        service: "luna://com.webos.service.tts",
+        method: "speak",
+        parameters: {
+            text,
+            language: "ko-KR"
+        }
+    });
+};
+
+export {LS2createAlert, LS2createToast, LS2speakTts};
