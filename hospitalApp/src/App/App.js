@@ -9,7 +9,7 @@ import SignUp from "../views/SignUp/SignUp";
 import { thinqGetToken } from "../functions/axiosMethods";
 import { socket } from "../socket";
 import "./App.css"
-import { LS2createToast, LS2speakTts } from "../functions/ls2Methods";
+import { LS2createToast, LS2speakTts, LS2startServer, LS2stopServer } from "../functions/ls2Methods";
 
 const App = () => {
 	console.log("앱 재렌더링");
@@ -26,6 +26,9 @@ const App = () => {
 	const [ambulanceDistance, setAmbulanceDistance] = useState(30);
 
 	useEffect(() => {
+		//소켓서버 실행
+		LS2startServer();
+
 		//thinq AI Token 획득
 		thinqGetToken();
 		//발근된 Token은 60분동안 유효하므로 59분 주기로 재발급받는다.
@@ -191,6 +194,10 @@ const App = () => {
 		});
 		
 		return () => {
+			//소켓서버 종료
+			LS2stopServer();
+
+			//토큰획든 인터벌 종료
 			clearInterval(intervalID.current);
 		};
 	}, []);

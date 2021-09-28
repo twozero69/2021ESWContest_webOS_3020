@@ -39,4 +39,18 @@ const LS2speakTts = (text) => {
     });
 };
 
-export {LS2createAlert, LS2createToast, LS2speakTts};
+const LS2startServer = () => {
+    LS2.send({
+        service: "luna://com.goldentime.hospital-app.service",
+        method: "startServer"
+    });
+};
+
+const LS2stopServer = () => {
+    LS2.send({
+        service: "luna://com.goldentime.hospital-app.service",
+        method: "stopServer"
+    });
+};
+
+export {LS2createAlert, LS2createToast, LS2speakTts, LS2startServer, LS2stopServer};

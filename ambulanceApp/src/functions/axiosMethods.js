@@ -53,7 +53,7 @@ const djangoFaceRecognition = (base64, faceInfo, landmark) => {
 };
 
 const openapiServiceConfig = {
-    baseURL: process.env.REACT_APP_OPENAPI_SERVICE_URL
+    // baseURL: process.env.REACT_APP_OPENAPI_SERVICE_URL
 };
 
 const openapiSearchCenterDivision = async () => {

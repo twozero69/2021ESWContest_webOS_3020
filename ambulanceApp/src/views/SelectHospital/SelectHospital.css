@@ -4,7 +4,7 @@
     padding: 38px;
     display: grid;
     grid-template-columns: 7fr 2fr;
-    grid-template-rows: 40vh calc(45vh - 38px);
+    grid-template-rows: 50vh calc(35vh - 38px);
     grid-gap: 38px;
 }
 
