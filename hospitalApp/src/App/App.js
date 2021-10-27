@@ -9,7 +9,7 @@ import SignUp from "../views/SignUp/SignUp";
 import { thinqGetToken } from "../functions/axiosMethods";
 import { socket } from "../socket";
 import "./App.css"
-import { LS2createToast, LS2speakTts, LS2startServer, LS2stopServer } from "../functions/ls2Methods";
+import { LS2createToast, LS2speakTts, LS2keepAliveServer, LS2stopServer } from "../functions/ls2Methods";
 
 const App = () => {
 	console.log("앱 재렌더링");
@@ -27,7 +27,7 @@ const App = () => {
 
 	useEffect(() => {
 		//소켓서버 실행
-		LS2startServer();
+		LS2keepAliveServer();
 
 		//thinq AI Token 획득
 		thinqGetToken();

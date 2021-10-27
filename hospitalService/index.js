@@ -6,9 +6,10 @@ const { Server } = require("socket.io");
 //서비스 생성
 const service = new Service(pkgInfo.name)
 
-let httpServer;
 let keepAliveActivity;
 let hospitalData;
+let ambulanceSocket;
+let httpServer;
 
 //메소드 설정
 service.register('startServer', (message) => {
@@ -18,6 +19,7 @@ service.register('startServer', (message) => {
         console.log('created activity');
     })
 
+    //서버 실행
     const httpPort = 4000;
     httpServer = http.createServer();
     const io = new Server(httpServer, {
@@ -27,8 +29,7 @@ service.register('startServer', (message) => {
         }
     });
 
-    let ambulanceSocket;
-    const hospitalData = {
+    hospitalData = {
         hospitalSocket: 123123,
         wards: [
             {
@@ -55,7 +56,6 @@ service.register('startServer', (message) => {
                 wardNo: 104,
                 state: "0"
             },
-            
             {
                 x: 151,
                 y: 60,
@@ -80,7 +80,6 @@ service.register('startServer', (message) => {
                 wardNo: 108,
                 state: "0"
             },
-
             {
                 x: 212,
                 y: 60,
@@ -105,7 +104,6 @@ service.register('startServer', (message) => {
                 wardNo: 112,
                 state: "0"
             },
-
             {
                 x: 291,
                 y: 60,
@@ -196,91 +194,91 @@ service.register('startServer', (message) => {
         //control hospital event
         socket.on("hospitalLed", data => {
             const converter = {
-                "01":{
+                "01": {
                     roomType: "wards",
-                    roomIdx: 0 
+                    roomIdx: 0,
                 },
-                "02":{
+                "02": {
                     roomType: "wards",
-                    roomIdx: 1
+                    roomIdx: 1,
                 },
-                "03":{
+                "03": {
                     roomType: "wards",
-                    roomIdx: 2 
+                    roomIdx: 2,
                 },
-                "04":{
+                "04": {
                     roomType: "wards",
-                    roomIdx: 3 
+                    roomIdx: 3,
                 },
-                "05":{
+                "05": {
                     roomType: "wards",
-                    roomIdx: 4 
+                    roomIdx: 4,
                 },
-                "06":{
+                "06": {
                     roomType: "wards",
-                    roomIdx: 5 
+                    roomIdx: 5,
                 },
-                "07":{
+                "07": {
                     roomType: "wards",
-                    roomIdx: 6 
+                    roomIdx: 6,
                 },
-                "08":{
+                "08": {
                     roomType: "wards",
-                    roomIdx: 7 
+                    roomIdx: 7,
                 },
-                "09":{
+                "09": {
                     roomType: "wards",
-                    roomIdx: 8 
+                    roomIdx: 8,
                 },
-                "10":{
+                10: {
                     roomType: "wards",
-                    roomIdx: 9 
+                    roomIdx: 9,
                 },
-                "11":{
+                11: {
                     roomType: "wards",
-                    roomIdx: 10 
+                    roomIdx: 10,
                 },
-                "12":{
+                12: {
                     roomType: "wards",
-                    roomIdx: 11
+                    roomIdx: 11,
                 },
-                "13":{
+                13: {
                     roomType: "wards",
-                    roomIdx: 12
+                    roomIdx: 12,
                 },
-                "14":{
+                14: {
                     roomType: "wards",
-                    roomIdx: 13
+                    roomIdx: 13,
                 },
-                "15":{
+                15: {
                     roomType: "wards",
-                    roomIdx: 14
+                    roomIdx: 14,
                 },
-                "16":{
+                16: {
                     roomType: "wards",
-                    roomIdx: 15
+                    roomIdx: 15,
                 },
-                "17":{
+                17: {
                     roomType: "operatingRooms",
-                    roomIdx: 0
+                    roomIdx: 0,
                 },
-                "21":{
+                21: {
                     roomType: "operatingRooms",
-                    roomIdx: 1
+                    roomIdx: 1,
                 },
-                "22":{
+                22: {
                     roomType: "equipmentRooms",
-                    roomIdx: 0
+                    roomIdx: 0,
                 },
-                "19":{
+                19: {
                     roomType: "equipmentRooms",
-                    roomIdx: 1
+                    roomIdx: 1,
                 },
-                "20":{
+                20: {
                     roomType: "equipmentRooms",
-                    roomIdx: 2
-                }
-            }
+                    roomIdx: 2,
+                },
+            };
             const {roomType, roomIdx} = converter[data.roomNumber];
             hospitalData[roomType][roomIdx].state = data.data;
             io.emit("hospitalLed", data);
@@ -313,9 +311,9 @@ service.register('startServer', (message) => {
         console.log(`http server is running on port ${httpPort}`);
     });
 
-    message.respond({
-        message: "start websocket server"
-    });
+        message.respond({
+            message: "start websocket server"
+        });
 });
 
 service.register("stopServer", (message) => {
@@ -331,4 +329,4 @@ service.register("stopServer", (message) => {
     message.respond({
         message: 'stoped websocket server'
     });
-})
+});

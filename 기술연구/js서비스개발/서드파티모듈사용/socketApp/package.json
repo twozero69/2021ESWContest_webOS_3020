@@ -1,8 +1,8 @@
 {
-	"name": "ambulanceapp",
+	"name": "httpserverapp",
 	"version": "1.0.0",
-	"description": "",
-	"author": "twozero69",
+	"description": "A general template for an Enact Sandstone application for webOS TVs",
+	"author": "",
 	"main": "src/index.js",
 	"scripts": {
 		"serve": "enact serve",
@@ -34,18 +34,10 @@
 	],
 	"dependencies": {
 		"@enact/webos": "^4.0.0",
-		"axios": "^0.21.1",
-		"axios-retry": "^3.1.9",
-		"firebase": "^8.9.1",
 		"ilib": "npm:ilib-webos@^14.6.2-webos1",
 		"prop-types": "^15.6.2",
 		"react": "^17.0.1",
 		"react-dom": "^17.0.1",
-		"react-icons": "^4.2.0",
-		"react-naver-maps": "0.0.13",
-		"react-router-dom": "^5.2.0",
-		"simple-peer": "^9.6.2",
-		"socket.io-client": "^4.2.0",
-		"uuid": "^8.3.2"
+		"socket.io-client": "^4.3.2"
 	}
 }

@@ -1,0 +1,9 @@
+{
+  "id": "com.app.socketserver.service",
+  "description": "service",
+  "services": [
+    {
+      "name": "com.app.socketserver.service"
+    }
+  ]
+}

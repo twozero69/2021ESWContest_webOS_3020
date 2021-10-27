@@ -39,10 +39,10 @@ const LS2speakTts = (text) => {
     });
 };
 
-const LS2startServer = () => {
+const LS2keepAliveServer = () => {
     LS2.send({
         service: "luna://com.goldentime.hospital-app.service",
-        method: "startServer"
+        method: "keepAliveServer"
     });
 };
 
@@ -53,4 +53,4 @@ const LS2stopServer = () => {
     });
 };
 
-export {LS2createAlert, LS2createToast, LS2speakTts, LS2startServer, LS2stopServer};
+export {LS2createAlert, LS2createToast, LS2speakTts, LS2keepAliveServer, LS2stopServer};

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { openapiGetCenterInfo, openapiSearchCenterDisease } from "./axiosMethods";
+import { openapiGetCenterInfo, openapiSearchCenterDisease, openapiSearchCenterDivision } from "./axiosMethods";
 
 
 const getWPSGeolocation = () => {
@@ -15,7 +15,14 @@ const getMockGeolocation = () => {
 };
 
 const getHospitalList = async (mkioskty, location) => {
-    const hospitalListPromise = openapiSearchCenterDisease(mkioskty);
+    let hospitalListPromise;
+    if(mkioskty.length == 0){
+        hospitalListPromise = openapiSearchCenterDivision();
+    }
+    else{
+        hospitalListPromise = openapiSearchCenterDisease(mkioskty);
+    }
+
     const traumaCenterMap = new Map(
         [
             ["A1200002"],
