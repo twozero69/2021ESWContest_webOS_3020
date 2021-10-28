@@ -1,9 +1,9 @@
 {
-  "id": "com.goldentime.hospital-app.service",
+  "id": "com.goldentime.hospitalapp.service",
   "description": "service",
   "services": [
     {
-      "name": "com.goldentime.hospital-app.service"
+      "name": "com.goldentime.hospitalapp.service"
     }
   ]
 }

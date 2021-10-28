@@ -1,5 +1,4 @@
 import LS2Request from "@enact/webos/LS2Request";
-
 const LS2 = new LS2Request();
 
 const LS2createAlert = (message) => {
@@ -39,18 +38,19 @@ const LS2speakTts = (text) => {
     });
 };
 
-const LS2keepAliveServer = () => {
+const LS2startServer = () => {
     LS2.send({
-        service: "luna://com.goldentime.hospital-app.service",
-        method: "keepAliveServer"
+        service: "luna://com.goldentime.hospitalapp.service",
+        method: "startServer"
     });
+    console.log("server start!!");
 };
 
 const LS2stopServer = () => {
     LS2.send({
-        service: "luna://com.goldentime.hospital-app.service",
+        service: "luna://com.goldentime.hospitalapp.service",
         method: "stopServer"
     });
 };
 
-export {LS2createAlert, LS2createToast, LS2speakTts, LS2keepAliveServer, LS2stopServer};
+export {LS2createAlert, LS2createToast, LS2speakTts, LS2startServer, LS2stopServer};
