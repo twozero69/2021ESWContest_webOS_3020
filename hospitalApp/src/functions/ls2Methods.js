@@ -41,16 +41,51 @@ const LS2speakTts = (text) => {
 const LS2startServer = () => {
     LS2.send({
         service: "luna://com.goldentime.hospitalapp.service",
-        method: "startServer"
+        method: "startServer",
+        onComplete: (response) => {
+            console.log(response);
+        }
     });
-    console.log("server start!!");
 };
 
 const LS2stopServer = () => {
     LS2.send({
         service: "luna://com.goldentime.hospitalapp.service",
-        method: "stopServer"
+        method: "stopServer",
+        onComplete: (response) => {
+            console.log(response);
+        }
     });
 };
 
-export {LS2createAlert, LS2createToast, LS2speakTts, LS2startServer, LS2stopServer};
+const LS2putKind = () => {
+    LS2.send({
+        service: "luna://com.goldentime.hospitalapp.service",
+        method: "putKind",
+        onComplete: (response) => {
+            console.log(response);
+        }
+    });
+};
+
+const LS2initData = () => {
+    LS2.send({
+        service: "luna://com.goldentime.hospitalapp.service",
+        method: "initData",
+        onComplete: (response) => {
+            console.log(response);
+        }
+    });
+}
+
+const LS2putData = () => {
+    LS2.send({
+        service: "luna://com.goldentime.hospitalapp.service",
+        method: "put",
+        onComplete: (response) => {
+            console.log(response);
+        }
+    });
+};
+
+export {LS2createAlert, LS2createToast, LS2speakTts, LS2startServer, LS2stopServer, LS2putKind, LS2initData, LS2putData};

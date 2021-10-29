@@ -1,14 +1,13 @@
 /* eslint-disable */
 import { useEffect, useRef, useState } from "react";
 import {HashRouter as Router, Redirect, Route, Switch} from "react-router-dom";
-import { io } from "socket.io-client";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import ControlHospital from "../views/ControlHospital/ControlHospital"
 import Telemedicine from "../views/Telemedicine/Telemedicine"
 import SignIn from "../views/SignIn/SignIn";
 import SignUp from "../views/SignUp/SignUp";
 import { thinqGetToken } from "../functions/axiosMethods";
-import { LS2createToast, LS2speakTts, LS2startServer, LS2stopServer } from "../functions/ls2Methods";
+import { LS2createToast, LS2initData, LS2putData, LS2putKind, LS2speakTts, LS2startServer, LS2stopServer } from "../functions/ls2Methods";
 import { socket } from "../socket";
 import "./App.css"
 
@@ -34,8 +33,15 @@ const App = () => {
 			thinqGetToken();
 		}, 1000 * 60 * 59);
 
-		//소켓서버 실행
-		LS2startServer();
+		LS2putKind();
+
+		setTimeout(() => {
+			LS2initData();
+		}, 1000);
+		
+		setTimeout(() => {
+			LS2startServer();
+		}, 2000);
 
 		//소켓 섷정
 		setTimeout(() => {
@@ -195,8 +201,9 @@ const App = () => {
 				const message = `${roomString} ${dataString}되었습니다.`;
 				LS2createToast(message);
 				LS2speakTts(message);
+				LS2putData();
 			});
-		}, 500);
+		}, 3000);
 		
 		return () => {
 			//소켓서버 종료

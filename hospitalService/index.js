@@ -2,14 +2,18 @@ const Service = require('webos-service')
 const pkgInfo = require('./package.json');
 const http = require('http');
 const { Server } = require("socket.io");
+const initData = require('./initData.json');
 
 //서비스 생성
 const service = new Service(pkgInfo.name)
+const kindId = 'com.goldentime.hospitalapp.service:1';
 
 let keepAliveActivity;
 let hospitalData;
 let ambulanceSocket;
 let httpServer;
+let dataId = null;
+let dataRev = null;
 
 //메소드 설정
 service.register('startServer', (message) => {
@@ -28,147 +32,6 @@ service.register('startServer', (message) => {
             methods: ['GET', 'POST']
         }
     });
-
-    hospitalData = {
-        hospitalSocket: 123123,
-        wards: [
-            {
-                x: 72,
-                y: 60,
-                wardNo: 101,
-                state: "0"
-            },
-            {
-                x: 72,
-                y: 97,
-                wardNo: 102,
-                state: "0"
-            },
-            {
-                x: 72,
-                y: 134,
-                wardNo: 103,
-                state: "0"
-            },
-            {
-                x: 72,
-                y: 171,
-                wardNo: 104,
-                state: "0"
-            },
-            {
-                x: 151,
-                y: 60,
-                wardNo: 105,
-                state: "0"
-            },
-            {
-                x: 151,
-                y: 97,
-                wardNo: 106,
-                state: "0"
-            },
-            {
-                x: 151,
-                y: 134,
-                wardNo: 107,
-                state: "0"
-            },
-            {
-                x: 151,
-                y: 171,
-                wardNo: 108,
-                state: "0"
-            },
-            {
-                x: 212,
-                y: 60,
-                wardNo: 109,
-                state: "0"
-            },
-            {
-                x: 212,
-                y: 97,
-                wardNo: 110,
-                state: "0"
-            },
-            {
-                x: 212,
-                y: 134,
-                wardNo: 111,
-                state: "0"
-            },
-            {
-                x: 212,
-                y: 171,
-                wardNo: 112,
-                state: "0"
-            },
-            {
-                x: 291,
-                y: 60,
-                wardNo: 113,
-                state: "0"
-            },
-            {
-                x: 291,
-                y: 97,
-                wardNo: 114,
-                state: "0"
-            },
-            {
-                x: 291,
-                y: 134,
-                wardNo: 115,
-                state: "0"
-            },
-            {
-                x: 291,
-                y: 171,
-                wardNo: 116,
-                state: "0"
-            }
-        ],
-        equipmentRooms: [
-            {
-                textX: 218,
-                textY: 315,
-                points: "184 293, 253 293, 253 309, 285 309, 285 377, 220 377, 220 330, 196 330, 196 377, 184 377",
-                roomKind: "CT검사실",
-                state: "0"
-            },
-            {
-                textX: 102,
-                textY: 295,
-                points: "146 238, 146 316, 56 316, 56 271, 115 271, 115 238",
-                roomKind: "MRI검사실",
-                state: "0"
-            },
-            {
-                textX: 234,
-                textY: 260,
-                points: "184 226, 285 226, 285 304, 258 304, 258 288, 184 288",
-                roomKind: "내시경검사실",
-                state: "0"
-            }
-        ],
-        operatingRooms: [
-            {
-                textX: 403,
-                textY: 165,
-                points: "351 122, 540 122, 540 153, 449 153, 449 201, 351 201",
-                roomNo: 1,
-                state: "0"
-            },
-            {
-                textX: 364,
-                textY: 264,
-                points: "310 226, 417 226, 417 297, 310, 297",
-                roomNo: 2,
-                state: "0"
-            },
-        ]
-    }
 
     io.on("connection", (socket) => {
         console.log("connect!!!");
@@ -283,13 +146,16 @@ service.register('startServer', (message) => {
             hospitalData[roomType][roomIdx].state = data.data;
             io.emit("hospitalLed", data);
         });
+
         socket.on("ambulanceDistance", data => {
             socket.broadcast.emit("ambulanceDistance", data);
         });
+
         socket.on("disconnect", (reason) => {
             console.log(`socket was disconnect: ${reason}`);
         });
 
+        
         //video chan event
         socket.on("makeCall", data => {
             console.log(`make call from ${data.from} to ${data.to}`);
@@ -311,9 +177,9 @@ service.register('startServer', (message) => {
         console.log(`http server is running on port ${httpPort}`);
     });
 
-        message.respond({
-            message: "start websocket server"
-        });
+    message.respond({
+        message: "start websocket server"
+    });
 });
 
 service.register("stopServer", (message) => {
@@ -330,3 +196,70 @@ service.register("stopServer", (message) => {
         message: 'stoped websocket server'
     });
 });
+
+service.register('putKind', (message) => {
+    service.call('luna://com.webos.service.db/putKind', {
+        id: kindId,
+        owner: 'com.goldentime.hospitalapp.service'
+    }, (response) => {
+        message.respond(response.payload);
+    });
+});
+
+service.register('initData', (message) => {
+    service.call('luna://com.webos.service.db/find', {
+        query: {
+            from: kindId
+        }
+    }, (response) => {
+        const dataList = response.payload.results;
+        if(dataList.length != 0){
+            dataId = dataList[0]._id;
+            dataRev = dataList[0]._rev;
+            hospitalData = dataList[0].data;
+        }
+        else{
+            hospitalData = initData;
+        }
+
+        message.respond(response.payload);
+    });
+});
+
+service.register('put', (message) => {
+    if(dataId == null){
+        service.call('luna://com.webos.service.db/put', {
+            objects: [
+                {
+                    _kind: kindId,
+                    data: hospitalData
+                }
+            ]
+        }, (response) => {
+            const dataList = response.payload.results;
+            dataId = dataList[0].id;
+            dataRev = dataList[0].rev;
+            message.respond({
+                returnValue: true
+            });
+        });
+    }
+    else{
+        service.call('luna://com.webos.service.db/put', {
+            objects: [
+                {
+                    _kind: kindId,
+                    _id: dataId,
+                    _rev: dataRev,
+                    data: hospitalData
+                }
+            ]
+        }, (response) => {
+            const dataList = response.payload.results;
+            dataRev = dataList[0].rev;
+            message.respond({
+                returnValue: true
+            });
+        });
+    }
+})

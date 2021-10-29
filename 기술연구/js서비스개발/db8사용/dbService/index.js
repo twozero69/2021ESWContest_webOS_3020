@@ -8,6 +8,24 @@ const service = new Service(pkgInfo.name);
 let keepAlive = null;
 let cnt = 0;
 let dataId = null;
+let dataRev = null;
+const data = {
+    array1: [
+        {
+            key1:1,
+            key2:2
+        },
+        {
+            key1:3,
+            key2:4
+        }
+    ],
+    array2: [
+        {
+            key: "value"
+        }
+    ],
+};
 
 service.register('startActivity', (message) =>{
     if(keepAlive != null){
@@ -80,12 +98,14 @@ service.register('put', (message) => {
             objects: [
                 {
                     _kind: 'com.app.dbexample.service:1',
-                    cnt: cnt
+                    cnt: cnt,
+                    data: data
                 }
             ]
         }, (response) => {
             cnt++;
             dataId = response.payload.results[0].id;
+            dataRev = response.payload.results[0].rev;
             console.log(response);
             message.respond({
                 message: 'first put',
@@ -99,11 +119,14 @@ service.register('put', (message) => {
                 {
                     _kind: 'com.app.dbexample.service:1',
                     _id: dataId,
-                    cnt: cnt
+                    _rev: dataRev,
+                    cnt: cnt,
+                    data: data
                 }
             ]
         }, (response) => {
             cnt++;
+            dataRev = response.payload.results[0].rev;
             console.log(response);
             message.respond({
                 message: 'replace put',
