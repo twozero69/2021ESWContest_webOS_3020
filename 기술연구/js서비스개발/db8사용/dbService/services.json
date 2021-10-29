@@ -1,0 +1,9 @@
+{
+  "id": "com.app.dbexample.service",
+  "description": "service",
+  "services": [
+    {
+      "name": "com.app.dbexample.service"
+    }
+  ]
+}

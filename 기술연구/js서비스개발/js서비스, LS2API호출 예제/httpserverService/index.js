@@ -82,12 +82,12 @@ service.register('stopServer', (message) => {
     server.close();
     server=null;
 
-    message.respond({
-        message : 'stopped http server'
-    });
-
     //activity를 비활성화
     service.activityManager.complete(keepAlive, (activity) => {
         console.log('completed activity');
-    })
+    });
+
+    message.respond({
+        message : 'stopped http server'
+    });
 });
