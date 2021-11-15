@@ -59,10 +59,7 @@ const HospitalDetailInfo = ({selectedHospitalInfo, patient}) => {
         <div>
             <span>입원실: {selectedHospitalInfo.hvgc} / {selectedHospitalInfo.hpgryn}</span>
         </div>
-        <div>
-            <span>병상수: {selectedHospitalInfo.dutyHano} / {selectedHospitalInfo.hpbdn}</span>
-        </div>
-
+        
         <Button onClick={onClick}>병원선정</Button>
     </>);
 };

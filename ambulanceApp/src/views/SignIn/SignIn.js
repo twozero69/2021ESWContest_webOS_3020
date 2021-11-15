@@ -89,7 +89,7 @@ const SignIn = ({setLoginFlag, setUser}) => {
             <div className="sign-in-form">
                 <div className="video-form">
                     <div className="video-contents">
-                        <video ref={webcamVideo} playsInline autoPlay onPlay={onPlay} />
+                        <video ref={webcamVideo} playsInline autoPlay muted onPlay={onPlay} />
                         <div>{visionMessage}</div>
                         {retryFlag && <Button onClick={onVision}>face 로그인</Button>}
                     </div>

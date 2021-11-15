@@ -161,7 +161,7 @@ const AddPatient = ({patient, setPatient, ambulanceDistance}) => {
             <Header patient={patient} setPatient={setPatient} name="환자등록" outline="응급환자의 정보를 등록합니다." ambulanceDistance={ambulanceDistance} />
             <div className="add-patient">
                 <ContentsBox className="image-contents" title="환자사진"> 
-                    <video ref={patientVideo} playsInline autoPlay onPlay={onPlay} />
+                    <video ref={patientVideo} playsInline autoPlay muted onPlay={onPlay} />
                     <canvas ref={faceCanvas} />
                     <div className="vision-message">{visionMessage}</div>
                     {retryFlag && <Button onClick={onCapture}>사진촬영</Button>}

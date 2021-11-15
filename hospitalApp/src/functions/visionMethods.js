@@ -1,28 +1,32 @@
 /* eslint-disable */
 import { thinqRequestVisionLabs, djangoFaceRecognition, djangoGetVector } from "./axiosMethods";
 
+let streamSrc = null;
+let imageSrc = null;
+window.navigator.mediaDevices.getUserMedia({
+    video: true,
+    audio: true
+}).then(stream => {
+    streamSrc = stream;
+    const track = stream.getVideoTracks()[0];
+    imageSrc = new window.ImageCapture(track);
+});
+
 const getVideo = (webcamVideoRef, imageCaptureRef) => {
-    window.navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: false,
-    }).then(stream => {
-        webcamVideoRef.current.srcObject = stream;
-        const track = stream.getVideoTracks()[0];
-        imageCaptureRef.current = new window.ImageCapture(track);
-    }).catch(error => {
-        console.log(error);
-    });
-}
+    if(streamSrc != null && imageSrc != null){
+        webcamVideoRef.current.srcObject = streamSrc;
+        imageCaptureRef.current = imageSrc;
+        return;
+    }
+
+    setTimeout(() => {
+        webcamVideoRef.current.srcObject = streamSrc;
+        imageCaptureRef.current = imageSrc;
+    }, 3000);
+};
 
 const getVideoWithAudio = (webcamVideoRef) => {
-    window.navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true
-    }).then(stream => {
-        webcamVideoRef.current.srcObject = stream;
-    }).catch(error => {
-        console.log(error);
-    });
+    webcamVideoRef.current.srcObject = streamSrc;
 };
 
 
@@ -39,7 +43,7 @@ const getVisionProcessResult = async (blob) => {
     } = await thinqRequestVisionLabs(byteArray);
     
     return {faceCount, estimationResult};
-}
+};
 
 const visionSignIn = async (imageCaptureRef) => {
     console.log("로그인 시작");

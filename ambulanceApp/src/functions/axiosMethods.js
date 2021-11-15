@@ -57,6 +57,7 @@ const openapiServiceConfig = {
 };
 
 const openapiSearchCenterDivision = async () => {
+    console.log("division으로 탐색");
     const queryParams = `?ServiceKey=${process.env.REACT_APP_OPENAPI_API_KEY}&STAGE1=${process.env.REACT_APP_OPENAPI_STAGE1}&pageNo=1&numOfRows=100`;
     const requestURL = `/getEmrrmRltmUsefulSckbdInfoInqire${queryParams}`;
     const {data: {response: {body: {items: {item}}}}} = await axios.get(requestURL, openapiServiceConfig);
@@ -64,6 +65,7 @@ const openapiSearchCenterDivision = async () => {
 };
 
 const openapiSearchCenterDisease = async (mkioskty) => {
+    console.log("disease로 탐색");
     const mkiosktyToString = {
         "뇌출혈": "1",
         "뇌경색": "2",

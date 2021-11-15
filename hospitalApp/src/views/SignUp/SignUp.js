@@ -132,7 +132,7 @@ const SignUp = () => {
             <div className="sign-up-form">
                 <div className="video-form">
                     <div ref={videoContents} className="video-contents">
-                        <video ref={webcamVideo} playsInline autoPlay onPlay={onPlay} />
+                        <video ref={webcamVideo} playsInline autoPlay muted onPlay={onPlay} />
                         <canvas ref={faceCanvas} />
                         <div>{visionMessage}</div>
                         {retryFlag && <Button onClick={onCapture}>사진촬영</Button>}
