@@ -55,4 +55,4 @@ webOS를 공부한 내용을 팀원들 간 공유하기 위한 파일들.
 전상현: 전자공학부 4학년, 인공지능과 아두이노 개발을 담당.
 
 ## 개발환경
-![image](https://user-images.githubusercontent.com/60468060/142009712-3db1ff7c-1c86-47fb-af52-cf9d419930cd.png)
+![image](https://user-images.githubusercontent.com/60468060/142010378-a78ab810-c5b0-4930-8d18-8be4bb98706b.png)
