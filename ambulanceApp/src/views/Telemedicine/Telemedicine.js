@@ -48,7 +48,7 @@ const Telemedicine = ({patient, setPatient, hospitalSocket, ambulanceDistance}) 
     const makeCall = () => {
         console.log("call!!!");
 
-         const peer = new Peer({
+        const peer = new Peer({
             initiator: true,
             trickle: false,
             stream: stream
@@ -66,17 +66,22 @@ const Telemedicine = ({patient, setPatient, hospitalSocket, ambulanceDistance}) 
             hospitalVideo.current.srcObject = stream;
         });
 
-        socket.on("answerCall", data => {
+        const answerCallListener = data => {
             if(data.response){
                 peer.signal(data.signal);
             }
             else{
                 setCallFlag(false);
             }
-        });
+        };
 
-        socket.on("endCall", data => {
+        socket.on("answerCall", answerCallListener);
+
+        const endCallListener = data => {
             if(connection.current){
+                socket.off("answerCall", answerCallListener);
+                socket.off("endCall", endCallListener);
+
                 connection.current.destroy();
                 connection.current = null;
             }
@@ -86,7 +91,9 @@ const Telemedicine = ({patient, setPatient, hospitalSocket, ambulanceDistance}) 
                 name: ""
             });
             setCallFlag(false);
-        })
+        };
+
+        socket.on("endCall", endCallListener);
 
         connection.current = peer;
         setCallFlag(true);

@@ -82,6 +82,7 @@ const SelectHospital = ({patient, setPatient, ambulanceDistance}) => {
             LS2createToast("조건을 만족하는 병원이 근처에 없습니다.");
             LS2speakTts("조건을 만족하는 병원이 근처에 없습니다.");
             history.push("add-patient");
+            return;
         }
 
         setHospitalList(list);
