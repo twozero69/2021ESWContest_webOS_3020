@@ -147,7 +147,7 @@ const AddPatient = ({patient, setPatient, ambulanceDistance}) => {
                 hospitalization: hospitalization,
                 operation: operation
             },
-            createdAt: Date.now()
+            createdAt: Date.now(),
         };
 
         setPatient(patientData);

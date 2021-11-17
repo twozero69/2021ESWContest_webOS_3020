@@ -12,6 +12,8 @@ const Telemedicine = ({patientData, ambulanceDistance}) => {
     const patientVideo = useRef();
     const hospitalVideo = useRef();
     const connection = useRef();
+    const endCallListener = useRef(null);
+    const answerCallListener = useRef(null);
     const [stream, setStream] = useState(null);
     const [callerData, setCallerData] = useState({
         from: null,
@@ -45,6 +47,21 @@ const Telemedicine = ({patientData, ambulanceDistance}) => {
         });
     }, []);
 
+    const cleanConnection = () => {
+        if(answerCallListener.current != null){
+            socket.off("answerCall", answerCallListener.current);
+            answerCallListener.current = null;
+        };
+
+        if(endCallListener.current != null){
+            socket.off("endCall", endCallListener.current);
+            endCallListener.current = null;
+        }
+
+        connection.current.destroy();
+        connection.current = null;
+    };
+
     const makeCall = () => {
         console.log("call!!!");
 
@@ -66,7 +83,7 @@ const Telemedicine = ({patientData, ambulanceDistance}) => {
             hospitalVideo.current.srcObject = stream;
         });
 
-        const answerCallListener = data => {
+        answerCallListener.current = data => {
             if(data.response){
                 peer.signal(data.signal);
             }
@@ -75,15 +92,11 @@ const Telemedicine = ({patientData, ambulanceDistance}) => {
             }
         };
 
-        socket.on("answerCall", answerCallListener);
+        socket.on("answerCall", answerCallListener.current);
 
-        const endCallListener = data => {
+        endCallListener.current = data => {
             if(connection.current){
-                socket.off("answerCall", answerCallListener);
-                socket.off("endCall", endCallListener);
-
-                connection.current.destroy();
-                connection.current = null;
+                cleanConnection();
             }
             setCallerData({
                 from: null,
@@ -93,7 +106,7 @@ const Telemedicine = ({patientData, ambulanceDistance}) => {
             setCallFlag(false);
         };
 
-        socket.on("endCall", endCallListener);
+        socket.on("endCall", endCallListener.current);
 
         connection.current = peer;
         setCallFlag(true);
@@ -105,7 +118,7 @@ const Telemedicine = ({patientData, ambulanceDistance}) => {
             socket.emit("answerCall", {
                 response,
                 from: socket.id,
-                to: callerData.from
+                to: patientData.current.patientSocket
             });
 
             return;
@@ -122,7 +135,7 @@ const Telemedicine = ({patientData, ambulanceDistance}) => {
                 response,
                 signal,
                 from: socket.id,
-                to: callerData.from
+                to: patientData.current.patientSocket
             });
         });
 
@@ -130,10 +143,9 @@ const Telemedicine = ({patientData, ambulanceDistance}) => {
             hospitalVideo.current.srcObject = stream;
         });
 
-        socket.on("endCall", data => {
+        endCallListener.current = data => {
             if(connection.current){
-                connection.current.destroy();
-                connection.current = null;
+                cleanConnection();
             }
             setCallerData({
                 from: null,
@@ -141,7 +153,9 @@ const Telemedicine = ({patientData, ambulanceDistance}) => {
                 name: ""
             });
             setCallFlag(false);
-        })
+        };
+
+        socket.on("endCall", endCallListener.current);
 
         peer.signal(callerData.signal);
         connection.current = peer;
@@ -151,12 +165,11 @@ const Telemedicine = ({patientData, ambulanceDistance}) => {
     const endCall = () => {
         socket.emit("endCall", {
             from: socket.id,
-            to: callerData.from
+            to: patientData.current.patientSocket
         });
 
         if(connection.current){
-            connection.current.destroy();
-            connection.current = null;
+            cleanConnection();
         }
         setCallerData({
             from: null,

@@ -101,7 +101,7 @@ def face_recognition(request):
         #firebase firestore의 사용자 얼굴정보와 비교
         return_value = False
         userdata = None
-        minDist = 0.35 #threshold값 
+        minDist = 0.38 #threshold값 
 
         docs = users_ref.stream()
         for doc in docs:
